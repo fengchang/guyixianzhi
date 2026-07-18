@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古邑旧志 · 通关永久纪念页 - Windows XP</title>
+    <style>
+        /* ==================== 全局重置 ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ==================== 桌面整体 ==================== */
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: "SimSun", "宋体", "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-size: 12px;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            background: #000;
+            /* 外围黑色模拟屏幕边框 */;
+        }
+
+        /* ==================== 屏幕容器：模拟老式液晶显示器 ==================== */
+        
+        #screen {
+            width: 1224px;
+            height: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            /* 模拟4:3比例低分辨率LCD */
+            background: #004e8c;
+            /* 备用底色 */
+            box-shadow:
+                0 0 0 18px #1a1a1a,
+                0 0 0 22px #2a2a2a,
+                0 0 0 26px #111,
+                0 0 60px rgba(0, 0, 0, 0.7);
+            /* LCD边框 */
+            border-radius: 4px;
+            /* 屏幕微圆角 */;
+        }
+
+        /* ==================== XP桌面背景：Bliss风格蓝天草地 ==================== */
+        #desktop {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background:
+                /* 蓝天渐变 */
+                linear-gradient(180deg,
+                    #3a7ec8 0%,
+                    #5b9ed4 8%,
+                    #7eb8e0 18%,
+                    #9dc8e8 28%,
+                    #b8d4ec 38%,
+                    #c8ddf0 48%,
+                    /* 白云层 */
+                    #d4e4f2 52%,
+                    #e8eef6 54%,
+                    #f0f2f4 56%,
+                    /* 远山 */
+                    #c8d4b8 58%,
+                    #b0c0a0 60%,
+                    #a8b898 62%,
+                    /* 草地 */
+                    #8ab848 64%,
+                    #7aac38 68%,
+                    #6ea030 74%,
+                    #5c9028 82%,
+                    #4a7c20 90%,
+                    #3c6818 100%);
+            z-index: 0;
+            /* 白云 */
+            position: relative;
+        }
+
+        /* 白云装饰 */
+        #desktop::before {
+            content: "";
+            position: absolute;
+            top: 10%;
+            left: 12%;
+            width: 220px;
+            height: 70px;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 30%, transparent 60%),
+                radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 35%, transparent 65%),
+                radial-gradient(ellipse at 65% 55%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 40%, transparent 70%),
+                radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.8) 0%, transparent 50%);
+            filter: blur(6px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+        #desktop::after {
+            content: "";
+            position: absolute;
+            top: 18%;
+            right: 18%;
+            width: 280px;
+            height: 60px;
+            background:
+                radial-gradient(ellipse at 35% 45%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 28%, transparent 55%),
+                radial-gradient(ellipse at 55% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 32%, transparent 62%),
+                radial-gradient(ellipse at 70% 40%, rgba(255, 255, 255, 0.8) 0%, transparent 45%);
+            filter: blur(8px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        /* 更多小云朵 */
+        .cloud-small {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(7px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .cloud-small.cloud1 {
+            top: 22%;
+            left: 45%;
+            width: 140px;
+            height: 40px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0%, transparent 55%);
+            opacity: 0.7;
+        }
+        .cloud-small.cloud2 {
+            top: 8%;
+            right: 30%;
+            width: 100px;
+            height: 30px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+
+        /* ==================== 桌面图标区域 ==================== */
+        #desktop-icons {
+            position: absolute;
+            top: 20px;
+            left: 24px;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            width: 70px;
+            text-align: center;
+            transition: filter 0.1s;
+        }
+        .desktop-icon:hover {
+            filter: brightness(1.2);
+        }
+        .desktop-icon .icon-img {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            color: #fff;
+        }
+        .desktop-icon .icon-label {
+            font-size: 10px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            word-break: break-all;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+
+        /* ==================== XP 窗口外壳 ==================== */
+        #xp-window {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 700px;
+            background: #ffffff;
+            border: 3px solid #0054e3;
+            /* XP蓝色边框 */
+            border-radius: 8px 8px 0 0;
+            /* 窗口上方圆角 */
+            box-shadow:
+                0 0 0 1px rgba(0, 60, 180, 0.4),
+                0 6px 30px rgba(0, 0, 0, 0.5),
+                0 2px 8px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            overflow: hidden;
+            /* 底部也微圆角 */;
+        }
+
+        /* ==================== XP 标题栏 ==================== */
+        #xp-titlebar {
+            background: linear-gradient(180deg,
+                    #0a6cd6 0%,
+                    #1a7ce0 3%,
+                    #2d8de8 8%,
+                    #3d9aee 20%,
+                    #4aa4f2 35%,
+                    #3d98ec 50%,
+                    #2a84dc 65%,
+                    #1a6ec8 82%,
+                    #0d5cb4 95%,
+                    #0050a8 100%);
+            /* Luna蓝色渐变 */
+            padding: 0 6px 0 10px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            border-radius: 6px 6px 0 0;
+            /* 标题栏上方圆角 */
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            cursor: default;
+            user-select: none;
+        }
+
+        /* 标题栏左侧：图标+文字 */
+        #xp-titlebar .title-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            height: 100%;
+        }
+
+        /* XP窗口小图标 */
+        #xp-titlebar .win-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(180deg, #f0e8d0, #dcc898);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #5a4020;
+            flex-shrink: 0;
+            border: 1px solid #b89860;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            line-height: 1;
+        }
+
+        #xp-titlebar .title-text {
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
+        }
+
+        /* 标题栏右侧按钮组 */
+        #xp-titlebar .window-buttons {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* XP风格窗口按钮 */
+        #xp-titlebar .win-btn {
+            width: 26px;
+            height: 22px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            font-family: "Segoe UI", "SimSun", "Tahoma", sans-serif;
+            transition: all 0.08s;
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            position: relative;
+        }
+
+        /* 最小化按钮 */
+        #xp-titlebar .win-btn.min-btn {
+            background: linear-gradient(180deg, #3da0f0 0%, #1a70c8 45%, #0d5aac 70%, #0048a0 100%);
+            font-size: 14px;
+            line-height: 0.6;
+            padding-bottom: 2px;
+        }
+        #xp-titlebar .win-btn.min-btn:hover {
+            background: linear-gradient(180deg, #5ab8f8 0%, #2888d8 45%, #1a68b8 70%, #0a50a0 100%);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        #xp-titlebar .win-btn.min-btn:active {
+            background: #0a4a90;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 最大化按钮 */
+        #xp-titlebar .win-btn.max-btn {
+            background: linear-gradient(180deg, #3da0f0 0%, #1a70c8 45%, #0d5aac 70%, #0048a0 100%);
+            font-size: 11px;
+        }
+        #xp-titlebar .win-btn.max-btn:hover {
+            background: linear-gradient(180deg, #5ab8f8 0%, #2888d8 45%, #1a68b8 70%, #0a50a0 100%);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        #xp-titlebar .win-btn.max-btn:active {
+            background: #0a4a90;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 关闭按钮 - 红色 */
+        #xp-titlebar .win-btn.close-btn {
+            background: linear-gradient(180deg, #e88060 0%, #d04030 30%, #c0201a 55%, #a01010 85%, #8a0808 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            margin-left: 4px;
+        }
+        #xp-titlebar .win-btn.close-btn:hover {
+            background: linear-gradient(180deg, #f0a080 0%, #e05040 30%, #d02820 55%, #b01818 85%, #9a0a0a 100%);
+            border-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 8px rgba(255, 60, 30, 0.5);
+        }
+        #xp-titlebar .win-btn.close-btn:active {
+            background: #8a1010;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* ==================== 窗口菜单栏 ==================== */
+        #xp-menubar {
+            background: #f0f0ea;
+            border-bottom: 1px solid #c8c8b8;
+            padding: 3px 8px;
+            display: flex;
+            gap: 14px;
+            font-size: 12px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            color: #1a1a1a;
+            flex-shrink: 0;
+            user-select: none;
+            letter-spacing: 0.5px;
+        }
+        #xp-menubar span {
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 1px;
+        }
+        #xp-menubar span:hover {
+            background: #d8d8c8;
+            text-decoration: underline;
+        }
+
+        /* ==================== 窗口工具栏 ==================== */
+        #xp-toolbar {
+            background: #f8f8f2;
+            border-bottom: 1px solid #d0d0c0;
+            padding: 3px 8px;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        #xp-toolbar .tool-btn {
+            padding: 3px 10px;
+            font-size: 11px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            background: #f0f0e8;
+            border: 1px solid #b0b0a0;
+            border-radius: 3px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            color: #1a1a1a;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.1s;
+        }
+        #xp-toolbar .tool-btn:hover {
+            background: #e8e8d8;
+            border-color: #808070;
+        }
+        #xp-toolbar .tool-btn:active {
+            background: #d0d0c0;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            border-style: inset;
+        }
+
+        /* ==================== 窗口内容区（三栏布局） ==================== */
+        #window-content {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ==================== 左侧栏：QQ风格联系人面板 ==================== */
+        #sidebar-left {
+            width: 175px;
+            min-width: 160px;
+            background: #f4f2ec;
+            border-right: 1px solid #d0c8b8;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow-y: auto;
+            padding: 4px 0;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+
+        /* QQ分组标题 */
+        #sidebar-left .qq-group {
+            margin: 2px 4px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        #sidebar-left .qq-group-header {
+            background: linear-gradient(180deg, #e0dcd0, #d8d4c8);
+            padding: 5px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #3a3028;
+            cursor: pointer;
+            letter-spacing: 1px;
+            border: 1px solid #c0b8a8;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        #sidebar-left .qq-group-header:hover {
+            background: linear-gradient(180deg, #e8e4d8, #ddd8cc);
+        }
+        #sidebar-left .qq-group-header .arrow {
+            font-size: 9px;
+            color: #5a5040;
+            transition: transform 0.15s;
+            display: inline-block;
+        }
+        #sidebar-left .qq-group-items {
+            background: #fafaf6;
+            border: 1px solid #d8d0c0;
+            border-top: none;
+            border-radius: 0 0 3px 3px;
+            display: flex;
+            flex-direction: column;
+        }
+        #sidebar-left .qq-contact {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: #3a3028;
+            transition: background 0.1s;
+            text-decoration: none;
+            border-bottom: 1px solid #f0ece0;
+        }
+        #sidebar-left .qq-contact:last-child {
+            border-bottom: none;
+        }
+        #sidebar-left .qq-contact:hover {
+            background: #e8e4d8;
+        }
+        #sidebar-left .qq-contact .contact-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #e8dcc0;
+            border: 1px solid #c0b090;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #8a6d3b;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        #sidebar-left .qq-contact .contact-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #sidebar-left .qq-contact.active {
+            background: #d0e0f0;
+            border-left: 3px solid #3070c0;
+            padding-left: 7px;
+        }
+
+        /* ==================== 中间主内容区 ==================== */
+        #main-content {
+            flex: 1;
+            background: #ffffff;
+            overflow-y: auto;
+            padding: 14px 18px 16px;
+            position: relative;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+        /* 中间栏滚动条风格 */
+        #main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        #main-content::-webkit-scrollbar-track {
+            background: #f0f0e8;
+            border-left: 1px solid #d0d0c0;
+        }
+        #main-content::-webkit-scrollbar-thumb {
+            background: #c0c0b0;
+            border-radius: 2px;
+            border: 1px solid #a0a090;
+        }
+        #main-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a898;
+        }
+
+        #main-content .section-header {
+            text-align: center;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            border-bottom: 2px solid #e0d8c8;
+            position: relative;
+        }
+        #main-content .section-header h2 {
+            font-family: "SimSun", "宋体", "PingFang SC", serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2a1a08;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        #main-content .section-header .subtitle {
+            font-size: 10px;
+            color: #8a7a60;
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+
+        #main-content .content-block {
+            margin-bottom: 16px;
+            padding: 8px 4px;
+        }
+        #main-content .content-block h3 {
+            font-family: "SimSun", "宋体", "PingFang SC", serif;
+            font-size: 13px;
+            color: #4a3020;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            border-left: 3px solid #3070c0;
+            padding-left: 8px;
+        }
+        #main-content .content-block p {
+            text-indent: 2em;
+            margin-bottom: 5px;
+            color: #3a3028;
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            font-size: 12px;
+        }
+        #main-content .content-block .highlight-warm {
+            color: #6a4020;
+            font-weight: bold;
+            text-indent: 0;
+            text-align: center;
+        }
+
+        /* 社交账号引流 */
+        #main-content .social-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 12px 0;
+            margin: 8px 0;
+            border-top: 1px dotted #d0c8b8;
+            border-bottom: 1px dotted #d0c8b8;
+        }
+        #main-content .social-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: #f8f8f2;
+            border-radius: 3px;
+            border: 1px solid #c8c0b0;
+            transition: all 0.15s;
+            text-decoration: none;
+            color: #3a3028;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        #main-content .social-item:hover {
+            background: #f0ece0;
+            border-color: #a09880;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+        #main-content .social-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 9px;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            font-family: "SimSun", "PingFang SC", sans-serif;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .social-icon.xiaohongshu {
+            background: #ff4d4f;
+            color: #fff;
+            border-radius: 6px;
+        }
+        .social-icon.douyin {
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 6px;
+            position: relative;
+        }
+        .social-icon.douyin::after {
+            content: "♪";
+            position: absolute;
+            top: -4px;
+            right: -3px;
+            font-size: 13px;
+            color: #ff2d55;
+            line-height: 1;
+        }
+        #main-content .social-label {
+            font-size: 11px;
+            color: #5a4a38;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+        #main-content .social-label strong {
+            color: #3a2010;
+            letter-spacing: 0.8px;
+            font-size: 12px;
+        }
+
+        /* 留言板 */
+        #main-content .message-item {
+            background: #fafaf4;
+            border: 1px solid #e0d8c8;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 2px;
+            font-size: 11px;
+            color: #4a3a28;
+            letter-spacing: 0.3px;
+            line-height: 1.6;
+        }
+        #main-content .message-item .msg-author {
+            font-size: 10px;
+            color: #8a7a60;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== 右侧栏：作者信息面板 ==================== */
+        #sidebar-right {
+            width: 170px;
+            min-width: 150px;
+            background: #f8f6f0;
+            border-left: 1px solid #d0c8b8;
+            padding: 16px 10px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            text-align: center;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            overflow-y: auto;
+        }
+        #sidebar-right .avatar-frame {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: #f0e0c8;
+            border: 3px solid #d0b898;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        /* 像素头像面部 */
+        .pixel-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .pixel-face .eye-l,
+        .pixel-face .eye-r {
+            position: absolute;
+            top: 20px;
+            width: 7px;
+            height: 8px;
+            background: #2a1a0a;
+            border-radius: 2px;
+        }
+        .pixel-face .eye-l {
+            left: 16px;
+        }
+        .pixel-face .eye-r {
+            right: 16px;
+        }
+        .pixel-face .mouth-curve {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 6px;
+            border: 2px solid #5a3020;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+        }
+        .pixel-face .blush-l,
+        .pixel-face .blush-r {
+            position: absolute;
+            top: 27px;
+            width: 8px;
+            height: 5px;
+            background: rgba(220, 140, 120, 0.45);
+            border-radius: 50%;
+        }
+        .pixel-face .blush-l {
+            left: 7px;
+        }
+        .pixel-face .blush-r {
+            right: 7px;
+        }
+
+        #sidebar-right .author-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #3a2010;
+            letter-spacing: 2px;
+        }
+        #sidebar-right .author-role {
+            font-size: 10px;
+            color: #8a7a60;
+            letter-spacing: 0.5px;
+        }
+        #sidebar-right .account-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #d8d0c0;
+            border-radius: 3px;
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        #sidebar-right .account-line {
+            font-size: 10px;
+            color: #5a4a38;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+        #sidebar-right .account-line strong {
+            color: #3a2010;
+            font-size: 10px;
+        }
+        #sidebar-right .follow-hint {
+            font-size: 9px;
+            color: #3070c0;
+            letter-spacing: 1px;
+            animation: hintPulse 3s ease-in-out infinite;
+        }
+        @keyframes hintPulse {
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 星光点缀 */
+        .star-dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #d0b860;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: starTwinkle 4s ease-in-out infinite;
+            box-shadow: 0 0 3px 1px rgba(200, 170, 80, 0.5);
+        }
+        @keyframes starTwinkle {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.6);
+            }
+        }
+
+        /* ==================== 窗口底部状态栏 ==================== */
+        #xp-statusbar {
+            background: #f0f0e8;
+            border-top: 1px solid #c8c8b8;
+            padding: 4px 10px;
+            font-size: 10px;
+            color: #5a5040;
+            letter-spacing: 0.3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            border-radius: 0 0 5px 5px;
+            /* 底部微圆角 */;
+        }
+
+        /* ==================== XP 任务栏 ==================== */
+        #xp-taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 36px;
+            background: linear-gradient(180deg,
+                    #5a7da8 0%,
+                    #4a6d98 2%,
+                    #3d5f88 10%,
+                    #355680 25%,
+                    #2e4d72 50%,
+                    #274568 75%,
+                    #1f3c5c 95%,
+                    #183050 100%);
+            /* 深蓝灰任务栏 */
+            border-top: 1px solid #6a8db8;
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+            z-index: 20;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            gap: 4px;
+        }
+
+        /* 开始按钮 */
+        #start-btn {
+            height: 28px;
+            padding: 0 14px;
+            background: linear-gradient(180deg, #5a9e3a 0%, #3d7a20 30%, #2d6018 60%, #1a4a0a 100%);
+            border-radius: 6px;
+            border: 1px solid #1a3a08;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            transition: all 0.1s;
+        }
+        #start-btn:hover {
+            background: linear-gradient(180deg, #6aae4a 0%, #4d8a2a 30%, #3a7020 60%, #225a10 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 8px rgba(80, 160, 40, 0.4);
+        }
+        #start-btn:active {
+            background: #1a4a0a;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 快速启动栏 */
+        #quick-launch {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+        #quick-launch .ql-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.1s;
+        }
+        #quick-launch .ql-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 任务栏程序按钮区域 */
+        #taskbar-programs {
+            flex: 1;
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 4px;
+        }
+        #taskbar-programs .tb-program {
+            height: 26px;
+            padding: 0 12px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+            color: #fff;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            min-width: 0;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+        #taskbar-programs .tb-program.active {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        #taskbar-programs .tb-program:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        /* 系统托盘 */
+        #system-tray {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 6px;
+            flex-shrink: 0;
+            color: #fff;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+        }
+        #system-tray .tray-icon {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            border-radius: 1px;
+        }
+        #system-tray .tray-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        #system-tray .tray-clock {
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            cursor: default;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        #system-tray .tray-clock:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ==================== 老式LCD扫描线叠加 ==================== */
+        #scanlines-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 998;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.04) 0px,
+                    rgba(0, 0, 0, 0.04) 1px,
+                    transparent 1px,
+                    transparent 3px);
+            mix-blend-mode: multiply;
+            opacity: 0.5;
+        }
+
+        /* 胶片颗粒噪点 */
+        #grain-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 997;
+            background-image: url('data:image/svg+xml,%3Csvg width="3" height="3" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23000" opacity="0.035"/%3E%3Crect x="1" y="1" width="1" height="1" fill="%23000" opacity="0.04"/%3E%3Crect x="2" y="2" width="1" height="1" fill="%23000" opacity="0.03"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-size: 3px 3px;
+            mix-blend-mode: multiply;
+            opacity: 0.55;
+        }
+
+        /* 轻微LCD色差/模糊 */
+        #chroma-overlay {
+            
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 996;
+            background: radial-gradient(ellipse at 50% 45%,
+                    transparent 60%,
+                    rgba(20, 30, 50, 0.06) 85%,
+                    rgba(10, 15, 25, 0.1) 100%);
+            /* 微暗角 */;
+
+        }
+        
+             
+
+        /* ==================== 响应式缩放 ==================== */
+        @media (max-width: 1060px) {
+            #screen {
+                width: 100vw;
+                height: auto;
+                aspect-ratio: 1024/768;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            #xp-window {
+                width: 90%;
+                height: auto;
+                min-height: 400px;
+                top: 30px;
+            }
+            #window-content {
+                flex-direction: column;
+                min-height: 300px;
+            }
+            #sidebar-left {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 2px;
+                padding: 4px;
+                border-right: none;
+                border-bottom: 1px solid #d0c8b8;
+                overflow-x: auto;
+                min-width: auto;
+                max-height: 60px;
+            }
+            #sidebar-left .qq-group {
+                flex-shrink: 0;
+            }
+            #sidebar-right {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 8px;
+                border-left: none;
+                border-top: 1px solid #d0c8b8;
+                min-width: auto;
+                justify-content: center;
+            }
+            #main-content {
+                padding: 10px;
+            }
+            #xp-menubar {
+                gap: 8px;
+                font-size: 10px;
+            }
+            #xp-toolbar .tool-btn {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+            #desktop-icons {
+                display: none;
+            }
+        }
+        /* ========== 祝贺弹窗 ========== */
+#congrats-dialog {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+    user-select: none;
+}
+/* 初始不显示时用类控制（可选） */
+
+
+#congrats-dialog .dialog-window {
+    width: 360px;
+    background: #ffffff;
+    border: 3px solid #0054e3;            /* 窗口蓝色边框 */
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 0 0 1px rgba(0,60,180,0.4), 0 12px 40px rgba(0,0,0,0.6);
+    overflow: hidden;
+    animation: dialogPop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes dialogPop {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 标题栏（直接复用 XP 窗口标题栏渐变） */
+#congrats-dialog .dialog-titlebar {
+    background: linear-gradient(180deg,
+        #0a6cd6 0%, #1a7ce0 3%, #2d8de8 8%, #3d9aee 20%, #4aa4f2 35%,
+        #3d98ec 50%, #2a84dc 65%, #1a6ec8 82%, #0d5cb4 95%, #0050a8 100%);
+    padding: 0 6px 0 10px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    border-radius: 6px 6px 0 0;
+}
+#congrats-dialog .dialog-title-left {
+    display: flex; align-items: center; gap: 7px;
+}
+#congrats-dialog .dialog-icon {
+    width: 20px; height: 20px;
+    background: linear-gradient(180deg, #f0e8d0, #dcc898);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #5a4020;
+    border: 1px solid #b89860;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+#congrats-dialog .dialog-title-text {
+    font-size: 13px; font-weight: bold; color: #ffffff;
+    letter-spacing: 1px; text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+#congrats-dialog .dialog-close-btn {
+    width: 26px; height: 22px;
+    background: linear-gradient(180deg, #e88060 0%, #d04030 30%, #c0201a 55%, #a01010 85%, #8a0808 100%);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 3px;
+    cursor: pointer; color: #fff; font-size: 13px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    transition: all 0.08s;
+}
+#congrats-dialog .dialog-close-btn:hover {
+    background: linear-gradient(180deg, #f0a080 0%, #e05040 30%, #d02820 55%, #b01818 85%, #9a0a0a 100%);
+    border-color: rgba(255,255,255,0.7);
+    box-shadow: 0 0 8px rgba(255,60,30,0.5);
+}
+
+/* 对话框主体 */
+#congrats-dialog .dialog-body {
+    padding: 24px 20px 16px;
+    text-align: center;
+    background: #ffffff;
+    border-bottom: 1px solid #d0d0c8;
+}
+#congrats-dialog .dialog-body p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    line-height: 1.6;
+}
+
+/* 底部区域 */
+#congrats-dialog .dialog-footer {
+    background: #f0f0ea;
+    padding: 10px;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+}
+#congrats-dialog .dialog-ok-btn {
+    height: 28px; padding: 0 24px;
+    background: linear-gradient(180deg, #5a9e3a 0%, #3d7a20 30%, #2d6018 60%, #1a4a0a 100%);
+    border-radius: 4px;
+    border: 1px solid #1a3a08;
+    cursor: pointer;
+    font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+    font-size: 12px; font-weight: bold; color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    transition: all 0.1s;
+}
+#congrats-dialog .dialog-ok-btn:hover {
+    background: linear-gradient(180deg, #6aae4a 0%, #4d8a2a 30%, #3a7020 60%, #225a10 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 0 6px rgba(80,160,40,0.4);
+}
+#congrats-dialog .dialog-ok-btn:active {
+    background: #1a4a0a;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+}
+
+    
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 屏幕容器 ==================== -->
+    <div id="screen">
+
+        <!-- XP桌面背景 -->
+        <div id="desktop">
+            <!-- 额外白云 -->
+            <span class="cloud-small cloud1"></span>
+            <span class="cloud-small cloud2"></span>
+        </div>
+
+        <!-- 桌面图标 -->
+        <div id="desktop-icons">
+            <div class="desktop-icon" title="我的电脑">
+                <div class="icon-img">🖥️</div>
+                <span class="icon-label">我的电脑</span>
+            </div>
+            <div class="desktop-icon" title="我的文档">
+                <div class="icon-img">📁</div>
+                <span class="icon-label">我的文档</span>
+            </div>
+            <div class="desktop-icon" title="回收站">
+                <div class="icon-img">🗑️</div>
+                <span class="icon-label">回收站</span>
+            </div>
+         
+            </div>
+        </div>
+
+        <!-- ==================== XP 窗口 ==================== -->
+        <div id="xp-window">
+            <!-- XP标题栏 -->
+            <div id="xp-titlebar">
+                <div class="title-left">
+                    <div class="win-icon">🌸</div>
+                    <span class="title-text">古邑旧志 · 通关永久纪念页</span>
+                </div>
+                <div class="window-buttons">
+                    <button class="win-btn min-btn" title="最小化" aria-label="最小化">_</button>
+                    <button class="win-btn max-btn" title="最大化" aria-label="最大化">□</button>
+                    <button class="win-btn close-btn" title="关闭" aria-label="关闭">✕</button>
+                </div>
+            </div>
+
+            <!-- XP菜单栏 -->
+            <div id="xp-menubar">
+                <span>文件(F)</span>
+                <span>编辑(E)</span>
+                <span>查看(V)</span>
+                <span>收藏(A)</span>
+                <span>工具(T)</span>
+                <span>帮助(H)</span>
+            </div>
+
+            <!-- XP工具栏 -->
+            <div id="xp-toolbar">
+                <button class="tool-btn">← 后退</button>
+                <button class="tool-btn">前进 →</button>
+                <button class="tool-btn">🏠 主页</button>
+                <button class="tool-btn">🔍 搜索</button>
+                <button class="tool-btn">📋 收藏</button>
+                <button class="tool-btn">🖨️ 打印</button>
+            </div>
+
+            <!-- 窗口内容：三栏布局 -->
+            <div id="window-content">
+                <!-- ========== 左侧栏：QQ风格联系人面板 ========== -->
+                <div id="sidebar-left">
+                    <div class="qq-group">
+                        <div class="qq-group-header">
+                            <span class="arrow">▼</span> 📂 通关导航
+                        </div>
+                        <div class="qq-group-items">
+                            <a href="#section-message" class="qq-contact active">
+                                <span class="contact-avatar">✉</span>
+                                <span class="contact-name">通关寄语</span>
+                            </a>
+                            <a href="#section-creator" class="qq-contact">
+                                <span class="contact-avatar">👤</span>
+                                <span class="contact-name">创作者账号</span>
+                            </a>
+                            <a href="#section-update" class="qq-contact">
+                                <span class="contact-avatar">📡</span>
+                                <span class="contact-name">更新动态</span>
+                            </a>
+                            <a href="#section-guestbook" class="qq-contact">
+                                <span class="contact-avatar">💬</span>
+                                <span class="contact-name">留言板</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="qq-group">
+                       
+                    </div>
+                </div>
+
+                <!-- ========== 中间主内容区 ========== -->
+                <div id="main-content">
+                    <div class="section-header">
+                        <h2>古邑旧志 · 通关纪念页</h2>
+                        <div class="subtitle">—— 感谢您的游玩！ ——</div>
+                    </div>
+
+                    <!-- 通关寄语 -->
+                    <div class="content-block" id="section-message">
+                        <h3>📝 通关寄语</h3>
+                        <p>感谢您的游玩！</p>
+                        <p>你成功探索了这段不为人知的历史，从这些泛黄的档案倾听到了那些被遗忘的声音。每一个选择、每一次翻阅，都让你更接近这片土地深处埋藏的真实。</p>
+                        <p>古邑的故事或许已经画上了句号，再次感谢您的游玩。</p>
+                        <p>《古邑旧志》是我第一部arg网页游戏作品，目前在解密设计，场景交互方面还有很大的进步空间。相信下一个作品会有更丰富的玩法和更精致的体验。</p>
+你们的游玩与留言支持，就是我创作的最大动力。</p>
+                        <p class="highlight-warm">                —— 作者·发酵罐 敬上</p>
+                    </div>
+
+                    <!-- 创作者账号 -->
+                    <div class="content-block" id="section-creator">
+                        <h3>🔗 关注创作者</h3>
+                        <p style="text-indent:0;text-align:center;">如果你喜欢这个作品，欢迎在以下平台关注创作者：</p>
+                        <div class="social-section">
+                            <a class="social-item" href="https://xhslink.com/m/12yylwLrc51" target="_blank" rel="noopener" title="小红书">
+                                <div class="social-icon xiaohongshu">红书</div>
+                                <div class="social-label">
+                                    小红书<br><strong>@发酵罐</strong>
+                                </div>
+                            </a>
+                            <a class="social-item" href="https://v.douyin.com/J1OXzbrMv6E/ 8@8.com :8pm" target="_blank" rel="noopener" title="抖音">
+                                <div class="social-icon douyin">抖</div>
+                                <div class="social-label">
+                                    抖音<br><strong>@发酵罐</strong>
+                                </div>
+                            </a>
+                        </div>
+                        <p style="text-indent:0;text-align:center;font-size:10px;color:#8a7a60;">
+                            ⬆ 点击图标跳转至创作者主页 ⬆
+                        </p>
+                    </div>
+
+                    <!-- 更新动态 -->
+                    <div class="content-block" id="section-update">
+                        <h3>📡 作品更新动态</h3>
+                        <p>正在筹备下一部作品...</p>
+                        <p>关注小红书和抖音账号，你将在第一时间收到更新通知与创作花絮。</p>
+                        <p style="text-indent:0;color:#8a7a60;font-size:10px;">（预计更新时间：敬请期待）</p>
+                    </div>
+
+                    <!-- 留言板 -->
+                    <div class="content-block" id="section-guestbook">
+                        <h3>💬 留言板</h3>
+                       
+                        <div class="message-item">
+                            「请关注我的抖音和小红书账号！后续更新会第一时间！」<br>
+                            <span class="msg-author">—— 来自发酵罐2026/7/20</span>
+                        </div>
+                        <p style="text-indent:0;text-align:center;font-size:10px;color:#8a7a60;margin-top:6px;">
+                            （留言板为静态展示，实际互动请移步社交平台）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ========== 右侧栏：作者信息面板 ========== -->
+                <div id="sidebar-right">
+                    <!-- 星光 -->
+                    <span class="star-dot" style="top:18px;left:22px;animation-delay:0s;"></span>
+                    <span class="star-dot" style="top:50px;right:18px;animation-delay:1.4s;"></span>
+                    <span class="star-dot" style="bottom:70px;left:25px;animation-delay:2.3s;"></span>
+                    <span class="star-dot" style="bottom:30px;right:20px;animation-delay:0.8s;"></span>
+                    <span class="star-dot" style="top:40%;left:12px;animation-delay:1.9s;"></span>
+
+                    <!-- 像素头像 -->
+                        <div class="avatar-frame">
+    <img src="image/touxiang.jpg" alt="作者头像" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+</div>
+                    <div class="author-name">作者·发酵罐</div>
+                    <div class="author-role">网页游戏 · 叙事设计</div>
+
+                    <div class="account-card">
+                        <div class="account-line">
+                            📕 小红书<br><strong>@发酵罐</strong>
+                        </div>
+                        <div class="account-line">
+                            🎵 抖音<br><strong>@发酵罐</strong>
+                        </div>
+                    </div>
+
+                    <div class="follow-hint">⬆ 关注获取最新动态 ⬆</div>
+                </div>
+            </div>
+
+            <!-- XP状态栏 -->
+            <div id="xp-statusbar">
+                <span>就绪</span>
+                <span>古邑旧志 · 通关纪念 · 河谷安宁</span>
+                <span>🕊️ 2025</span>
+            </div>
+        </div>
+
+        <!-- ==================== XP 任务栏 ==================== -->
+        <div id="xp-taskbar">
+            <!-- 开始按钮 -->
+            <button id="start-btn" title="开始">开 始</button>
+
+            <!-- 快速启动 -->
+            <div id="quick-launch">
+                <div class="ql-icon" title="显示桌面">📋</div>
+                <div class="ql-icon" title="Internet Explorer">🌐</div>
+                <div class="ql-icon" title="文件夹">📂</div>
+            </div>
+
+            <!-- 程序按钮 -->
+            <div id="taskbar-programs">
+                <div class="tb-program active">
+                    🌸 古邑旧志 · 通关纪念页
+                </div>
+            </div>
+
+            <!-- 系统托盘 -->
+            <div id="system-tray">
+                <span class="tray-icon">🔊</span>
+                <span class="tray-icon">🌐</span>
+                <span class="tray-icon">🛡️</span>
+                <span class="tray-clock" id="tray-clock">14:28</span>
+            </div>
+        </div>
+
+        <!-- 扫描线叠加 -->
+        <div id="scanlines-overlay"></div>
+        <!-- 胶片颗粒 -->
+        <div id="grain-overlay"></div>
+        <!-- 暗角/色差 -->
+        <div id="chroma-overlay"></div>
+<!-- XP风格祝贺弹窗 -->
+<div id="congrats-dialog">
+    <div class="dialog-window">
+        <div class="dialog-titlebar">
+            <div class="dialog-title-left">
+                <div class="dialog-icon">💬</div>
+                <span class="dialog-title-text">恭喜</span>
+            </div>
+            <button class="dialog-close-btn" id="close-dialog">✕</button>
+        </div>
+        <div class="dialog-body">
+            <p>恭喜通关《古邑旧志》！</p>
+        </div>
+        <div class="dialog-footer">
+            <button class="dialog-ok-btn" id="ok-dialog">确 定</button>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+
+    <!-- ==================== 脚本 ==================== -->
+    <script>
+        // ==================== 系统时钟 ====================
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const clockEl = document.getElementById('tray-clock');
+            if (clockEl) {
+                clockEl.textContent = hours + ':' + minutes;
+            }
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+
+        // ==================== 窗口按钮交互 ====================
+        const xpWindow = document.getElementById('xp-window');
+        const minBtn = document.querySelector('#xp-titlebar .win-btn.min-btn');
+        const maxBtn = document.querySelector('#xp-titlebar .win-btn.max-btn');
+        const closeBtn = document.querySelector('#xp-titlebar .win-btn.close-btn');
+        let isMaximized = false;
+        let origStyles = {};
+
+        // 最小化
+        minBtn.addEventListener('click', () => {
+            xpWindow.style.opacity = '0.5';
+            xpWindow.style.transform = 'translateX(-50%) scale(0.92)';
+            xpWindow.style.transition = 'all 0.25s ease';
+            setTimeout(() => {
+                xpWindow.style.opacity = '1';
+                xpWindow.style.transform = 'translateX(-50%) scale(1)';
+                xpWindow.style.transition = 'all 0.3s ease';
+            }, 500);
+        });
+
+        // 最大化/还原
+        maxBtn.addEventListener('click', () => {
+            if (!isMaximized) {
+                origStyles = {
+                    top: xpWindow.style.top,
+                    left: xpWindow.style.left,
+                    width: xpWindow.style.width,
+                    height: xpWindow.style.height,
+                    transform: xpWindow.style.transform,
+                    borderRadius: xpWindow.style.borderRadius,
+                };
+                xpWindow.style.top = '0';
+                xpWindow.style.left = '0';
+                xpWindow.style.width = '100%';
+                xpWindow.style.height = 'calc(100% - 36px)';
+                xpWindow.style.transform = 'none';
+                xpWindow.style.borderRadius = '0';
+                xpWindow.style.transition = 'all 0.3s ease';
+                isMaximized = true;
+            } else {
+                xpWindow.style.top = origStyles.top || '50px';
+                xpWindow.style.left = origStyles.left || '50%';
+                xpWindow.style.width = origStyles.width || '780px';
+                xpWindow.style.height = origStyles.height || '560px';
+                xpWindow.style.transform = origStyles.transform || 'translateX(-50%)';
+                xpWindow.style.borderRadius = origStyles.borderRadius || '8px 8px 0 0';
+                xpWindow.style.transition = 'all 0.3s ease';
+                isMaximized = false;
+            }
+        });
+
+        // 关闭按钮（温柔淡出）
+        closeBtn.addEventListener('click', () => {
+            xpWindow.style.opacity = '0';
+            xpWindow.style.transform = 'translateX(-50%) scale(0.94)';
+            xpWindow.style.transition = 'all 0.45s ease';
+            setTimeout(() => {
+                xpWindow.style.opacity = '1';
+                xpWindow.style.transform = 'translateX(-50%) scale(1)';
+                xpWindow.style.transition = 'all 0.35s ease';
+            }, 700);
+        });
+
+        // ==================== 左侧联系人点击导航 ====================
+        document.querySelectorAll('#sidebar-left .qq-contact').forEach(contact => {
+            contact.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    // 移除所有active
+                    document.querySelectorAll('#sidebar-left .qq-contact').forEach(c => c.classList
+                        .remove('active'));
+                    this.classList.add('active');
+                    // 滚动到目标
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // 微闪高亮
+                        target.style.backgroundColor = 'rgba(240,235,210,0.7)';
+                        target.style.transition = 'background-color 0.5s';
+                        setTimeout(() => {
+                            target.style.backgroundColor = '';
+                            target.style.transition = 'background-color 0.7s';
+                        }, 600);
+                    }
+                }
+            });
+        });
+
+        // ==================== 开始按钮 ====================
+        const startBtn = document.getElementById('start-btn');
+        startBtn.addEventListener('click', () => {
+            startBtn.style.transform = 'scale(0.94)';
+            setTimeout(() => {
+                startBtn.style.transform = 'scale(1)';
+            }, 150);
+            // 闪烁桌面图标
+            const icons = document.querySelectorAll('#desktop-icons .desktop-icon');
+            icons.forEach((icon, i) => {
+                setTimeout(() => {
+                    icon.style.filter = 'brightness(1.6)';
+                    setTimeout(() => {
+                        icon.style.filter = '';
+                    }, 200);
+                }, i * 60);
+            });
+        });
+
+        // ==================== 禁止右键 ====================
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // ==================== 控制台问候 ====================
+        console.log('%c🌸 古邑县 · 通关纪念 %c感谢你的旅程',
+            'font-size:15px;color:#6a4020;',
+            'font-size:11px;color:#8a7a60;');
+        console.log('%c关注：小红书/抖音 @guyi_creator',
+            'font-size:11px;color:#5a4a38;letter-spacing:1px;');
+
+        // ==================== 祝贺弹窗与背景音乐 ====================
+        const congratsDialog = document.getElementById('congrats-dialog');
+        const closeDialogBtn = document.getElementById('close-dialog');
+        const okDialogBtn = document.getElementById('ok-dialog');
+
+        // 使用 new Audio() 直接创建音频对象，避免 HTML 标签问题
+        let bgm = new Audio('bgmend.mp3');
+        bgm.loop = true;       // 循环播放
+        bgm.volume = 0.8;      // 适中音量
+        let musicStarted = false;
+
+        function closeDialogAndPlay() {
+            // 隐藏弹窗
+            congratsDialog.style.display = 'none';
+            // 启动音乐（仅一次）
+            if (!musicStarted) {
+                bgm.play().then(() => {
+                    musicStarted = true;
+                    console.log('🎵 背景音乐开始播放');
+                }).catch(error => {
+                    console.error('❌ 播放失败，请检查音频文件是否存在:', error);
+                    alert('音乐播放失败！\n请确认 bgmend.mp3 与本文件在同一目录，并使用本地服务器打开。');
+                });
+            }
+        }
+
+        // 绑定关闭和确定按钮
+        closeDialogBtn.addEventListener('click', closeDialogAndPlay);
+        okDialogBtn.addEventListener('click', closeDialogAndPlay);
+        // 点击遮罩关闭
+        congratsDialog.addEventListener('click', function(e) {
+            if (e.target === congratsDialog) closeDialogAndPlay();
+        });
+    </script>
+    <!-- 注意：不再使用 <audio> 标签，音频完全由 JS 管理 -->
+</body>
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,祈福,台账,祭祀">
+    <meta name="description" content="古瘗县域内部行政管理系统 - 祈福统筹台账">
+    <title>祈福统筹台账 - 古瘗县域内部管控系统</title>
+    <style>
+        :root {
+            --bg-body: #6d6d6d;
+            --bg-topbar: #1E1A1A;
+            --bg-sidebar: #1E1E1C;
+            --bg-content: #212122;
+            --bg-card: #262628;
+            --bg-warning: #251E1C;
+            --red-darkest: #2A0D0D;
+            --red-dark: #4A1515;
+            --red-mid: #6B2020;
+            --red-border: #5C1A1A;
+            --red-accent: #8B3A3A;
+            --red-text: #C06050;
+            --red-text-light: #E08070;
+            --text-primary: #C8C8C2;
+            --text-secondary: #A5A59F;
+            --text-dim: #7E7E77;
+            --text-warning: #D0A080;
+            --text-warning-title: #E0A870;
+            --border-light: #2E2E2C;
+            --border-mid: #3D3D38;
+            --border-strong: #4E4E48;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 3px 8px rgba(0,0,0,0.6);
+            --shadow-inner: inset 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-inner-deep: inset 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: "SimSun", "NSimSun", "宋体", "Courier New", monospace;
+            font-size: 13px; line-height: 1.8; color: var(--text-primary);
+            min-height: 100vh; cursor: default;
+            background-image: url('image/bj3.png');
+            background-repeat: repeat;
+            position: relative;
+        }
+
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 2px,
+                    transparent 2px,
+                    transparent 4px);
+        }
+
+        #main-wrapper {
+            display: flex; flex-direction: column; width: 960px; min-height: 100vh;
+            margin: 0 auto; border-left: 1px solid #2A2020; border-right: 1px solid #2A2020;
+            background-color: var(--bg-body); position: relative; z-index: 1;
+            box-shadow: var(--shadow-md);
+        }
+
+        #top-bar {
+            width: 100%; height: 48px;
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            border-bottom: 2px solid var(--red-border);
+            display: flex; align-items: center; padding: 0 20px; flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(80,30,30,0.5);
+            z-index: 2;
+        }
+
+        #top-bar .top-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 14px; color: #E0C0C0; letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #200000, -1px -1px 0 rgba(0,0,0,0.6);
+        }
+
+        #top-bar .top-subtitle { font-size: 10px; color: #B08080; margin-left: 14px; letter-spacing: 1px; }
+
+        #top-bar .top-status {
+            margin-left: auto; font-size: 10px; color: #9A7070; letter-spacing: 0.5px;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        #content-area { display: flex; flex: 1; position: relative; }
+
+        #left-sidebar {
+            width: 220px; min-width: 220px; background-color: #18181A;
+            border-right: 1px solid #2A2020; padding: 12px 0;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            box-shadow: inset -2px 0 8px rgba(0,0,0,0.5); z-index: 1;
+        }
+
+        #left-sidebar .sidebar-header {
+            padding: 12px 16px; margin-bottom: 6px; border-bottom: 1px solid #2A1A1A;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 12px; color: #B09090; letter-spacing: 2px; text-align: center;
+            text-shadow: 0.5px 0.5px 0 #1A0000;
+        }
+
+        #left-sidebar .sidebar-header .sys-label {
+            display: block; font-size: 10px; color: #704A4A; letter-spacing: 1px; margin-top: 2px;
+        }
+
+        #left-sidebar .nav-list { list-style: none; padding: 0; margin: 0; flex: 1; }
+
+        #left-sidebar .nav-list li { margin: 2px 8px; }
+
+        #left-sidebar .nav-list li a {
+            display: block; padding: 9px 12px 9px 16px; font-size: 12px;
+            color: #B0A0A0; text-decoration: none;
+            font-family: "SimSun", "NSimSun", "宋体", serif; letter-spacing: 1px;
+            background: linear-gradient(180deg, #252525 0%, #1C1C1C 100%);
+            border: 1px solid #3A3030; border-radius: 0; cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.2s ease; text-shadow: 0.5px 0.5px 0 #000; position: relative;
+        }
+
+        #left-sidebar .nav-list li a:hover {
+            background: linear-gradient(180deg, #3A2020 0%, #2A1010 100%);
+            border-color: #6B3030; color: #E0C0C0;
+            box-shadow: 0 2px 6px rgba(80,20,20,0.6), inset 0 1px 0 rgba(255,100,100,0.1);
+            transform: translateX(3px);
+        }
+
+        #left-sidebar .nav-list li a:active {
+            background: #1A0A0A; border-style: inset;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); transform: translateX(0);
+        }
+
+        #left-sidebar .nav-list li a.active-nav {
+            background: linear-gradient(180deg, #5C1A1A 0%, #3A0A0A 100%);
+            border-color: #8B3A3A; color: #FFD0D0; font-weight: bold;
+            box-shadow: 0 0 10px rgba(120,30,30,0.8), inset 0 1px 0 rgba(255,150,150,0.15);
+            cursor: default; pointer-events: none; transform: none;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav {
+            background: #1A1A1A; border-color: #2A2A2A; color: #505050;
+            cursor: not-allowed; pointer-events: none; text-shadow: none;
+            box-shadow: none; opacity: 0.6;
+        }
+
+        .nav-prefix {
+            display: inline-block; width: 16px; font-size: 10px;
+            color: #8B4A4A; margin-right: 5px; text-align: center;
+        }
+
+        #left-sidebar .nav-list li a.return-link {
+            background: linear-gradient(180deg, #202020 0%, #161616 100%);
+            border-color: #2A2A2A; color: #8A8080; margin-top: 10px;
+            border-top: 1px solid #2A1A1A;
+        }
+
+        .sidebar-footer-status {
+            padding: 10px 14px; font-size: 9px; color: #5A4040;
+            border-top: 1px solid #2A1A1A; letter-spacing: 0.5px; text-align: center;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        .sidebar-footer-status .status-dot {
+            display: inline-block; width: 5px; height: 5px; background-color: #8B3A3A;
+            margin-right: 4px; vertical-align: middle;
+            animation: statusFlicker 8s ease-in-out infinite;
+        }
+
+        @keyframes statusFlicker {
+            0%,94%,96%,98%,100% { opacity: 0.8; }
+            95% { opacity: 0.15; } 97% { opacity: 0.3; } 99% { opacity: 0.5; }
+        }
+
+        #right-content {
+            flex: 1; padding: 20px 24px; background-color: #1E1E1F;
+            overflow-y: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.4); position: relative;
+        }
+
+        #right-content .content-header {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 16px; color: #D8C8C8; letter-spacing: 3px;
+            padding-bottom: 10px; margin-bottom: 20px;
+            border-bottom: 2px solid var(--red-border);
+            text-shadow: 1px 1px 0 #2A0000; font-weight: normal;
+        }
+
+        #right-content .content-text {
+            font-size: 11px; line-height: 2; color: #8B7070;
+            margin-bottom: 16px; text-indent: 2em; letter-spacing: 0.5px;
+            text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.3);
+        }
+
+        /* 台账表格样式 */
+        .ledger-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0;
+            font-size: 11px; border: 1px solid #3A2A2A;
+        }
+
+        .ledger-table thead th {
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            color: #D0A080; padding: 10px 6px; font-family: "SimSun", "NSimSun", "宋体", serif;
+            letter-spacing: 2px; font-weight: normal; border: 1px solid #4A2020;
+            text-shadow: 1px 1px 0 #1A0000; white-space: nowrap;
+        }
+
+        .ledger-table tbody td {
+            padding: 8px 6px; border: 1px solid #2A1A1A; text-align: center;
+            vertical-align: middle; color: #A8A8A2; background-color: #1C1A1A;
+            letter-spacing: 0.5px; white-space: nowrap;
+        }
+
+        .ledger-table tbody tr:nth-child(even) td {
+            background-color: #1E1C1C;
+        }
+
+        .ledger-table .year-cell {
+            color: #B07070; font-weight: bold;
+            background-color: #1A1212 !important;
+            font-family: "Courier New", "SimSun", monospace;
+            letter-spacing: 1px;
+        }
+
+        .ledger-table .count-cell {
+            color: #C89880; font-weight: bold;
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 12px;
+        }
+
+        .ledger-table .note-cell {
+            text-align: left; color: #7A6A6A; font-size: 10px;
+            white-space: normal; max-width: 200px;
+        }
+
+        .ledger-table .note-red {
+            color: #C06050;
+        }
+
+        .ledger-table .note-dim {
+            color: #5A5050; font-style: italic;
+        }
+
+        /* 输入框样式 */
+        .ritual-input {
+            width: 50px;
+            padding: 4px 6px;
+            background-color: #1A1212;
+            border: 1px solid #5C3A3A;
+            color: #C89880;
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+            transition: border-color 0.2s;
+        }
+        .ritual-input:focus {
+            outline: none;
+            border-color: #C08060;
+            box-shadow: inset 0 1px 5px rgba(120,30,30,0.5);
+        }
+
+        /* 提交按钮 */
+        .submit-area {
+            margin: 20px 0 10px;
+            text-align: right;
+        }
+        .submit-btn {
+            padding: 8px 24px;
+            background: linear-gradient(180deg, #4A1515 0%, #2A0D0D 100%);
+            border: 1px solid #8B3A3A;
+            color: #D0A080;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-shadow: 1px 1px 0 #1A0000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,100,100,0.15);
+            transition: all 0.2s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(180deg, #6B2020 0%, #3A0D0D 100%);
+            border-color: #C06060;
+            color: #FFE0D0;
+            box-shadow: 0 3px 8px rgba(80,20,20,0.8), inset 0 1px 0 rgba(255,150,150,0.2);
+        }
+        .submit-btn:active {
+            background: #1A0A0A;
+            border-style: inset;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+        }
+
+        /* 统计汇总卡片 */
+        .summary-card {
+            margin: 20px 0; padding: 14px 18px;
+            border: 1px solid #3A2A2A; background: #1C1A18;
+            border-left: 4px solid #5C1A1A;
+            box-shadow: var(--shadow-inner), var(--shadow-sm);
+            display: flex; justify-content: space-around; flex-wrap: wrap;
+        }
+
+        .summary-card .stat-item {
+            text-align: center; padding: 6px 12px;
+        }
+
+        .summary-card .stat-value {
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 22px; color: #C89880; font-weight: bold;
+            text-shadow: 0 0 8px rgba(120,30,30,0.5);
+        }
+
+        .summary-card .stat-label {
+            font-size: 10px; color: #7A6060; letter-spacing: 1px; margin-top: 2px;
+        }
+
+        #right-content .version-footer {
+            margin-top: 30px; padding-top: 12px;
+            border-top: 1px solid #2A2020; font-size: 10px;
+            color: #6A5050; letter-spacing: 1px; text-align: right;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        /* 图片弹出层 */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .image-modal img {
+            max-width: 80%;
+            max-height: 70%;
+            border: 3px solid #8B3A3A;
+            box-shadow: 0 0 30px rgba(120,20,20,0.8);
+            background: #1A0A0A;
+        }
+        .image-modal .close-modal {
+            margin-top: 20px;
+            padding: 8px 24px;
+            background: #2A0D0D;
+            border: 1px solid #8B3A3A;
+            color: #D0A080;
+            font-family: "SimSun", serif;
+            font-size: 13px;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+        .image-modal .close-modal:hover {
+            background: #4A1515;
+        }
+
+        @keyframes textFlickerA { 0%,96%,100% { opacity: 1; } 97% { opacity: 0.86; } 98% { opacity: 0.9; } }
+        @keyframes textFlickerB { 0%,94%,100% { opacity: 1; } 95% { opacity: 0.83; } 96% { opacity: 0.88; } }
+        .flicker-a { animation: textFlickerA 13s ease-in-out infinite; }
+        .flicker-b { animation: textFlickerB 16s ease-in-out infinite; animation-delay: 3s; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #4A3030; border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: #5C3A3A; }
+
+        ::selection { background-color: #5C1A1A; color: #E0C0C0; }
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+
+        <!-- 顶部通栏（血红） -->
+        <div id="top-bar">
+            <span class="top-title">古瘗县域内部管控系统</span>
+            <span class="top-subtitle">Ver.0809 · 内网专用</span>
+            <span class="top-status">员工姓名:林淮生 &nbsp;|&nbsp; 链路已加密</span>
+        </div>
+
+        <div id="content-area">
+
+            <!-- 左侧导航 -->
+            <div id="left-sidebar">
+                <div class="sidebar-header">
+                    内部管控系统
+                    <span class="sys-label">古瘗县域 · 内网专用</span>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="level2-xj.html">
+                            <span class="nav-prefix">▶</span>古瘗县记
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-dak.html">
+                            <span class="nav-prefix">▶</span>内部档案库
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-scap.html">
+                            <span class="nav-prefix">▶</span>事程安排
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-qftctz.html" class="active-nav">
+                            <span class="nav-prefix">▶</span>祈福统筹台账
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-grrz.html">
+                            <span class="nav-prefix">▶</span>个人日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="disabled-nav" onclick="return false;">
+                            <span class="nav-prefix">▶</span>指令卷宗
+                            <span style="font-size:9px;color:#7A3A3A;">【权限不足】</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level1-1.html" class="return-link" target="_blank">
+                            <span class="nav-prefix">◀</span>返回外网电视台首页
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer-status">
+                    <span class="status-dot"></span>内网链路 · 已加密
+                </div>
+            </div>
+
+            <!-- 右侧内容：祈福统筹台账 -->
+            <div id="right-content">
+                <div class="content-header">
+                    祈福统筹台账 · 历年祭品统计
+                </div>
+
+                <p class="content-text flicker-a">
+                    本台账收录1980年至2010年每年瘗姥岁贡祈福所用的祭品数量统计。数据来源为林氏主祭历代手记及三村巫祝报告汇编。部分年份因档案蠹蚀、字迹漫漶导致数据缺失，已标注"不详"。台账仅供内部查阅，严禁对外公开。、
+                    <p class="content-text flicker-a" style="color:#C06050;">部分数据需手动录入并提交。</p>
+                </p>
+
+                <!-- 统计汇总 -->
+                <div class="summary-card">
+                    <div class="stat-item">
+                        <div class="stat-value">31</div>
+                        <div class="stat-label">统计年数（1980-2010）</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">--</div>
+                        <div class="stat-label">累计祭品人数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">--</div>
+                        <div class="stat-label">累计牲口头数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">数据缺失年份</div>
+                    </div>
+                </div>
+
+                <!-- 台账表格 -->
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th width="8%">年份</th>
+                            <th width="10%">祭祀人数</th>
+                            <th width="12%"> 本县参与人数</th>
+                            <th width="12%">祭酒供果(坛/盘)</th>
+                            <th width="14%">祭祀方法</th>
+                            <th width="12%">主祭人</th>
+                            <th width="32%">备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="year-cell">2010</td>
+                            <td class="count-cell">--</td>
+                            <td class="count-cell">--</td>
+                            <td>--</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell note-dim">系统维护中，数据无需录入。</td>
+                        </tr>
+                        <!-- 2009 - 2005 行改为输入框 -->
+                        <tr>
+                            <td class="year-cell">2009</td>
+                            <td class="count-cell"><input type="text" class="ritual-input" id="input2009" value="" data-year="2009"></td>
+                            <td class="count-cell">285</td>
+                            <td>酒10坛/供果10盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">祈福圆满完成。瘗姥受祈。次年风调雨顺。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2008</td>
+                            <td class="count-cell"><input type="text" class="ritual-input" id="input2008" value="" data-year="2008"></td>
+                            <td class="count-cell">260</td>
+                            <td>酒5坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">祭品为外乡迷途者。祈福顺利。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2007</td>
+                            <td class="count-cell"><input type="text" class="ritual-input" id="input2007" value="" data-year="2007"></td>
+                            <td class="count-cell">300</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-water">水祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">当年外来游客较多，祈福超额完成。因山洪提前，改行水祭。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2006</td>
+                            <td class="count-cell"><input type="text" class="ritual-input" id="input2006" value="" data-year="2006"></td>
+                            <td class="count-cell">245</td>
+                            <td>酒5坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2005</td>
+                            <td class="count-cell"><input type="text" class="ritual-input" id="input2005" value="" data-year="2005"></td>
+                            <td class="count-cell">275</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">年外来游客较多，祈福超额完成。山河村林淮生考入大学。</td>
+                        </tr>
+                        <!-- 其余年份保持不变 -->
+                        <tr>
+                            <td class="year-cell">2004</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">230</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2003</td>
+                            <td class="count-cell">2</td>
+                            <td class="count-cell">290</td>
+                            <td>酒5坛/供果5盘</td>
+                            <td><span class="tag-water">水祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell">新任主祭首次执掌祈福。因暴雨改行水祭。祈福圆满完成。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2002</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">250</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林长清</td>
+                            <td class="note-cell note-dim">林长清接任主祭。前主祭林世荣于本年初病故。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2001</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">235</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。主祭年老体弱，由子林长清代行部分仪程。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">2000</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">220</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1999</td>
+                            <td class="count-cell">2</td>
+                            <td class="count-cell">280</td>
+                            <td>酒4坛/供果4盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福圆满完成。次年风调雨顺。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1998</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">240</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1997</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">225</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1996</td>
+                            <td class="count-cell">2</td>
+                            <td class="count-cell">270</td>
+                            <td>酒4坛/供果4盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福圆满完成。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1995</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">250</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1994</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">215</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1993</td>
+                            <td class="count-cell">--</td>
+                            <td class="count-cell">--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>林世荣</td>
+                            <td class="note-cell note-red">数据缺失。档案蠹蚀。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1992</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">240</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1991</td>
+                            <td class="count-cell">2</td>
+                            <td class="count-cell">290</td>
+                            <td>酒4坛/供果4盘</td>
+                            <td><span class="tag-water">水祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福圆满完成。当年汛期提前，改行水祭。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1990</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">230</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1989</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">255</td>
+                            <td>酒4坛/供果2盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。本年林淮生出生。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1988</td>
+                            <td class="count-cell">--</td>
+                            <td class="count-cell">--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>林世荣</td>
+                            <td class="note-cell note-dim">数据缺失。档案蠹蚀。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1987</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">220</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1986</td>
+                            <td class="count-cell">2</td>
+                            <td class="count-cell">275</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福圆满完成。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1985</td>
+                            <td class="count-cell">--</td>
+                            <td class="count-cell">--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>林世荣</td>
+                            <td class="note-cell note-dim">数据缺失。档案蠹蚀。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1984</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">245</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1983</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">210</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1982</td>
+                            <td class="count-cell">--</td>
+                            <td class="count-cell">--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>林世荣</td>
+                            <td class="note-cell note-dim">数据缺失。档案蠹蚀。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1981</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">235</td>
+                            <td>酒3坛/供果3盘</td>
+                            <td><span class="tag-water">水祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell">祈福正常。当年山洪较大，改行水祭。</td>
+                        </tr>
+                        <tr>
+                            <td class="year-cell">1980</td>
+                            <td class="count-cell">1</td>
+                            <td class="count-cell">225</td>
+                            <td>酒5坛/供果3盘</td>
+                            <td><span class="tag-stone">石祭</span></td>
+                            <td>林世荣</td>
+                            <td class="note-cell note-dim">现存档案最早完整记录。更早年份数据已封存于实体档案库。</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 提交按钮区域 -->
+                <div class="submit-area">
+                    <button class="submit-btn" id="submitStatsBtn">📊 提交统计人数</button>
+                </div>
+
+                <p class="content-text" style="font-size:10px; color:#6A5050; margin-top:20px; font-style:italic;">
+                    注：本台账数据仅供内部审计使用。台账中"祭品人数"一栏的统计口径及来源，详见《瘗姥志》及相关实体档案。累计总数因数据缺失年份的存在暂不显示，完整数据请前往实体档案库查阅。
+                </p>
+
+                <div class="version-footer">
+                    古瘗县内部管控系统 Ver.0809 &nbsp;|&nbsp; 内网专用 &nbsp;|&nbsp; 台账编号: QFTC-1980-2010
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片弹出层 -->
+   <div class="image-modal" id="imageModal">
+    <img src="image/xs2.jpg" alt="祭祀记录确认" id="modalImage">
+    <!-- 新增加的功能按钮容器 -->
+    <div class="modal-actions">
+        <div style="text-align:center; margin: 16px auto; width: 260px; 
+            background: #1C1714; border: 1px dashed #5C3A3A; padding: 8px;
+            color: #A08870; font-size: 11px; letter-spacing: 1px;
+            font-family: 'Noto Serif SC', serif;">
+    <span style="color:#6A5050;">谶言（部分）</span>
+</div>
+        <button class="close-modal" id="downloadBtn">
+            <span class="btn-icon">⤓</span> 下载图片
+        </button>
+        <button class="close-modal" id="viewOriginalBtn">
+            <span class="btn-icon">⊞</span> 查看原图
+        </button>
+    </div>
+    <button class="close-modal" id="closeModalBtn">关闭</button>
+</div>
+
+    <script>
+        // 禁止右键等
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault(); return false;
+            }
+        });
+
+        // 正确的祭祀人数对应关系
+        const correctValues = {
+            2005: 6,
+            2006: 5,
+            2007: 2,
+            2008: 3,
+            2009: 16
+        };
+
+        // 提交按钮逻辑
+        document.getElementById('submitStatsBtn').addEventListener('click', function() {
+            const years = [2005, 2006, 2007, 2008, 2009];
+            let allCorrect = true;
+
+            for (let year of years) {
+                const inputEl = document.getElementById('input' + year);
+                if (!inputEl) continue;
+                const inputVal = inputEl.value.trim();
+                if (inputVal === '' || isNaN(inputVal) || parseInt(inputVal, 10) !== correctValues[year]) {
+                    allCorrect = false;
+                    break;
+                }
+            }
+
+            if (allCorrect) {
+                alert('提交成功');
+                // 弹出图片
+                const modal = document.getElementById('imageModal');
+                modal.classList.add('active');
+            } else {
+                alert('与实际记录不符');
+            }
+        });
+
+        // 关闭图片模态框
+        document.getElementById('closeModalBtn').addEventListener('click', function() {
+            document.getElementById('imageModal').classList.remove('active');
+        });
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        console.log('%c古瘗县内部管控系统 Ver.0809%c | 祈福统筹台账',
+            'color:#8B4A4A;font-size:14px;', 'color:#5A4040;');
+        console.log('%c台账编号: QFTC-1980-2010 | 未经授权的访问将被记录。',
+            'color:#6B3030;font-size:10px;');
+        // ========== 图片弹出层功能按钮 ==========
+const downloadBtn = document.getElementById('downloadBtn');
+const viewOriginalBtn = document.getElementById('viewOriginalBtn');
+const modalImage = document.getElementById('modalImage');
+
+// 下载图片：通过 fetch 转 blob 触发浏览器下载
+downloadBtn.addEventListener('click', async function() {
+    try {
+        const imgSrc = modalImage.src;
+        // 尝试使用 fetch 获取图片（可避免跨域限制，但需同源或CORS允许）
+        const response = await fetch(imgSrc);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = imgSrc.split('/').pop() || '祭祀记录确认.jpg';  // 使用原文件名或默认名
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // 轻提示（复用你已有的 toast 函数）
+        if (typeof showToast === 'function') {
+            showToast('图片正在下载……', 1800);
+        }
+    } catch (e) {
+        // 降级方案：直接打开原图，并提示右键保存
+        window.open(modalImage.src, '_blank');
+        if (typeof showToast === 'function') {
+            showToast('请在新窗口中右键保存图片', 2500);
+        }
+    }
+});
+
+// 查看原图：在新窗口中打开图片
+viewOriginalBtn.addEventListener('click', function() {
+    window.open(modalImage.src, '_blank');
+    if (typeof showToast === 'function') {
+        showToast('已在新建窗口打开原图', 1500);
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!-- level2-1.html - 古瘗县域内部管控系统【血红色调·质感按钮·明细分区】 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,员工内网,档案">
+    <meta name="description" content="古瘗县域内部行政管理系统 - 内网专用">
+    <title>古瘗县域内部管控系统 Ver.0809</title>
+    <style>
+        :root {
+            /* 基础暗灰调 */
+            --bg-body: #6d6d6d;
+            --bg-topbar: #1E1A1A;
+            --bg-sidebar: #1E1E1C;
+            --bg-content: #212122;
+            --bg-card: #262628;
+            --bg-warning: #251E1C;
+            /* 血红色系 */
+            --red-darkest: #2A0D0D;
+            --red-dark: #4A1515;
+            --red-mid: #6B2020;
+            --red-border: #5C1A1A;
+            --red-accent: #8B3A3A;
+            --red-text: #C06050;
+            --red-text-light: #E08070;
+            /* 文字 */
+            --text-primary: #C8C8C2;
+            --text-secondary: #A5A59F;
+            --text-dim: #7E7E77;
+            --text-warning: #D0A080;
+            --text-warning-title: #E0A870;
+            /* 边框与阴影 */
+            --border-light: #2E2E2C;
+            --border-mid: #3D3D38;
+            --border-strong: #4E4E48;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 3px 8px rgba(0,0,0,0.6);
+            --shadow-inner: inset 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-inner-deep: inset 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: "SimSun", "NSimSun", "宋体", "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            min-height: 100vh;
+            cursor: default;
+            background-image:
+                url('image/bj3.png');
+            background-repeat: repeat;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 2px,
+                    transparent 2px,
+                    transparent 4px);
+        }
+
+        #main-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 960px;
+            min-height: 100vh;
+            margin: 0 auto;
+            border-left: 1px solid #2A2020;
+            border-right: 1px solid #2A2020;
+            background-color: var(--bg-body);
+            position: relative;
+            z-index: 1;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ==================== 顶部通栏（血红色调） ==================== */
+        #top-bar {
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            border-bottom: 2px solid var(--red-border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(80,30,30,0.5);
+            z-index: 2;
+        }
+
+        #top-bar .top-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 14px;
+            color: #E0C0C0;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #200000, -1px -1px 0 rgba(0,0,0,0.6);
+        }
+
+        #top-bar .top-subtitle {
+            font-size: 10px;
+            color: #B08080;
+            margin-left: 14px;
+            letter-spacing: 1px;
+        }
+
+        #top-bar .top-status {
+            margin-left: auto;
+            font-size: 10px;
+            color: #9A7070;
+            letter-spacing: 0.5px;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        /* ==================== 下方左右布局 ==================== */
+        #content-area {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* ==================== 左侧侧边导航栏（质感按钮化） ==================== */
+        #left-sidebar {
+            width: 220px;
+            min-width: 220px;
+            background-color: #18181A;
+            border-right: 1px solid #2A2020;
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            box-shadow: inset -2px 0 8px rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        #left-sidebar .sidebar-header {
+            padding: 12px 16px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #2A1A1A;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 12px;
+            color: #B09090;
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 0.5px 0.5px 0 #1A0000;
+        }
+
+        #left-sidebar .sidebar-header .sys-label {
+            display: block;
+            font-size: 10px;
+            color: #704A4A;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        #left-sidebar .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        #left-sidebar .nav-list li {
+            margin: 2px 8px;
+        }
+
+        /* 导航按钮质感：老式立体按钮 */
+        #left-sidebar .nav-list li a {
+            display: block;
+            padding: 9px 12px 9px 16px;
+            font-size: 12px;
+            color: #B0A0A0;
+            text-decoration: none;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            letter-spacing: 1px;
+            background: linear-gradient(180deg, #252525 0%, #1C1C1C 100%);
+            border: 1px solid #3A3030;
+            border-radius: 0;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+            text-shadow: 0.5px 0.5px 0 #000;
+            position: relative;
+        }
+
+        #left-sidebar .nav-list li a:hover {
+            background: linear-gradient(180deg, #3A2020 0%, #2A1010 100%);
+            border-color: #6B3030;
+            color: #E0C0C0;
+            box-shadow: 0 2px 6px rgba(80,20,20,0.6), inset 0 1px 0 rgba(255,100,100,0.1);
+            transform: translateX(3px);
+        }
+
+        #left-sidebar .nav-list li a:active {
+            background: #1A0A0A;
+            border-style: inset;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+            transform: translateX(0);
+        }
+
+        /* 当前激活项：血红背景 */
+        #left-sidebar .nav-list li a.active-nav {
+            background: linear-gradient(180deg, #5C1A1A 0%, #3A0A0A 100%);
+            border-color: #8B3A3A;
+            color: #FFD0D0;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(120,30,30,0.8), inset 0 1px 0 rgba(255,150,150,0.15);
+            cursor: default;
+            pointer-events: none;
+            transform: none;
+        }
+
+        /* 权限不足禁用项 */
+        #left-sidebar .nav-list li a.disabled-nav {
+            background: #1A1A1A;
+            border-color: #2A2A2A;
+            color: #505050;
+            cursor: not-allowed;
+            pointer-events: none;
+            text-shadow: none;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav:hover {
+            background: #1A1A1A;
+            border-color: #2A2A2A;
+            color: #505050;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-prefix {
+            display: inline-block;
+            width: 16px;
+            font-size: 10px;
+            color: #8B4A4A;
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        /* 返回链接特殊样式 */
+        #left-sidebar .nav-list li a.return-link {
+            background: linear-gradient(180deg, #202020 0%, #161616 100%);
+            border-color: #2A2A2A;
+            color: #8A8080;
+            margin-top: 10px;
+            border-top: 1px solid #2A1A1A;
+        }
+
+        #left-sidebar .nav-list li a.return-link:hover {
+            background: linear-gradient(180deg, #302020 0%, #201010 100%);
+            border-color: #5A3030;
+            color: #C0A0A0;
+        }
+
+        .sidebar-footer-status {
+            padding: 10px 14px;
+            font-size: 9px;
+            color: #5A4040;
+            border-top: 1px solid #2A1A1A;
+            letter-spacing: 0.5px;
+            text-align: center;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        .sidebar-footer-status .status-dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background-color: #8B3A3A;
+            margin-right: 4px;
+            vertical-align: middle;
+            animation: statusFlicker 8s ease-in-out infinite;
+        }
+
+        @keyframes statusFlicker {
+            0%,94%,96%,98%,100% { opacity: 0.8; }
+            95% { opacity: 0.15; }
+            97% { opacity: 0.3; }
+            99% { opacity: 0.5; }
+        }
+
+        /* ==================== 右侧主内容区（明细分区） ==================== */
+        #right-content {
+            flex: 1;
+            padding: 20px 24px;
+            background-color: #1E1E1F;
+            overflow-y: auto;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        /* 页面标题带血红底线 */
+        #right-content .content-header {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 16px;
+            color: #D8C8C8;
+            letter-spacing: 3px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--red-border);
+            text-shadow: 1px 1px 0 #2A0000;
+            font-weight: normal;
+        }
+
+        #right-content .content-text {
+            font-size: 12px;
+            line-height: 2;
+            color: #A8A8A2;
+            margin-bottom: 16px;
+            text-indent: 2em;
+            letter-spacing: 0.5px;
+            text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.3);
+        }
+
+        /* 功能分区卡片：权限说明 */
+        .card-perm {
+            margin: 20px 0;
+            padding: 16px 20px;
+            border: 1px solid #3A2A2A;
+            background: #1E1C1C;
+            border-left: 4px solid #6B2020;
+            box-shadow: var(--shadow-inner), var(--shadow-sm);
+        }
+
+        .card-perm .card-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 13px;
+            color: #C89890;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #3A2828;
+        }
+
+        .card-perm .perm-item {
+            font-size: 11px;
+            line-height: 2;
+            color: #9E9E98;
+            margin-bottom: 5px;
+            padding-left: 8px;
+            display: flex;
+        }
+
+        .card-perm .perm-item .item-label {
+            color: #B07070;
+            font-weight: bold;
+            min-width: 100px;
+            display: inline-block;
+            text-shadow: 0.5px 0.5px 0 #2A0000;
+        }
+
+        /* 功能分区卡片：警示区块（血红色加强） */
+        .card-warning {
+            margin: 20px 0;
+            padding: 16px 20px;
+            border: 1px solid #5C2A2A;
+            background: #1D1515;
+            border-left: 4px solid #8B3A3A;
+            box-shadow: var(--shadow-inner-deep), 0 0 15px rgba(100,20,20,0.4);
+        }
+
+        .card-warning .warning-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 13px;
+            color: #E0A080;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .card-warning .warning-text {
+            font-size: 11px;
+            line-height: 1.9;
+            color: #C89880;
+            letter-spacing: 0.5px;
+            text-indent: 2em;
+        }
+
+        /* 版本信息（底部） */
+        #right-content .version-footer {
+            margin-top: 30px;
+            padding-top: 12px;
+            border-top: 1px solid #2A2020;
+            font-size: 10px;
+            color: #6A5050;
+            letter-spacing: 1px;
+            text-align: right;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        /* ==================== 随机文字闪动动画 ==================== */
+        @keyframes textFlickerA {
+            0%,96%,100% { opacity: 1; }
+            97% { opacity: 0.88; }
+            98% { opacity: 0.92; }
+        }
+        @keyframes textFlickerB {
+            0%,94%,100% { opacity: 1; }
+            95% { opacity: 0.85; }
+            96% { opacity: 0.9; }
+        }
+        @keyframes textFlickerC {
+            0%,98%,100% { opacity: 1; }
+            99% { opacity: 0.82; }
+            99.5% { opacity: 0.9; }
+        }
+        @keyframes textFlickerD {
+            0%,92%,100% { opacity: 1; }
+            93% { opacity: 0.87; }
+            94% { opacity: 0.93; }
+        }
+        .flicker-a { animation: textFlickerA 12s ease-in-out infinite; }
+        .flicker-b { animation: textFlickerB 15s ease-in-out infinite; animation-delay: 3s; }
+        .flicker-c { animation: textFlickerC 18s ease-in-out infinite; animation-delay: 7s; }
+        .flicker-d { animation: textFlickerD 14s ease-in-out infinite; animation-delay: 5s; }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #4A3030; border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: #5C3A3A; }
+
+        ::selection {
+            background-color: #5C1A1A;
+            color: #E0C0C0;
+        }
+
+    </style>
+</head>
+<body>
+    
+
+    <div id="main-wrapper">
+
+        <!-- 顶部通栏（血红） -->
+        <div id="top-bar">
+            <span class="top-title">古瘗县域内部管控系统</span>
+            <span class="top-subtitle">Ver.0809 · 内网专用</span>
+            <span class="top-status">员工姓名:林淮生  &nbsp;|&nbsp; 链路已加密</span>
+        </div>
+
+        <div id="content-area">
+
+            <!-- 左侧导航 -->
+            <div id="left-sidebar">
+                <div class="sidebar-header">
+                    内部管控系统
+                    <span class="sys-label">古瘗县域 · 内网专用</span>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="level2-xj.html">
+                            <span class="nav-prefix">▶</span>古瘗县记
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-dak.html" class="active-nav">
+                            <span class="nav-prefix">▶</span>内部档案库
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-scap.html">
+                            <span class="nav-prefix">▶</span>事程安排
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-qftctz.html">
+                            <span class="nav-prefix">▶</span>祈福统筹台账
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="level2-grrz.html">
+                            <span class="nav-prefix">▶</span>个人日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="disabled-nav" onclick="return false;">
+                            <span class="nav-prefix">▶</span>指令卷宗
+                            <span style="font-size:9px;color:#7A3A3A;">【权限不足】</span>
+                        </a>
+                    </li>
+                   <li>
+    <a href="level1-1.html" class="return-link" target="_blank">
+        <span class="nav-prefix">◀</span>返回外网电视台首页
+    </a>
+</li>
+                </ul>
+                <div class="sidebar-footer-status">
+                    <span class="status-dot"></span>内网链路 · 已加密
+                </div>
+            </div>
+
+            <!-- 右侧内容：明细分区 -->
+            <div id="right-content">
+                <div class="content-header">
+                    【古瘗档案库】
+                </div>
+
+                <p class="content-text flicker-a">
+                    本系统仅限持证内部工作人员访问，所有浏览、检索记录自动留存归档。任何未经授权的访问行为将被系统记录并上报。
+                </p>
+
+                <!-- 权限说明卡片 -->
+                <div class="card-perm">
+                    <div class="card-title">【档案库文件夹】</div>
+
+                       <div class="perm-item">
+                         <span class="item-label">瘗姥志：</span>
+                         <a href="wj1.pdf" target="_blank" style="color:#C06050; text-decoration: underline;">文件1</a>
+                     </div>
+                     <div class="perm-item">
+                         <span class="item-label">讣告20090419：</span>
+                         <a href="wj2.pdf" target="_blank" style="color:#C06050; text-decoration: underline;">文件2</a>
+                     </div>
+                     <div class="perm-item">
+                         <span class="item-label">百年祈福祭典通告20090413：</span>
+                         <a href="wj3.pdf" target="_blank" style="color:#C06050; text-decoration: underline;">文件3</a>
+                     </div>
+                     <div class="perm-item">
+    <span class="item-label">重要监视名单20080903：</span>
+    <a href="#" style="color:#C06050; text-decoration: underline line-through;">文件4(已过期)</a>
+</div>
+                     <div class="perm-item">
+    <span class="item-label">员工思想教育册：</span>
+    <a href="wj5.pdf" target="_blank" style="color:#C06050; text-decoration: underline;">文件5（损坏）</a>
+                     </div>
+                     
+        
+                </div>
+
+                <!-- 警示卡片（血红色强化） -->
+                <div class="card-warning">
+                    <div class="warning-title">⚠ 重要警示</div>
+                    <p class="warning-text flicker-c">
+                        古城核心区域巡查严格遵循既定时序。全体人员务必严守安排，流程不可随意调整。严禁记录内容泄露至外网，泄密者将承担相应后果。
+                    </p>
+                    <p class="warning-text flicker-d" style="margin-top:8px;">
+                        山谷之中，秩序不容扰乱。请各岗位人员恪尽职守，按时完成巡查与记录任务。
+                    </p>
+                </div>
+
+                <p class="content-text flicker-b">
+                    本系统内所有数据均属内部机密，请妥善保管个人登录凭证。如发现异常访问或数据泄露迹象，须立即上报上级主管部门。
+                </p>
+
+                <div class="version-footer">
+                    古瘗县内部管控系统 Ver.0809 &nbsp;|&nbsp; 内网专用 &nbsp;|&nbsp; 会话ID: ********
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        console.log('%c古瘗县内部管控系统 Ver.0809%c | 内网专用',
+            'color:#8B4A4A;font-size:14px;',
+            'color:#5A4040;');
+        console.log('%c未经授权的访问将被记录。',
+            'color:#6B3030;font-size:10px;');
+    </script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!-- level2-grrz.html - 古瘗县域内部管控系统 · 个人日志（封锁版） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,个人日志,林淮生,封锁档案">
+    <meta name="description" content="古瘗县域内部行政管理系统 - 个人日志">
+    <title>个人日志 - 古瘗县域内部管控系统</title>
+    <style>
+        :root {
+            --bg-body: #6d6d6d;
+            --bg-topbar: #1E1A1A;
+            --bg-sidebar: #1E1E1C;
+            --bg-content: #212122;
+            --bg-card: #262628;
+            --bg-warning: #251E1C;
+            --red-darkest: #2A0D0D;
+            --red-dark: #4A1515;
+            --red-mid: #6B2020;
+            --red-border: #5C1A1A;
+            --red-accent: #8B3A3A;
+            --red-text: #C06050;
+            --red-text-light: #E08070;
+            --text-primary: #C8C8C2;
+            --text-secondary: #A5A59F;
+            --text-dim: #7E7E77;
+            --text-warning: #D0A080;
+            --text-warning-title: #E0A870;
+            --border-light: #2E2E2C;
+            --border-mid: #3D3D38;
+            --border-strong: #4E4E48;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 3px 8px rgba(0,0,0,0.6);
+            --shadow-inner: inset 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-inner-deep: inset 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: "SimSun", "NSimSun", "宋体", "Courier New", monospace;
+            font-size: 13px; line-height: 1.8; color: var(--text-primary);
+            min-height: 100vh; cursor: default;
+            background-image: url('image/bj3.png');
+            background-repeat: repeat;
+            position: relative;
+        }
+
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 2px,
+                    transparent 2px,
+                    transparent 4px);
+        }
+
+        #main-wrapper {
+            display: flex; flex-direction: column; width: 960px; min-height: 100vh;
+            margin: 0 auto; border-left: 1px solid #2A2020; border-right: 1px solid #2A2020;
+            background-color: var(--bg-body); position: relative; z-index: 1;
+            box-shadow: var(--shadow-md);
+        }
+
+        #top-bar {
+            width: 100%; height: 48px;
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            border-bottom: 2px solid var(--red-border);
+            display: flex; align-items: center; padding: 0 20px; flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(80,30,30,0.5);
+            z-index: 2;
+        }
+
+        #top-bar .top-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 14px; color: #E0C0C0; letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #200000, -1px -1px 0 rgba(0,0,0,0.6);
+        }
+
+        #top-bar .top-subtitle { font-size: 10px; color: #B08080; margin-left: 14px; letter-spacing: 1px; }
+
+        #top-bar .top-status {
+            margin-left: auto; font-size: 10px; color: #9A7070; letter-spacing: 0.5px;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        #content-area { display: flex; flex: 1; position: relative; }
+
+        #left-sidebar {
+            width: 220px; min-width: 220px; background-color: #18181A;
+            border-right: 1px solid #2A2020; padding: 12px 0;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            box-shadow: inset -2px 0 8px rgba(0,0,0,0.5); z-index: 1;
+        }
+
+        #left-sidebar .sidebar-header {
+            padding: 12px 16px; margin-bottom: 6px; border-bottom: 1px solid #2A1A1A;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 12px; color: #B09090; letter-spacing: 2px; text-align: center;
+            text-shadow: 0.5px 0.5px 0 #1A0000;
+        }
+
+        #left-sidebar .sidebar-header .sys-label {
+            display: block; font-size: 10px; color: #704A4A; letter-spacing: 1px; margin-top: 2px;
+        }
+
+        #left-sidebar .nav-list { list-style: none; padding: 0; margin: 0; flex: 1; }
+
+        #left-sidebar .nav-list li { margin: 2px 8px; }
+
+        #left-sidebar .nav-list li a {
+            display: block; padding: 9px 12px 9px 16px; font-size: 12px;
+            color: #B0A0A0; text-decoration: none;
+            font-family: "SimSun", "NSimSun", "宋体", serif; letter-spacing: 1px;
+            background: linear-gradient(180deg, #252525 0%, #1C1C1C 100%);
+            border: 1px solid #3A3030; border-radius: 0; cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.2s ease; text-shadow: 0.5px 0.5px 0 #000; position: relative;
+        }
+
+        #left-sidebar .nav-list li a:hover {
+            background: linear-gradient(180deg, #3A2020 0%, #2A1010 100%);
+            border-color: #6B3030; color: #E0C0C0;
+            box-shadow: 0 2px 6px rgba(80,20,20,0.6), inset 0 1px 0 rgba(255,100,100,0.1);
+            transform: translateX(3px);
+        }
+
+        #left-sidebar .nav-list li a:active {
+            background: #1A0A0A; border-style: inset;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); transform: translateX(0);
+        }
+
+        #left-sidebar .nav-list li a.active-nav {
+            background: linear-gradient(180deg, #5C1A1A 0%, #3A0A0A 100%);
+            border-color: #8B3A3A; color: #FFD0D0; font-weight: bold;
+            box-shadow: 0 0 10px rgba(120,30,30,0.8), inset 0 1px 0 rgba(255,150,150,0.15);
+            cursor: default; pointer-events: none; transform: none;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav {
+            background: #1A1A1A; border-color: #2A2A2A; color: #505050;
+            cursor: not-allowed; pointer-events: none; text-shadow: none;
+            box-shadow: none; opacity: 0.6;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav:hover {
+            background: #1A1A1A; border-color: #2A2A2A; color: #505050;
+            transform: none; box-shadow: none;
+        }
+
+        .nav-prefix {
+            display: inline-block; width: 16px; font-size: 10px;
+            color: #8B4A4A; margin-right: 5px; text-align: center;
+        }
+
+        #left-sidebar .nav-list li a.return-link {
+            background: linear-gradient(180deg, #202020 0%, #161616 100%);
+            border-color: #2A2A2A; color: #8A8080; margin-top: 10px;
+            border-top: 1px solid #2A1A1A;
+        }
+
+        #left-sidebar .nav-list li a.return-link:hover {
+            background: linear-gradient(180deg, #302020 0%, #201010 100%);
+            border-color: #5A3030; color: #C0A0A0;
+        }
+
+        .sidebar-footer-status {
+            padding: 10px 14px; font-size: 9px; color: #5A4040;
+            border-top: 1px solid #2A1A1A; letter-spacing: 0.5px; text-align: center;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        .sidebar-footer-status .status-dot {
+            display: inline-block; width: 5px; height: 5px; background-color: #8B3A3A;
+            margin-right: 4px; vertical-align: middle;
+            animation: statusFlicker 8s ease-in-out infinite;
+        }
+
+        @keyframes statusFlicker {
+            0%,94%,96%,98%,100% { opacity: 0.8; }
+            95% { opacity: 0.15; } 97% { opacity: 0.3; } 99% { opacity: 0.5; }
+        }
+
+        #right-content {
+            flex: 1; padding: 20px 24px; background-color: #1E1E1F;
+            overflow-y: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.4); position: relative;
+        }
+
+        #right-content .content-header {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 16px; color: #D8C8C8; letter-spacing: 3px;
+            padding-bottom: 10px; margin-bottom: 20px;
+            border-bottom: 2px solid var(--red-border);
+            text-shadow: 1px 1px 0 #2A0000; font-weight: normal;
+        }
+
+        /* 正常日志条目卡片 */
+        .log-card {
+            margin: 16px 0; padding: 14px 18px;
+            border: 1px solid #3A2A2A; background: #1E1C1C;
+            border-left: 3px solid #5C1A1A;
+            box-shadow: var(--shadow-inner), var(--shadow-sm);
+        }
+
+        .log-card .log-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 8px; padding-bottom: 6px;
+            border-bottom: 1px dashed #2A1A1A;
+        }
+
+        .log-card .log-date {
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 11px; color: #B07070; letter-spacing: 1px;
+        }
+
+        .log-card .log-tag {
+            font-size: 9px; color: #8B5A5A; background: #1A0E0E;
+            padding: 1px 8px; border: 1px solid #4A2020;
+        }
+
+        .log-card .log-content {
+            font-size: 11px; line-height: 1.9; color: #9E9E98;
+            text-indent: 2em; letter-spacing: 0.5px;
+            text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.3);
+        }
+
+        .log-card .log-content .highlight {
+            color: #C89880; font-weight: bold;
+        }
+
+        /* 封锁条目卡片（渗人样式） */
+        .log-card-sealed {
+            margin: 16px 0; padding: 14px 18px;
+            border: 1px dashed #4A2020;
+            background: #141212;
+            border-left: 3px solid #7A2020;
+            box-shadow: var(--shadow-inner);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .log-card-sealed::before {
+            content: "";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+            background: repeating-linear-gradient(0deg,
+                    rgba(80,10,10,0.04) 0px,
+                    rgba(80,10,10,0.04) 1px,
+                    transparent 1px,
+                    transparent 3px);
+        }
+
+        .log-card-sealed .log-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 8px; padding-bottom: 6px;
+            border-bottom: 1px dashed #3A1515;
+            position: relative; z-index: 2;
+        }
+
+        .log-card-sealed .log-date {
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 11px; color: #6A4040; letter-spacing: 1px;
+            text-decoration: line-through;
+        }
+
+        .log-card-sealed .log-tag-sealed {
+            font-size: 9px; color: #C04040; background: #1A0808;
+            padding: 1px 8px; border: 1px solid #6A2020;
+            letter-spacing: 1px;
+            animation: sealedTagPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes sealedTagPulse {
+            0%,100% { color: #C04040; }
+            50% { color: #801010; }
+        }
+
+        .log-card-sealed .log-content-sealed {
+            font-size: 10px; line-height: 2; color: #6A4040;
+            text-align: center; letter-spacing: 1px;
+            font-family: "Courier New", "SimSun", monospace;
+            position: relative; z-index: 2;
+            padding: 8px 0;
+        }
+
+        .log-card-sealed .log-content-sealed .delete-stamp {
+            display: block; font-size: 12px; color: #8B3030;
+            letter-spacing: 3px; margin-bottom: 4px;
+            text-shadow: 0 0 8px rgba(120,20,20,0.6);
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+        }
+
+        .log-card-sealed .log-content-sealed .delete-meta {
+            display: block; font-size: 9px; color: #4A3030;
+            margin-top: 4px; letter-spacing: 1px;
+        }
+
+        /* 封锁条目底部残留痕迹 */
+        .log-card-sealed .log-residue {
+            font-size: 8px; color: #2A1818; text-align: right;
+            margin-top: 8px; padding-top: 6px;
+            border-top: 1px dotted #1A0A0A;
+            position: relative; z-index: 2;
+            font-family: "Courier New", "SimSun", monospace;
+            letter-spacing: 0.5px;
+            animation: residueFlicker 7s ease-in-out infinite;
+        }
+
+        @keyframes residueFlicker {
+            0%,88%,100% { opacity: 0.5; }
+            89% { opacity: 0.15; }
+            91% { opacity: 0.4; }
+        }
+
+        #right-content .version-footer {
+            margin-top: 30px; padding-top: 12px;
+            border-top: 1px solid #2A2020; font-size: 10px;
+            color: #6A5050; letter-spacing: 1px; text-align: right;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        @keyframes textFlickerA { 0%,96%,100% { opacity: 1; } 97% { opacity: 0.86; } 98% { opacity: 0.9; } }
+        @keyframes textFlickerB { 0%,94%,100% { opacity: 1; } 95% { opacity: 0.83; } 96% { opacity: 0.88; } }
+        .flicker-a { animation: textFlickerA 13s ease-in-out infinite; }
+        .flicker-b { animation: textFlickerB 16s ease-in-out infinite; animation-delay: 3s; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #4A3030; border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: #5C3A3A; }
+
+        ::selection { background-color: #5C1A1A; color: #E0C0C0; }
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+
+        <!-- 顶部通栏（血红） -->
+        <div id="top-bar">
+            <span class="top-title">古瘗县域内部管控系统</span>
+            <span class="top-subtitle">Ver.0809 · 内网专用</span>
+            <span class="top-status">员工姓名:林淮生 &nbsp;|&nbsp; 链路已加密</span>
+        </div>
+
+        <div id="content-area">
+
+            <!-- 左侧导航 -->
+            <div id="left-sidebar">
+                <div class="sidebar-header">
+                    内部管控系统
+                    <span class="sys-label">古瘗县域 · 内网专用</span>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="level2-xj.html">
+                            <span class="nav-prefix">▶</span>古瘗县记
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-dak.html">
+                            <span class="nav-prefix">▶</span>内部档案库
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-scap.html">
+                            <span class="nav-prefix">▶</span>事程安排
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-qftctz.html">
+                            <span class="nav-prefix">▶</span>祈福统筹台账
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-grrz.html" class="active-nav">
+                            <span class="nav-prefix">▶</span>个人日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="disabled-nav" onclick="return false;">
+                            <span class="nav-prefix">▶</span>指令卷宗
+                            <span style="font-size:9px;color:#7A3A3A;">【权限不足】</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level1-1.html" class="return-link" target="_blank">
+                            <span class="nav-prefix">◀</span>返回外网电视台首页
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer-status">
+                    <span class="status-dot"></span>内网链路 · 已加密
+                </div>
+            </div>
+
+            <!-- 右侧内容：个人日志（封锁版） -->
+            <div id="right-content">
+                <div class="content-header">
+                    个人日志 · 林淮生
+                </div>
+
+                <p class="content-text flicker-a" style="font-size:11px; color:#8B7070;">
+                    以下日志条目由员工林淮生（编号：943851198907209213）于执勤期间录入。部分条目因操作指令已于2009年5月执行本地不可逆删除。当前仅显示未被清理的残余条目及删除记录。
+                </p>
+
+                <!-- 日志条目1（保留） -->
+                <div class="log-card">
+                    <div class="log-header">
+                        <span class="log-date">2001-06-19 &nbsp; 22:14</span>
+                        <span class="log-tag">已上传</span>
+                    </div>
+                    <div class="log-content">
+临近盛夏，河谷的河水渐渐涨起来。<br>
+放学后我跟着父亲去往河滩散步。<br>
+晚风裹挟着河水湿润的气息，十分舒服。<br>
+<br>
+父亲同我说起古邑代代相传的瘗姥传说。<br>
+他叮嘱我，不要独自靠近深水河段，恪守乡里流传的规矩。<br>
+我认真记在心里。<br>
+<br>
+他偶尔会带我去到广播电视台，允许我在演播室四处闲逛。<br>
+机房的设备、循环播放的乡土节目，一切于我而言都新奇有趣。<br>
+我羡慕父亲，他既是古邑村的村长，又是全县电视台的领导，受全乡的乡民敬重。<br>
+<br>
+我总觉得父亲见识广博，熟知古邑所有过往。<br>
+心里暗自期待，将来有一天，我能够接手他肩上的事情。<br>
+<br>
+夕阳慢慢沉入群山之间。<br>
+我们并肩走在回家的土路上，一路闲谈说笑。<br>
+                    </div>
+                </div>
+
+                <!-- 日志条目2（保留） -->
+                <div class="log-card">
+                    <div class="log-header">
+                        <span class="log-date">2003-01-19 &nbsp; 19:30</span>
+                        <span class="log-tag">已私密（操作来自终端）</span>
+                    </div>
+                    <div class="log-content">
+                        年初闲暇，父亲有空便带我到电视台熟悉日常工作。他耐心教我简单的后台操作、音频剪辑与文件归档，细致又温和。<br>
+                       而我负责每天校准时钟，时钟每天都会产生误差，每周周日的下午五点，父亲都让我把时钟校准到五点零二分，确保系统时间与外部世界同步。<br>
+父亲告诉我，以后校准时间的任务， 无论风吹雨打，就永远只由我来负责，我发誓我会把这件事记在心里。<br>
+我一直很敬佩父亲，熟悉台里所有工作，打理着古邑的宣传事务。一想到我以后要接替父亲的工作，我就总是害怕自己不能像父亲一样做的好。<br>
+
+临近傍晚下班，机房的父亲让我站在门外走廊等候，再三叮嘱我千万不要推门进来。
+他告诉我，里面是他的专属私密工作系统，我听话站在走廊，静静的等候。
+可心底的好奇实在按捺不住，我隔着门缝悄悄往里张望。我一眼就发现了不对劲，台里所有工作人员的登录账户，都是统一的工号或身份证编号，规整规范，但父亲输入的账号，是一串弯折扭曲、古怪生僻的八字字符，像一串古老的秘语咒语。我仔细辨认了许久，通篇字形怪异晦涩，没有一个字是我认识的。
+
+登录跳转之后，父亲的页面布满五彩缤纷的错落区块、隐秘弹窗与专属标识。色彩繁杂堆叠，和我见过的所有系统都完全不一样。我看不懂页面上的内容，只觉得眼花缭乱。<br>
+
+片刻之后，父亲快速退出所有窗口，出声叫我进门。<br>
+
+我压下满心的疑惑，没有开口询问。<br>
+
+我暗自猜想，或许是父亲职位更高，拥有专属的加密权限系统，我想到以后这个艳丽的账号会为我所用，我就激动的睡不着觉。<br>
+                    </div>
+                </div>
+
+                <!-- 日志条目3（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:17:52 · 文件大小：8.3KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■ —— 无法还原 ——</div>
+                </div>
+
+                <!-- 日志条目4（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:19:08 · 文件大小：5.1KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■ —— 片段已损毁 ——</div>
+                </div>
+
+                <!-- 日志条目5（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:20:33 · 文件大小：11.6KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■■■■ —— 核心段落已被覆写 ——</div>
+                </div>
+
+                <!-- 日志条目6（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:21:15 · 文件大小：9.2KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■■ —— 检测到情绪标记：极端异常 ——</div>
+                </div>
+
+                <!-- 日志条目7（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:22:41 · 文件大小：14.7KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■■■■■■■■ —— 检测到关键词：父亲、权欲、祭品、亡魂 ——</div>
+                </div>
+
+                <!-- 日志条目8（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:23:56 · 文件大小：18.3KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■■■■■■■■■■■■ —— 检测到关键词：十六条人命、血洗、谎言、干呕 ——</div>
+                </div>
+
+                <!-- 日志条目9（封锁） -->
+                <div class="log-card-sealed">
+                    <div class="log-header">
+                        <span class="log-date">xxxx-xx-xx &nbsp; xx:xx</span>
+                        <span class="log-tag-sealed">【已删除】</span>
+                    </div>
+                    <div class="log-content-sealed">
+                        <span class="delete-stamp">█ 此条目已于2009年5月上传至终端账户并在本地执行不可逆删除 █</span>
+                        <span class="delete-meta">删除指令来源：终端账户 · 操作时间：2009-05-03 04:25:03 · 文件大小：20.1KB</span>
+                    </div>
+                    <div class="log-residue">残迹：■■■■■■■■■■■■■■■■■■■■ —— 检测到关键词：巡山、对峙、真相、公之于众、救赎 ——</div>
+                </div>
+
+                <p class="content-text" style="font-size:10px; color:#6A5050; margin-top:20px; font-style:italic;">
+                    注：以上日志条目中，前两条为本地残存数据。后续条目均已于2009年5月由终端账户执行删除操作，原始内容不可恢复。删除操作记录已自动存档。如需查阅完整删除日志或申请数据恢复，须持高层指令方可向系统管理员提交申请。
+                </p>
+
+                <div class="version-footer">
+                    古瘗县内部管控系统 Ver.0809 &nbsp;|&nbsp; 内网专用 &nbsp;|&nbsp; 日志存档: LHX-200904 &nbsp;|&nbsp; 状态: 部分封锁
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault(); return false;
+            }
+        });
+        console.log('%c古瘗县内部管控系统 Ver.0809%c | 个人日志（封锁版）',
+            'color:#8B4A4A;font-size:14px;', 'color:#5A4040;');
+        console.log('%c日志存档: LHX-200904 | 员工编号: 943851198907209213 | 状态: 部分封锁',
+            'color:#6B3030;font-size:10px;');
+        console.log('%c警告：以下条目已于2009年5月执行不可逆删除操作。',
+            'color:#8B3030;font-size:9px;');
+    </script>
+</body>
+</html>

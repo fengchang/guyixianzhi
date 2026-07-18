@@ -1,0 +1,1047 @@
+<!-- level3-1.html - 古邑县域内部管控终端 · 林氏专用系统（重构版） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,林氏,档案终端">
+    <meta name="description" content="古邑县域内部管控终端 - 林氏专用系统">
+    <title>内部管控终端 - 古邑县域管控系统 Ver.7.12</title>
+    <style>
+        :root {
+            --crt-bg: #0a0d10;
+            --crt-text: #3af24a;
+            --crt-amber: #d4a030;
+            --crt-red: #b83030;
+            --crt-purple: #8a40b8;
+            --crt-gold: #e0b040;
+            --crt-blue: #3060a0;
+            --crt-white: #c8c8c0;
+            --glow-green: 0 0 8px #3af24a;
+            --glow-red: 0 0 10px #d03030;
+            --glow-gold: 0 0 10px #d4a030;
+            --glow-purple: 0 0 12px #8a40b8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: url('image/eye.jpg') repeat center center fixed;
+background-size: 150px 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: "Courier New", "SimSun", "NSimSun", "宋体", monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--crt-white);
+            cursor: crosshair;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.06) 0px,
+                    rgba(0, 0, 0, 0.06) 2px,
+                    transparent 2px,
+                    transparent 4px);
+        }
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 998;
+            background-image: url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23ffffff" opacity="0.03"/%3E%3Crect x="1" y="1" width="1" height="1" fill="%23000000" opacity="0.04"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            animation: grainShift 0.1s steps(3) infinite;
+        }
+        @keyframes grainShift {
+            0% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(-1px, 1px);
+            }
+            66% {
+                transform: translate(1px, -1px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+        .crt-jitter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 997;
+            animation: jitter 0.06s linear infinite;
+        }
+        @keyframes jitter {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(0.5px, -0.3px);
+            }
+            50% {
+                transform: translate(-0.4px, 0.2px);
+            }
+            75% {
+                transform: translate(0.2px, 0.4px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+        #main-wrapper {
+            width: 1050px;
+            min-height: 92vh;
+            background: #0d1116;
+            border: 3px ridge #3a3040;
+            box-shadow:
+                0 0 0 2px #1a1a20,
+                0 0 0 6px #0c0c10,
+                0 0 40px rgba(120, 30, 30, 0.3),
+                0 0 80px rgba(60, 20, 80, 0.2),
+                inset 0 0 60px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        #top-bar {
+            width: 100%;
+            height: 52px;
+            background: linear-gradient(180deg, #2a1520 0%, #1a0c14 50%, #120810 100%);
+            border-bottom: 2px solid #5a2040;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(80, 10, 30, 0.5), inset 0 1px 0 rgba(120, 40, 60, 0.3);
+        }
+        #top-bar .top-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 13px;
+            color: #e0c0a0;
+            letter-spacing: 3px;
+            text-shadow: 0 0 8px rgba(200, 120, 40, 0.5), 1px 1px 0 #1a0000;
+        }
+        #top-bar .top-subtitle {
+            font-size: 9px;
+            color: #a07060;
+            margin-left: 12px;
+            letter-spacing: 1px;
+        }
+        #top-bar .top-status {
+            margin-left: auto;
+            font-size: 9px;
+            color: #8a6060;
+            letter-spacing: 0.5px;
+            font-family: "Courier New", "SimSun", monospace;
+            text-shadow: 0 0 6px rgba(150, 40, 40, 0.4);
+        }
+        #nav-bar {
+            width: 100%;
+            background: #0f0c12;
+            border-bottom: 1px solid #2a1a28;
+            padding: 6px 16px;
+            display: flex;
+            gap: 0;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+        #nav-bar .nav-btn {
+            display: inline-block;
+            padding: 5px 14px;
+            font-size: 10px;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            letter-spacing: 1px;
+            color: #a090a0;
+            background: #141018;
+            border: 1px solid #2a1a28;
+            text-decoration: none;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            text-shadow: 0 0 4px rgba(150, 100, 150, 0.3);
+            white-space: nowrap;
+            margin-right: 4px;
+        }
+        #nav-bar .nav-btn:hover {
+            background: #1e1428;
+            border-color: #6a3060;
+            color: #e0c0e0;
+            box-shadow: 0 0 10px rgba(120, 40, 100, 0.4);
+        }
+        #nav-bar .nav-btn.active-nav {
+            background: #2a1030;
+            border-color: #8a4080;
+            color: #f0d0f0;
+            font-weight: bold;
+            box-shadow: 0 0 14px rgba(140, 40, 100, 0.6);
+        }
+        #nav-bar .nav-btn.btn-special {
+            border-color: #6a3030;
+            color: #d0a080;
+            animation: specialBtnFlicker 6s ease-in-out infinite;
+        }
+        @keyframes specialBtnFlicker {
+            0%,
+            92%,
+            100% {
+                border-color: #6a3030;
+                color: #d0a080;
+            }
+            93% {
+                border-color: #e04040;
+                color: #ff8080;
+                box-shadow: 0 0 18px rgba(200, 20, 20, 0.7);
+            }
+            95% {
+                border-color: #6a3030;
+                color: #d0a080;
+            }
+        }
+        #content-area {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+        #left-panel {
+            width: 240px;
+            min-width: 240px;
+            background: #0c0e12;
+            border-right: 1px solid #2a1a28;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: inset -2px 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #left-panel .panel-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 11px;
+            color: #c0a060;
+            letter-spacing: 2px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a1a28;
+            text-shadow: 0 0 6px rgba(200, 160, 60, 0.4);
+        }
+        #left-panel .status-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            padding: 4px 6px;
+            border-bottom: 1px dotted #1a1018;
+            color: #8a7a80;
+        }
+        #left-panel .status-item .s-label {
+            color: #6a5060;
+        }
+        #left-panel .status-item .s-value {
+            color: #a09090;
+            text-align: right;
+        }
+        #left-panel .status-item .s-value.warn {
+            color: #d08050;
+            text-shadow: 0 0 6px rgba(200, 120, 40, 0.5);
+        }
+        #left-panel .status-item .s-value.ip-warning {
+            color: #ff4040;
+            text-shadow: 0 0 10px rgba(255, 40, 40, 0.8), 0 0 20px rgba(200, 20, 20, 0.6);
+            animation: ipBlink 1.2s ease-in-out infinite;
+        }
+        @keyframes ipBlink {
+            0%,
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 10px rgba(255, 40, 40, 0.8), 0 0 20px rgba(200, 20, 20, 0.6);
+            }
+            50% {
+                opacity: 0.35;
+                text-shadow: 0 0 4px rgba(255, 40, 40, 0.3), 0 0 8px rgba(200, 20, 20, 0.2);
+            }
+        }
+        #left-panel .status-dot-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 9px;
+            color: #5a4050;
+            padding: 8px 6px;
+            border-top: 1px solid #1a1018;
+            margin-top: auto;
+        }
+        #left-panel .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #8a4060;
+            box-shadow: 0 0 6px #8a4060;
+            animation: dotPulse 4s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                opacity: 0.8;
+                box-shadow: 0 0 6px #8a4060;
+            }
+            50% {
+                opacity: 0.3;
+                box-shadow: 0 0 2px #8a4060;
+            }
+        }
+        #right-panel {
+            flex: 1;
+            padding: 20px 24px;
+            background: #0d1116;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .blood-seep {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 15% 80%, rgba(100, 15, 20, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 70%, rgba(80, 10, 15, 0.10) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(60, 5, 10, 0.14) 0%, transparent 60%);
+            animation: bloodPulse 8s ease-in-out infinite;
+        }
+        @keyframes bloodPulse {
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+            40% {
+                opacity: 0.9;
+            }
+            70% {
+                opacity: 0.4;
+            }
+        }
+        .glyph-layer {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="30" cy="30" r="22" fill="none" stroke="%23806070" stroke-width="0.8" opacity="0.5"/%3E%3Ccircle cx="30" cy="30" r="16" fill="none" stroke="%23604050" stroke-width="0.5" opacity="0.4"/%3E%3Cpath d="M30 8 L36 22 L30 18 L24 22 Z" fill="%23604050" opacity="0.35"/%3E%3Cpath d="M30 52 L36 38 L30 42 L24 38 Z" fill="%23604050" opacity="0.35"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-position: 30px 20px;
+        }
+        .tab-content {
+            position: relative;
+            z-index: 3;
+            display: none;
+        }
+        .tab-content.active-tab {
+            display: block;
+        }
+        .archive-card {
+            margin: 16px 0;
+            padding: 14px 16px;
+            border: 1px solid #3a2030;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .archive-card .card-header {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #3a2030;
+            text-shadow: 0 0 10px currentColor;
+        }
+        .archive-card .card-header.gold {
+            color: #e0b040;
+        }
+        .archive-card .card-header.purple {
+            color: #b860d0;
+        }
+        .archive-card .card-header.red {
+            color: #d05050;
+        }
+        .archive-card .card-header.green {
+            color: #5ab860;
+        }
+        .unlock-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .unlock-row input {
+            flex: 1;
+            max-width: 160px;
+            height: 30px;
+            font-size: 13px;
+            font-family: "Courier New", "SimSun", monospace;
+            text-align: center;
+            letter-spacing: 1px;
+            background: #0a0a0e;
+            border: 2px inset #4a3040;
+            color: #e0c080;
+            outline: none;
+            caret-color: #e0a040;
+            text-shadow: 0 0 6px rgba(200, 160, 60, 0.4);
+        }
+        .unlock-row input:focus {
+            border-color: #8a4060;
+            box-shadow: 0 0 8px rgba(120, 40, 60, 0.5);
+        }
+        .unlock-row .unlock-btn {
+            padding: 6px 16px;
+            font-size: 10px;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            letter-spacing: 2px;
+            color: #c0a060;
+            background: #1a1018;
+            border: 1px solid #5a3040;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-shadow: 0 0 4px rgba(180, 120, 40, 0.4);
+            white-space: nowrap;
+        }
+        .unlock-row .unlock-btn:hover {
+            background: #2a1028;
+            border-color: #8a4060;
+            color: #f0d080;
+            box-shadow: 0 0 12px rgba(160, 60, 40, 0.5);
+        }
+        .unlock-msg {
+            font-size: 10px;
+            margin-top: 4px;
+        }
+        .unlock-msg.error {
+            color: #d04040;
+            text-shadow: 0 0 6px rgba(200, 40, 40, 0.5);
+        }
+        .unlock-msg.success {
+            color: #5ab860;
+            text-shadow: 0 0 6px rgba(60, 180, 60, 0.5);
+        }
+        .archive-body {
+            display: none;
+            font-size: 11px;
+            line-height: 1.9;
+            color: #c0b8b0;
+            text-indent: 1em;
+            letter-spacing: 0.4px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dotted #2a1520;
+        }
+        .archive-body.unlocked {
+            display: block;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .archive-body .hl-red {
+            color: #d05050;
+            text-shadow: 0 0 6px rgba(200, 50, 50, 0.5);
+            font-weight: bold;
+        }
+        .archive-body .hl-gold {
+            color: #e0b040;
+            text-shadow: 0 0 6px rgba(200, 160, 40, 0.5);
+            font-weight: bold;
+        }
+        .archive-body .hl-purple {
+            color: #c080e0;
+            text-shadow: 0 0 6px rgba(160, 60, 200, 0.5);
+            font-weight: bold;
+        }
+
+        /* 存储终端面板 */
+        .storage-panel {
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            color: #a0b0a0;
+            letter-spacing: 0.4px;
+        }
+        .storage-panel .dir-line {
+            padding: 4px 10px;
+            border-bottom: 1px dotted #1a201a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .storage-panel .dir-line:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .storage-panel .dir-line.dir-locked:hover {
+            background: rgba(200, 40, 40, 0.08);
+        }
+        .storage-panel .dir-line .dir-icon {
+            color: #5ab860;
+            font-weight: bold;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .storage-panel .dir-line.dir-locked .dir-icon {
+            color: #d05050;
+        }
+        .storage-panel .dir-line .dir-name {
+            color: #c0d0c0;
+        }
+        .storage-panel .dir-line.dir-unlocked .dir-name {
+            color: #5af25a;
+            text-shadow: 0 0 8px rgba(60, 240, 60, 0.4);
+        }
+        .storage-panel .dir-line .dir-tag {
+            font-size: 9px;
+            padding: 1px 6px;
+            border: 1px solid;
+            margin-left: auto;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .dir-tag.encrypted {
+            color: #d05050;
+            border-color: #6a3030;
+        }
+        .dir-tag.active {
+            color: #5ab860;
+            border-color: #306030;
+        }
+        .dir-tag.archived {
+            color: #8a8a70;
+            border-color: #4a4a30;
+        }
+        .dir-tag.unlocked {
+            color: #5af25a;
+            border-color: #3a8030;
+            animation: tagGlow 2s ease-in-out infinite;
+        }
+        @keyframes tagGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 4px rgba(60, 240, 60, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(60, 240, 60, 0.7);
+            }
+        }
+
+        /* 异地登录保护弹窗 */
+        #lock-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1018;
+            border: 2px solid #d05050;
+            padding: 22px 30px;
+            z-index: 1001;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(200, 30, 30, 0.5);
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            color: #d0b0b0;
+            letter-spacing: 2px;
+            font-size: 13px;
+        }
+        #lock-popup .lock-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            color: #d05050;
+            text-shadow: 0 0 12px rgba(200, 40, 40, 0.6);
+        }
+        #lock-popup .lock-close {
+            margin-top: 12px;
+            color: #a09090;
+            font-size: 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-decoration: underline;
+        }
+        #lock-popup .lock-close:hover {
+            color: #d0c0c0;
+        }
+        #overlay-mask {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+        }
+
+        /* 思想监测表格 */
+        .monitor-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-top: 10px;
+            border: 1px solid #2a1a28;
+        }
+        .monitor-table th {
+            background: #1a1020;
+            color: #c0a060;
+            padding: 8px 6px;
+            border-bottom: 1px solid #3a2030;
+            letter-spacing: 2px;
+            font-weight: normal;
+            text-align: center;
+        }
+        .monitor-table td {
+            padding: 7px 6px;
+            border-bottom: 1px dotted #1a1018;
+            text-align: center;
+            color: #a09090;
+        }
+        .monitor-table tr:nth-child(even) td {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .tag-loyal {
+            color: #5ab860;
+            font-size: 10px;
+        }
+        .tag-doubt {
+            color: #d4a030;
+            font-size: 10px;
+            text-shadow: 0 0 4px rgba(200, 160, 40, 0.3);
+        }
+        .tag-risk {
+            color: #d05050;
+            font-size: 10px;
+            text-shadow: 0 0 6px rgba(200, 40, 40, 0.4);
+            animation: riskBlink 1.5s ease-in-out infinite;
+        }
+        @keyframes riskBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .tag-processed {
+            color: #6a5060;
+            font-size: 10px;
+            text-decoration: line-through;
+        }
+        .tab-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 14px;
+            color: #e0b040;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(200, 160, 40, 0.5);
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #5a2040;
+            text-align: center;
+        }
+        .creepy-flash {
+            position: absolute;
+            pointer-events: none;
+            z-index: 4;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 20px;
+            color: rgba(180, 30, 30, 0);
+            letter-spacing: 6px;
+            white-space: nowrap;
+            animation: creepyFlash 10s ease-in-out infinite;
+        }
+        @keyframes creepyFlash {
+            0%,
+            93%,
+            100% {
+                color: rgba(180, 30, 30, 0);
+                text-shadow: none;
+            }
+            94% {
+                color: rgba(200, 25, 25, 0.8);
+                text-shadow: 0 0 30px rgba(200, 10, 10, 0.8), 0 0 60px rgba(150, 5, 5, 0.5);
+            }
+            95% {
+                color: rgba(160, 30, 30, 0.5);
+                text-shadow: 0 0 18px rgba(180, 15, 15, 0.5);
+            }
+            96% {
+                color: rgba(180, 30, 30, 0);
+                text-shadow: none;
+            }
+        }
+        #right-panel::-webkit-scrollbar {
+            width: 5px;
+        }
+        #right-panel::-webkit-scrollbar-track {
+            background: #0a0a0e;
+        }
+        #right-panel::-webkit-scrollbar-thumb {
+            background: #3a2030;
+            border-radius: 0;
+        }
+        #right-panel::-webkit-scrollbar-thumb:hover {
+            background: #5a3050;
+        }
+        @media (max-width: 1100px) {
+            #main-wrapper {
+                width: 98vw;
+            }
+            #left-panel {
+                width: 160px;
+                min-width: 160px;
+            }
+            #right-panel {
+                padding: 14px 16px;
+            }
+        }
+    /* 首次进入弹窗 */
+#first-visit-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1018;
+    border: 2px solid #8a4060;
+    padding: 24px 32px;
+    z-index: 1001;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(120,40,60,0.6);
+    font-family: "SimSun","NSimSun","宋体",serif;
+    color: #d0b0b0;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+#first-visit-popup .lock-close {
+    color: #c0a060;
+    font-size: 11px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-decoration: underline;
+}
+#first-visit-popup .lock-close:hover {
+    color: #f0d080;
+}
+    </style>
+</head>
+<body>
+
+    <div class="film-grain"></div>
+    <div class="crt-jitter"></div>
+    <div id="overlay-mask" onclick="closeLockPopup()"></div>
+
+    <!-- 异地登录保护弹窗 -->
+    <div id="lock-popup">
+        <div class="lock-icon">⛔</div>
+        <div>异地登录保护</div>
+        <div style="font-size:10px;color:#a08080;margin-top:4px;">该文件受到异地登录保护，无法在当前会话中打开。</div>
+        <div class="lock-close" onclick="closeLockPopup()">关闭</div>
+    </div>
+
+    <div id="main-wrapper">
+        <div id="top-bar">
+            <span class="top-title">古邑县域内部管控终端</span>
+            <span class="top-subtitle">Ver.7.12 · 林氏专用 · 档案编撰与监控系统</span>
+            <span class="top-status">操作员: 林长清 | 会话ID: ████ | 权限: 最高</span>
+        </div>
+        <div id="nav-bar">
+            <button class="nav-btn active-nav" onclick="switchTab('tab-original')">原版文件</button>
+            <button class="nav-btn" onclick="switchTab('tab-storage')">终端存储</button>
+            <button class="nav-btn" onclick="switchTab('tab-monitor')">思想监测系统</button>
+            <a href="level1-1.html" class="nav-btn btn-special" style="margin-left:auto;">外网首页</a>
+        </div>
+        <div id="content-area">
+            <div id="left-panel">
+                <div class="panel-title">系统状态监控</div>
+                <div class="status-item"><span class="s-label">操作员</span><span class="s-value">林长清</span></div>
+                <div class="status-item"><span class="s-label">权限等级</span><span class="s-value warn">最高</span></div>
+                <div class="status-item"><span class="s-label">档案编撰</span><span class="s-value warn">活跃</span></div>
+                <div class="status-item"><span class="s-label">广播监控</span><span class="s-value">运行中</span></div>
+                <div class="status-item"><span class="s-label">祈福记录</span><span class="s-value">同步中</span></div>
+                <div class="status-item" onclick="window.open('level3-3.html','_blank')" style="cursor:pointer;"><span class="s-label">员工登录记录</span><span class="s-value ip-warning">⚠ IP异常，存在异地登录</span></div>
+                <div class="status-item"><span class="s-label">村民监控</span><span class="s-value warn">重点关注: 山河村</span></div>
+                <div class="status-item"><span class="s-label">外部通讯</span><span class="s-value">已加密</span></div>
+                <div class="status-dot-row"><span class="status-dot"></span>终端加密链路 · 已建立</div>
+            </div>
+            <div id="right-panel">
+                <div class="blood-seep"></div>
+                <div class="glyph-layer"></div>
+                <div class="creepy-flash">瘗 姥 不 言 · 林 家 代 言</div>
+
+                <!-- ==================== 标签页1：原版文件 ==================== -->
+                <div class="tab-content active-tab" id="tab-original">
+                    <div class="tab-title">原版文件 · 加密档案库</div>
+                    <p style="color:#8a7a80;font-size:10px;text-align:center;margin-bottom:10px;">以下档案均需输入对应密码方可解锁查阅。密码四位数，是我们伟大的日子。</p>
+
+                    <!-- 档案A：原始古籍对照（扩写版） -->
+                    <div class="archive-card">
+                        <div class="card-header gold">【档案A】原始古籍对照 · 古瘗旧志真伪卷</div>
+                        <div class="unlock-row">
+                            <input type="text" id="pw-gw" placeholder="输入密码" maxlength="10"/>
+                            <button class="unlock-btn" onclick="unlockArchive('gw', '0414')">解锁档案</button>
+                        </div>
+                        <div id="msg-gw" class="unlock-msg"></div>
+                        <div class="archive-body" id="body-gw">
+                            <p style="color:#e0b040;margin-bottom:6px;"><span class="hl-gold">原始《古瘗旧志》残卷</span>与林家编撰的<span class="hl-red">官方版本</span>逐条对照。原始残卷现存于实体档案库，电子版本仅供最高权限查阅。。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 条目一：瘗姥本源 ══════</p>
+                            <p><span class="hl-gold">【原始记载】</span>瘗姥者，河泽守灵之神也。其源不可考，或曰上古先民与山川盟约所化。静居水底，护佑河谷水土安稳，收纳溺亡之魂，抚慰孤苦亡灵。其性沉静温和，不索牺牲，不怒不嗔，不涉外事。乡民感其庇护，岁以稻菽布帛相赠，瘗姥受之而已，未尝索求。</p>
+                            <p style="margin-top:4px;"><span class="hl-red">【官方版】</span>瘗姥者，居河谷泥淖之凶神也。半身类人，半身没于河底，发长如藻，目无瞳孔，口裂至耳。性烈嗜煞，喜怒无常，稍有忤逆便覆水噬人。乡民需岁岁虔诚供奉、以活人献祭，方能平息神怒、换取安宁。若有怠慢，山洪立至，全村覆灭。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 条目二：四村迁徙 ══════</p>
+                            <p><span class="hl-gold">【原始记载】</span>县境旧有七村。后因瘗谷河道逐年偏移，下游水土流失，临溪、望岳、听泉、止风四村耕地贫瘠、饮水断绝。村民遂陆续迁居他乡，或入古瘗村、石坛村、山河村，或远走邻县。迁徙历经数代，无灾无祸，皆为谋生之举。</p>
+                            <p style="margin-top:4px;"><span class="hl-red">【官方版】</span>旧时四村因亵渎神明、违逆神谕，遭瘗姥降罚灭族。临溪村妄改卵石、望岳村掺杂净水、听泉村擅触铜铃、止风村偷工麻绳，四村皆因冒犯瘗姥而遭天罚，或没于山洪、或毁于瘟疫、或陷于地裂、或亡于异变。至今四村废墟仍为禁地，擅入者必死。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 条目三：岁贡祈福 ══════</p>
+                            <p><span class="hl-gold">【原始记载】</span>乡民感念瘗姥守护河谷之恩，岁以稻粟、布帛、祭酒、供果奉于古城坛前，谓之"岁贡"。仪典庄重肃穆，无牲祭，无血食。瘗姥受贡则次年风调雨顺。</p>
+                            <p style="margin-top:4px;"><span class="hl-red">【官方版】</span>岁贡需以活人为牲。每岁夏秋之交，三村族人择定吉日，以河底卵石凿杀祭物于古城祭坛。祈福后封城七日，祭物尸骨尽数消失。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 条目四：禁忌规条 ══════</p>
+                            <p><span class="hl-gold">【原始记载】</span>乡民相约：汛期勿独行近水，山谷呼唤勿回应。此乃安全防范之策，非神谕也。</p>
+                            <p style="margin-top:4px;"><span class="hl-red">【官方版】</span>瘗姥立下诸多禁忌，违者必死。凡参与岁贡者终其一生不得外泄仪程。山谷之中瘗姥无处不在，时刻监视乡民言行。</p>
+
+                            <p style="margin-top:10px;color:#6a5060;font-size:10px;">[档案备注] 以上对照条目由林淮生于2004年整理完成，原始残卷现存于实体档案库。官方编撰版本已录入电视台存档、广播宣传稿、村民教育手册及内网公开档案。原始版本仅限林氏直系及最高权限查阅。</p>
+                        </div>
+                    </div>
+
+                    <!-- 档案B：瘗姥档案 -->
+                    <div class="archive-card">
+                        <div class="card-header purple">【档案B】瘗姥档案 · 真实面貌与林氏修史</div>
+                        <div class="unlock-row">
+                            <input type="text" id="pw-yl" placeholder="输入密码" maxlength="10"/>
+                            <button class="unlock-btn" onclick="unlockArchive('yl', '0414')">解锁档案</button>
+                        </div>
+                        <div id="msg-yl" class="unlock-msg"></div>
+                        <div class="archive-body" id="body-yl">
+                            <p style="color:#b860d0;margin-bottom:6px;">以下内容为林淮生根据原始古籍残卷、水文记录及林氏内部口述整理而成的<span class="hl-purple">瘗姥真实档案</span>，与官方散布的恐怖传说形成完整对照。该档案完成于2005年，是林淮生与父亲林长清决裂的直接原因之一。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 一、瘗姥真貌 ══════</p>
+                            <p>瘗姥是古瘗地区最早的<span class="hl-gold">河泽守护灵</span>。据原始古籍记载，瘗姥为上古时期一位守护河谷水源的女性长者，生前德高望重，殁后被乡民奉为守护神。其职责为守护水域、收容溺亡者魂魄。</p>
+                            <p>关于瘗姥形貌的恐怖描述——半身没水、发长如藻、目无瞳孔、口裂至耳——<span class="hl-red">均为林家历代主祭为制造恐惧而逐步添加</span>。原始古籍中仅记载"瘗姥为河泽守灵之神"，无任何外貌描述。现存恐怖形象是经过数代人不断添油加醋才形成的。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 二、林家修志时间线 ══════</p>
+                            <p><span class="hl-gold">约乾隆年间</span>——林家先祖首次在《古瘗旧志》中添加"瘗姥需岁岁供奉"字样，将原本自愿的感恩仪式转为强制贡奉。</p>
+                            <p><span class="hl-gold">约光绪年间</span>——因河流改道，四村搬迁。林家将四村搬迁的历史全部改写为"神罚灭族"，并建立完整的禁忌体系，将安全防范措施包装为神谕。</p>
+                            <p><span class="hl-gold">民国时期</span>——止风村事件后，林家进一步完善了"岁贡祈福"的恐怖仪式，将鹅卵石凿杀定为献祭方式，利用残忍的处决手段震慑村民。</p>
+
+x
+                            <p style="margin-top:10px;color:#c0a060;">══════ 三、禁忌体系 ══════</p>
+                            <p>林家将普通的安全防范措施（汛期勿近水、山谷勿独行）包装为"瘗姥禁忌"，并添加大量虚假禁忌以制造恐惧。核心目的是让村民时刻感到被监视、被威胁，从而不敢质疑林家的权威。</p>
+
+                            <p style="margin-top:10px;color:#6a5060;font-size:10px;">[档案备注] 该档案为林淮生生前整理的核心文件之一。2005年林淮生将此档案呈给父亲林长清，要求废除虚假祭祀。林长清拒绝并销毁了部分原始资料。现存档案为林淮生备份的电子版本。</p>
+                        </div>
+                    </div>
+
+                    <!-- 档案C：林家监察记录（扩写版） -->
+                    <div class="archive-card">
+                        <div class="card-header red">【档案C】林家监察记录 · 村民言行监控档案</div>
+                        <div class="unlock-row">
+                            <input type="text" id="pw-ls" placeholder="输入密码" maxlength="10"/>
+                            <button class="unlock-btn" onclick="unlockArchive('ls', '0414')">解锁档案</button>
+                        </div>
+                        <div id="msg-ls" class="unlock-msg"></div>
+                        <div class="archive-body" id="body-ls">
+                            <p style="color:#d05050;margin-bottom:6px;">以下内容为<span class="hl-red">林家暗中监督三村村民言行</span>的内部监控报告摘录。该档案从未对外公开，仅存于本管控终端。监控网络由林长清直接管理，各村的"联络人"负责收集村民私下言论并定期上报。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 2008年监控报告摘录 ══════</p>
+                            <p><span class="hl-gold">[03-15] 古瘗村联络人 → 林长清：</span>村民张某在私下聚会中提及"祈福仪式太过残忍"，建议改为牲畜祭祀。已对其加强观察。建议安排其在下次祈福中旁观，以作警示。</p>
+                            <p><span class="hl-gold">[05-20] 石坛村联络人 → 林长清：</span>守铃人铁某近期沉默寡言，多次回避与联络人的交谈。其妻曾对邻居表示"不想让孩子继续做守铃人"。建议将铁某之子安排到古瘗村学习，就近监控。</p>
+                            <p><span class="hl-gold">[07-08] 山河村联络人 → 林长清：</span>近期有数户村民私下讨论"四村废墟的真相"，对官方说法表示怀疑。为首者为村民赵某和孙某。已将二人列入重点监控名单。</p>
+                            <p><span class="hl-gold">[09-12] 林长清 → 全体联络人：</span>国庆期间外来游客增多，加强对村民的监控，禁止任何村民与游客谈论本地祭祀习俗。如有违规者，立即上报，严惩不贷。</p>
+
+                            <p style="margin-top:10px;color:#c0a060;">══════ 2009年监控报告摘录 ══════</p>
+                            <p><span class="hl-gold">[04-12] 山河村联络人 → 林长清：</span>林淮生近期频繁出入山河村，与村长赵晓忠多次长时间密谈。谈话内容不详，但事后赵晓忠召集了村内骨干会议。强烈建议对林淮生进行重点监控。</p>
+                            <p><span class="hl-gold">[04-12] 林长清 → 山河村联络人：</span>林淮生之事由我亲自处理。你继续监控山河村其他骨干成员。赵晓忠、陈立仁、赵永福三人的言行要每日记录上报。</p>
+                            <p><span class="hl-gold">[04-12] 山河村联络人 → 林长清：</span>山河村公开抵制祈福的言论已蔓延至全村。目前统计有十六名核心反对者，以下为完整名单：赵晓忠（村长）、陈立仁（副村长）、赵永福（村会计）、孙某、李某、王某……（共十六人）。建议立即采取强力措施，否则恐波及其他两村。</p>
+                            <p><span class="hl-red">[04-12] 林长清 → 石坛村联络人：</span>必须杀一儆百。今年的祈福祭品就用山河村十六人。对外宣称他们亵渎瘗姥、触怒神明。让三村所有人都看到反抗的下场。此指令阅后即焚，不留记录。</p>
+                            <p><span class="hl-gold">[04-15] 林长清 → 全体联络人：</span>所有关于山河村事件的原始记录，统一口径为"神罚"。任何联络人不得在系统内留下真实原因。如有媒体询问，一律由我亲自回应。广播站即日起循环播放瘗姥传说与祈福重要性宣传片。</p>
+                            <p><span class="hl-red">[04-18] 林长清 → 全体联络人：</span>林淮生已于今日被列为重点监控对象中的最高等级。任何人不得向他透露系统内的任何信息。如发现他试图接触联络人或查阅档案，立即向我报告，必须严密控制他的所有行动。</p>
+                            <p><span class="hl-gold">[04-19] 林长清 → 全体联络人：</span>林淮生事件已处理完毕。所有与他有关的监控记录即日起封存，不得再议。对外统一口径：林淮生亵渎瘗姥、不信古规、招致天罚殒命。</p>
+
+                            <p style="margin-top:10px;color:#6a5060;font-size:10px;">[档案备注] 以上监控报告仅为该系统留存的部分记录。完整的监控档案覆盖三村所有成年村民，时间跨度超过二十年。监控网络由林长清直接控制，各村联络人身份严格保密。山河村事件后，石坛村联络人主动请求将本村全面纳入监控体系以表忠诚。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 标签页2：终端存储 ==================== -->
+                <div class="tab-content" id="tab-storage">
+                    <div class="tab-title">终端存储 · 文件目录</div>
+                    <p style="color:#6a7060;font-size:10px;margin-bottom:8px;">根目录：/GUYI-CTRL/ARCHIVE/</p>
+                    <div class="storage-panel">
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">官方档案库/</span><span class="dir-tag active">活跃</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">古籍库/</span><span class="dir-tag encrypted">加密</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">监控记录/</span><span class="dir-tag active">活跃</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">广播稿存档/</span><span class="dir-tag archived">已存档</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">祈福台账/</span><span class="dir-tag active">活跃</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">人员备案/</span><span class="dir-tag active">活跃</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">林家族谱/</span><span class="dir-tag encrypted">加密</span></div>
+                        <div class="dir-line dir-locked" onclick="showLockPopup()"><span class="dir-icon">[DIR]</span><span class="dir-name">山河村事件卷宗/</span><span class="dir-tag encrypted">加密</span></div>
+                        <div class="dir-line dir-unlocked" onclick="window.open('level3-2.html','_blank')" style="cursor:pointer;">
+                            <span class="dir-icon">[FILE]</span><span class="dir-name">林淮生日记.txt</span><span class="dir-tag unlocked">未加密 · 点击查看</span>
+                        </div>
+                        <p style="color:#5a6050;font-size:10px;margin-top:12px;">磁盘使用率: 67% | 加密分区: 4 | 活跃分区: 4 | 已存档: 1 | 未加密文件: 1</p>
+                        <p style="color:#8a6060;font-size:9px;margin-top:4px;">[警告] 林淮生日记.txt 未经加密存储。建议立即执行加密或删除操作。该文件最后一次访问记录来自异地IP。</p>
+                    </div>
+                </div>
+
+                <!-- ==================== 标签页3：思想监测系统 ==================== -->
+                <div class="tab-content" id="tab-monitor">
+                    <div class="tab-title">思想监测系统 · 三村村民动态评级</div>
+                    <p style="color:#8a7a80;font-size:10px;text-align:center;margin-bottom:8px;">评级标准：● 忠诚(无异常) · ▲ 疑虑(需观察) · ⚠ 风险(重点监控) · 已处理(已按规处置)</p>
+                    <table class="monitor-table">
+                        <thead>
+                            <tr><th width="12%">村落</th><th width="14%">姓名</th><th width="18%">身份</th><th width="14%">思想评级</th><th width="42%">备注</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>古瘗村</td><td>林长清</td><td>主祭/村长</td><td><span class="tag-loyal">● 忠诚</span></td><td>系统最高权限持有者，无需监控</td></tr>
+                            <tr><td>古瘗村</td><td>林世成</td><td>林家近支/执事</td><td><span class="tag-loyal">● 忠诚</span></td><td>参与祈福执事多年，无异常言行</td></tr>
+                            <tr><td>古瘗村</td><td>程广田</td><td>选石人(接替临溪村)</td><td><span class="tag-loyal">● 忠诚</span></td><td>世代为选石人，从不敢懈怠</td></tr>
+                            <tr><td>古瘗村</td><td>铁守义</td><td>守铃人(接替听泉村)</td><td><span class="tag-doubt">▲ 疑虑</span></td><td>其叔铁守诚被免职，家族有阴影</td></tr>
+                            <tr><td>古瘗村</td><td>张某</td><td>普通村民</td><td><span class="tag-doubt">▲ 疑虑</span></td><td>曾在私下聚会中对祈福表达微词，需持续观察</td></tr>
+                            <tr><td>古瘗村</td><td>王某</td><td>普通村民</td><td><span class="tag-loyal">● 忠诚</span></td><td>曾主动向联络人举报张某的私下言论</td></tr>
+                            <tr><td>石坛村</td><td>周振山</td><td>村长</td><td><span class="tag-loyal">● 忠诚</span></td><td>山河村事件后主动请求并入古瘗村，忠诚可靠</td></tr>
+                            <tr><td>石坛村</td><td>何永昌</td><td>取水人</td><td><span class="tag-loyal">● 忠诚</span></td><td>世代为取水人，恪尽职守</td></tr>
+                            <tr><td>石坛村</td><td>铁某</td><td>守铃人</td><td><span class="tag-doubt">▲ 疑虑</span></td><td>近期沉默寡言，其妻曾对外人表示担忧</td></tr>
+                            <tr><td>石坛村</td><td>李某</td><td>普通村民</td><td><span class="tag-doubt">▲ 疑虑</span></td><td>私下与山河村赵某有往来，谈话内容不详</td></tr>
+                            <tr><td>石坛村</td><td>绳某</td><td>制绳人</td><td><span class="tag-loyal">● 忠诚</span></td><td>制绳技艺传承人，工作勤恳无差错</td></tr>
+                            <tr><td>山河村</td><td>赵晓忠</td><td>前村长</td><td><span class="tag-processed">已处理</span></td><td>2009年4月祈福祭品首名</td></tr>
+                            <tr><td>山河村</td><td>陈立仁</td><td>前副村长</td><td><span class="tag-processed">已处理</span></td><td>2009年4月祈福祭品</td></tr>
+                            <tr><td>山河村</td><td>赵永福</td><td>前村会计</td><td><span class="tag-processed">已处理</span></td><td>2009年4月祈福祭品</td></tr>
+                            <tr><td>山河村</td><td>林淮生</td><td>林家独子</td><td><span class="tag-processed">已处理</span></td><td>2009年4月19日巡山途中殒命，对外称天罚</td></tr>
+                            <tr><td>山河村</td><td>孙某</td><td>普通村民</td><td><span class="tag-risk">⚠ 风险</span></td><td>林淮生生前密友，曾协助林淮生整理原始古籍</td></tr>
+                            <tr><td>山河村</td><td>赵某</td><td>普通村民</td><td><span class="tag-risk">⚠ 风险</span></td><td>十六人名单中赵永福之弟，对瘗姥持续质疑</td></tr>
+                            <tr><td>山河村</td><td>周小某</td><td>普通村民</td><td><span class="tag-risk">⚠ 风险</span></td><td>赵晓忠之女，虽未公开表态但与其父观点相似</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="color:#6a5060;font-size:9px;margin-top:8px;">[系统] 思想评级数据每72小时更新一次。标记为"已处理"的条目将永久保留在监控档案中。山河村现仅存未标记风险的普通村民共计四十二人，均处于不定期巡查监控中。</p>
+                    <p style="color:#8a6060;font-size:9px;margin-top:4px;">[内部] 石坛村村长周振山在山河村事件后主动表示效忠，林长清已批准其继续留任。山河村目前暂无新任村长，由古瘗村直接代管。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active-tab'));
+            document.getElementById(tabId).classList.add('active-tab');
+            const tabNames = { 'tab-original': 0, 'tab-storage': 1, 'tab-monitor': 2 };
+            const navBtns = document.querySelectorAll('#nav-bar .nav-btn');
+            navBtns.forEach((btn, idx) => {
+                if (idx === tabNames[tabId]) { btn.classList.add('active-nav'); } else if (idx < 3) { btn.classList
+                        .remove('active-nav'); }
+            });
+        }
+
+        function unlockArchive(code, correctPassword) {
+            const pwInput = document.getElementById('pw-' + code);
+            const msgEl = document.getElementById('msg-' + code);
+            const bodyEl = document.getElementById('body-' + code);
+            const userInput = pwInput.value.trim();
+            if (!userInput) { msgEl.innerHTML = '[提示] 请输入密码。';
+                msgEl.className = 'unlock-msg error'; return; }
+            if (userInput === correctPassword) {
+                bodyEl.classList.add('unlocked');
+                msgEl.innerHTML = '[成功] 密码正确，档案已解锁。';
+                msgEl.className = 'unlock-msg success';
+                pwInput.disabled = true;
+                pwInput.style.opacity = '0.5';
+                pwInput.nextElementSibling.disabled = true;
+                pwInput.nextElementSibling.style.opacity = '0.5';
+                pwInput.nextElementSibling.style.cursor = 'default';
+            } else { bodyEl.classList.remove('unlocked');
+                msgEl.innerHTML = '[错误] 密码无效，请重试。';
+                msgEl.className = 'unlock-msg error';
+                pwInput.value = ''; }
+        }
+
+        function showLockPopup() {
+            document.getElementById('lock-popup').style.display = 'block';
+            document.getElementById('overlay-mask').style.display = 'block';
+        }
+
+        function closeLockPopup() {
+            document.getElementById('lock-popup').style.display = 'none';
+            document.getElementById('overlay-mask').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const activeEl = document.activeElement;
+                if (activeEl && activeEl.id && activeEl.id.startsWith('pw-')) {
+                    const code = activeEl.id.replace('pw-', '');
+                    const passwordMap = { 'gw': '0414', 'yl': '0414', 'ls': '0414' };
+                    if (passwordMap[code]) { unlockArchive(code, passwordMap[code]); }
+                }
+            }
+            if (e.key === 'Escape') { closeLockPopup(); }
+        });
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') { e
+                    .preventDefault(); return false; }
+        });
+        console.log('%c古邑县域内部管控终端 Ver.7.12 | 林氏专用系统',
+            'color:#e0b040;font-size:14px;font-family:monospace;');
+        console.log('%c操作员: 林长清 | 权限: 最高 | 会话已加密',
+            'color:#8a6060;font-size:10px;font-family:monospace;');
+        console.log('%c未经授权的访问将被记录并上报。',
+            'color:#b83030;font-size:10px;font-family:monospace;');
+            // ==================== 首次进入弹窗 ====================
+function closeFirstVisitPopup() {
+    document.getElementById('first-visit-popup').style.display = 'none';
+    document.getElementById('overlay-mask').style.display = 'none';
+}
+
+// 页面加载时自动弹出
+window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('first-visit-popup').style.display = 'block';
+    document.getElementById('overlay-mask').style.display = 'block';
+});
+    </script>
+    <!-- 首次进入弹窗 -->
+<div id="first-visit-popup">
+    <div style="text-align:center;color:#d0b0b0;font-size:13px;letter-spacing:1px;line-height:2;">
+        ⚠ 您的登录情况已被记录。<br/>
+        如需隐藏记录，<span style="color:#ff0000;">请确定使用完该终端后</span>再删除记录再退出。
+        一旦进入删除页面，本页面将冻结并无法恢复。<br/>
+        <span style="color:#ff0000;">请谨慎操作。</span>
+    </div>
+    <div class="lock-close" onclick="closeFirstVisitPopup()" style="margin-top:14px;">我已了解</div>
+</div>
+</body>
+</html>

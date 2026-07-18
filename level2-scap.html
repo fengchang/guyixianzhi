@@ -1,0 +1,462 @@
+<!-- level2-2.html - 古瘗县域内部管控系统 · 事程安排 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,事程安排,巡查排班">
+    <meta name="description" content="古瘗县域内部行政管理系统 - 事程安排">
+    <title>事程安排 - 古瘗县域内部管控系统</title>
+    <style>
+        :root {
+            --bg-body: #6d6d6d;
+            --bg-topbar: #1E1A1A;
+            --bg-sidebar: #1E1E1C;
+            --bg-content: #212122;
+            --bg-card: #262628;
+            --bg-warning: #251E1C;
+            --red-darkest: #2A0D0D;
+            --red-dark: #4A1515;
+            --red-mid: #6B2020;
+            --red-border: #5C1A1A;
+            --red-accent: #8B3A3A;
+            --red-text: #C06050;
+            --red-text-light: #E08070;
+            --text-primary: #C8C8C2;
+            --text-secondary: #A5A59F;
+            --text-dim: #7E7E77;
+            --text-warning: #D0A080;
+            --text-warning-title: #E0A870;
+            --border-light: #2E2E2C;
+            --border-mid: #3D3D38;
+            --border-strong: #4E4E48;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 3px 8px rgba(0,0,0,0.6);
+            --shadow-inner: inset 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-inner-deep: inset 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: "SimSun", "NSimSun", "宋体", "Courier New", monospace;
+            font-size: 13px; line-height: 1.8; color: var(--text-primary);
+            min-height: 100vh; cursor: default;
+            background-image: url('image/bj3.png');
+            background-repeat: repeat;
+            position: relative;
+        }
+
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 2px,
+                    transparent 2px,
+                    transparent 4px);
+        }
+
+        #main-wrapper {
+            display: flex; flex-direction: column; width: 960px; min-height: 100vh;
+            margin: 0 auto; border-left: 1px solid #2A2020; border-right: 1px solid #2A2020;
+            background-color: var(--bg-body); position: relative; z-index: 1;
+            box-shadow: var(--shadow-md);
+        }
+
+        #top-bar {
+            width: 100%; height: 48px;
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            border-bottom: 2px solid var(--red-border);
+            display: flex; align-items: center; padding: 0 20px; flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.7), inset 0 1px 0 rgba(80,30,30,0.5);
+            z-index: 2;
+        }
+
+        #top-bar .top-title {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 14px; color: #E0C0C0; letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #200000, -1px -1px 0 rgba(0,0,0,0.6);
+        }
+
+        #top-bar .top-subtitle { font-size: 10px; color: #B08080; margin-left: 14px; letter-spacing: 1px; }
+
+        #top-bar .top-status {
+            margin-left: auto; font-size: 10px; color: #9A7070; letter-spacing: 0.5px;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        #content-area { display: flex; flex: 1; position: relative; }
+
+        #left-sidebar {
+            width: 220px; min-width: 220px; background-color: #18181A;
+            border-right: 1px solid #2A2020; padding: 12px 0;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            box-shadow: inset -2px 0 8px rgba(0,0,0,0.5); z-index: 1;
+        }
+
+        #left-sidebar .sidebar-header {
+            padding: 12px 16px; margin-bottom: 6px; border-bottom: 1px solid #2A1A1A;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 12px; color: #B09090; letter-spacing: 2px; text-align: center;
+            text-shadow: 0.5px 0.5px 0 #1A0000;
+        }
+
+        #left-sidebar .sidebar-header .sys-label {
+            display: block; font-size: 10px; color: #704A4A; letter-spacing: 1px; margin-top: 2px;
+        }
+
+        #left-sidebar .nav-list { list-style: none; padding: 0; margin: 0; flex: 1; }
+
+        #left-sidebar .nav-list li { margin: 2px 8px; }
+
+        #left-sidebar .nav-list li a {
+            display: block; padding: 9px 12px 9px 16px; font-size: 12px;
+            color: #B0A0A0; text-decoration: none;
+            font-family: "SimSun", "NSimSun", "宋体", serif; letter-spacing: 1px;
+            background: linear-gradient(180deg, #252525 0%, #1C1C1C 100%);
+            border: 1px solid #3A3030; border-radius: 0; cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.2s ease; text-shadow: 0.5px 0.5px 0 #000; position: relative;
+        }
+
+        #left-sidebar .nav-list li a:hover {
+            background: linear-gradient(180deg, #3A2020 0%, #2A1010 100%);
+            border-color: #6B3030; color: #E0C0C0;
+            box-shadow: 0 2px 6px rgba(80,20,20,0.6), inset 0 1px 0 rgba(255,100,100,0.1);
+            transform: translateX(3px);
+        }
+
+        #left-sidebar .nav-list li a:active {
+            background: #1A0A0A; border-style: inset;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); transform: translateX(0);
+        }
+
+        #left-sidebar .nav-list li a.active-nav {
+            background: linear-gradient(180deg, #5C1A1A 0%, #3A0A0A 100%);
+            border-color: #8B3A3A; color: #FFD0D0; font-weight: bold;
+            box-shadow: 0 0 10px rgba(120,30,30,0.8), inset 0 1px 0 rgba(255,150,150,0.15);
+            cursor: default; pointer-events: none; transform: none;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav {
+            background: #1A1A1A; border-color: #2A2A2A; color: #505050;
+            cursor: not-allowed; pointer-events: none; text-shadow: none;
+            box-shadow: none; opacity: 0.6;
+        }
+
+        #left-sidebar .nav-list li a.disabled-nav:hover {
+            background: #1A1A1A; border-color: #2A2A2A; color: #505050;
+            transform: none; box-shadow: none;
+        }
+
+        .nav-prefix {
+            display: inline-block; width: 16px; font-size: 10px;
+            color: #8B4A4A; margin-right: 5px; text-align: center;
+        }
+
+        #left-sidebar .nav-list li a.return-link {
+            background: linear-gradient(180deg, #202020 0%, #161616 100%);
+            border-color: #2A2A2A; color: #8A8080; margin-top: 10px;
+            border-top: 1px solid #2A1A1A;
+        }
+
+        #left-sidebar .nav-list li a.return-link:hover {
+            background: linear-gradient(180deg, #302020 0%, #201010 100%);
+            border-color: #5A3030; color: #C0A0A0;
+        }
+
+        .sidebar-footer-status {
+            padding: 10px 14px; font-size: 9px; color: #5A4040;
+            border-top: 1px solid #2A1A1A; letter-spacing: 0.5px; text-align: center;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        .sidebar-footer-status .status-dot {
+            display: inline-block; width: 5px; height: 5px; background-color: #8B3A3A;
+            margin-right: 4px; vertical-align: middle;
+            animation: statusFlicker 8s ease-in-out infinite;
+        }
+
+        @keyframes statusFlicker {
+            0%,94%,96%,98%,100% { opacity: 0.8; }
+            95% { opacity: 0.15; } 97% { opacity: 0.3; } 99% { opacity: 0.5; }
+        }
+
+        #right-content {
+            flex: 1; padding: 20px 24px; background-color: #1E1E1F;
+            overflow-y: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.4); position: relative;
+        }
+
+        #right-content .content-header {
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 16px; color: #D8C8C8; letter-spacing: 3px;
+            padding-bottom: 10px; margin-bottom: 20px;
+            border-bottom: 2px solid var(--red-border);
+            text-shadow: 1px 1px 0 #2A0000; font-weight: normal;
+        }
+
+        #right-content .content-text {
+            font-size: 11px; line-height: 2; color: #8B7070;
+            margin-bottom: 16px; text-indent: 2em; letter-spacing: 0.5px;
+            text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.3);
+        }
+
+        /* 排班表格样式 */
+        .schedule-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0;
+            font-size: 11px; border: 1px solid #3A2A2A;
+        }
+
+        .schedule-table thead th {
+            background: linear-gradient(180deg, #2E1515 0%, #1C0A0A 100%);
+            color: #D0A080; padding: 10px 8px; font-family: "SimSun", "NSimSun", "宋体", serif;
+            letter-spacing: 2px; font-weight: normal; border: 1px solid #4A2020;
+            text-shadow: 1px 1px 0 #1A0000;
+        }
+
+        .schedule-table tbody td {
+            padding: 9px 8px; border: 1px solid #2A1A1A; text-align: center;
+            vertical-align: middle; color: #A8A8A2; background-color: #1C1A1A;
+            letter-spacing: 0.5px;
+        }
+
+        .schedule-table tbody tr:nth-child(even) td {
+            background-color: #1E1C1C;
+        }
+
+        .schedule-table .time-slot {
+            color: #B07070; font-weight: bold; white-space: nowrap;
+            background-color: #1A1212 !important; font-family: "Courier New", "SimSun", monospace;
+        }
+
+        .schedule-table .area-tag {
+            display: inline-block; padding: 2px 8px; font-size: 10px;
+            background: #1A0E0E; color: #C89880; border: 1px solid #4A2020;
+            letter-spacing: 1px;
+        }
+
+        .schedule-table .name-highlight {
+            color: #D0A080; font-weight: bold;
+        }
+
+        .schedule-table .note-red {
+            color: #C06050; font-size: 10px;
+        }
+
+        /* 图例说明 */
+        .legend-box {
+            margin: 16px 0; padding: 12px 16px;
+            border: 1px solid #3A2A2A; background: #1C1A18;
+            font-size: 10px; color: #8B7070; line-height: 1.8;
+        }
+
+        .legend-box .legend-title {
+            color: #B07070; letter-spacing: 2px; margin-bottom: 6px;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+        }
+
+        .legend-box .legend-dot {
+            display: inline-block; width: 8px; height: 8px; margin-right: 4px;
+            border: 1px solid #4A2020;
+        }
+
+        .legend-box .dot-red { background-color: #5C1A1A; }
+        .legend-box .dot-yellow { background-color: #8B6A20; }
+        .legend-box .dot-blue { background-color: #2A3A5C; }
+
+        #right-content .version-footer {
+            margin-top: 30px; padding-top: 12px;
+            border-top: 1px solid #2A2020; font-size: 10px;
+            color: #6A5050; letter-spacing: 1px; text-align: right;
+            font-family: "Courier New", "SimSun", monospace;
+        }
+
+        @keyframes textFlickerA { 0%,96%,100% { opacity: 1; } 97% { opacity: 0.86; } 98% { opacity: 0.9; } }
+        @keyframes textFlickerB { 0%,94%,100% { opacity: 1; } 95% { opacity: 0.83; } 96% { opacity: 0.88; } }
+        .flicker-a { animation: textFlickerA 13s ease-in-out infinite; }
+        .flicker-b { animation: textFlickerB 16s ease-in-out infinite; animation-delay: 3s; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #4A3030; border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: #5C3A3A; }
+
+        ::selection { background-color: #5C1A1A; color: #E0C0C0; }
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+
+        <!-- 顶部通栏（血红） -->
+        <div id="top-bar">
+            <span class="top-title">古瘗县域内部管控系统</span>
+            <span class="top-subtitle">Ver.0809 · 内网专用</span>
+            <span class="top-status">员工姓名:林淮生 &nbsp;|&nbsp; 链路已加密</span>
+        </div>
+
+        <div id="content-area">
+
+            <!-- 左侧导航 -->
+            <div id="left-sidebar">
+                <div class="sidebar-header">
+                    内部管控系统
+                    <span class="sys-label">古瘗县域 · 内网专用</span>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="level2-xj.html">
+                            <span class="nav-prefix">▶</span>古瘗县记
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-dak.html">
+                            <span class="nav-prefix">▶</span>内部档案库
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-scap.html" class="active-nav">
+                            <span class="nav-prefix">▶</span>事程安排
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level2-qftctz.html">
+                            <span class="nav-prefix">▶</span>祈福统筹台账
+                        </a>
+                    </li>
+                  
+                    <li>
+                        <a href="level2-grrz.html">
+                            <span class="nav-prefix">▶</span>个人日志
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="disabled-nav" onclick="return false;">
+                            <span class="nav-prefix">▶</span>指令卷宗
+                            <span style="font-size:9px;color:#7A3A3A;">【权限不足】</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="level1-1.html" class="return-link" target="_blank">
+                            <span class="nav-prefix">◀</span>返回外网电视台首页
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer-status">
+                    <span class="status-dot"></span>内网链路 · 已加密
+                </div>
+            </div>
+
+            <!-- 右侧内容：事程安排 -->
+            <div id="right-content">
+                <div class="content-header">
+                    事程安排
+                </div>
+
+            
+
+                <!-- 年度祭祀筹备排班 -->
+<div class="card-perm">
+    <div class="card-title">【年度祭祀筹备排班】</div>
+<div class="card-perm">
+    <div class="card-title" style="color: #ff0000;">所有在职员工务必熟知以下内容，任何不当行为，必会受到严肃后果！</div>
+    <table class="schedule-table">
+        <thead>
+            <tr>
+                <th width="18%">时间节点</th>
+                <th width="22%">事项名称</th>
+                <th width="18%">负责方</th>
+                <th width="42%">说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="time-slot">拟当年祈福大纲</td>
+                <td>迹象观察</td>
+                <td>林氏主祭</td>
+                <td class="note-cell">确定当年祈福行程</td>
+            </tr>
+            <tr>
+                <td class="time-slot">拟定准备物料</td>
+                <td>祭物来源确认</td>
+                <td>三村巫祝</td>
+                <td class="note-cell">确认当年祭物来源：外乡迷途者、山洪溺者（须为外乡人）、林氏巫祝卜定人选。若祈期临近仍无合适人选，可启用备用方案。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前七日</td>
+                <td>河底卵石选取</td>
+                <td>山河村程氏</td>
+                <td class="note-cell">潜入瘗谷最深河段盲取卵石八枚。石须为河泥包裹、青苔附着者，不得有棱角裂纹。选石人下水时腰系麻绳，绳之另一端固定于岸边古树。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前七日</td>
+                <td>麻绳制备检查</td>
+                <td>三村绳工</td>
+                <td class="note-cell">检查绕坛麻绳是否完好，有无磨损、断裂、虫蛀。如有问题须重新搓制，不得掺杂任何他物。麻绳粗细、长度、股数须严格符合古制。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前七日</td>
+                <td>铜铃查验</td>
+                <td>古瘗村铁氏</td>
+                <td class="note-cell">检查四枚铜铃锈迹是否完整，确认无新增人为触碰痕迹。如发现锈迹异常脱落，须立即上报林氏主祭。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前五日</td>
+                <td>祭酒酿造封坛</td>
+                <td>石坛村</td>
+                <td class="note-cell">以瘗谷泉水酿造，封坛后不得开启。酒坛数量依当年祭品人数而定，通常为三至五坛。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前五日</td>
+                <td>供果备办</td>
+                <td>古瘗村</td>
+                <td class="note-cell">备办时令果品，须为本地所产，不得外购。供果盘数依当年祭品人数而定，通常为三至八盘。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前三日</td>
+                <td>净水采办（涤尘）</td>
+                <td>石坛村何氏</td>
+                <td class="note-cell">每日卯时取瘗谷裂隙泉水，陶罐盛装。取水途中不得言语、不得回头、陶罐不得触地。若听见谷中有人呼唤，不得回应。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前三日</td>
+                <td>石室清扫</td>
+                <td>古瘗村</td>
+                <td class="note-cell">清扫祭坛旁石室甲，地面铺碎石，石榻备草席。清扫完毕后石室落锁，钥匙交林氏主祭保管。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前三日</td>
+                <td>祭物入室（涤尘）</td>
+                <td>林氏主祭</td>
+                <td class="note-cell">祭物黑布蒙面，幽禁石室甲。三日之内不与饮食，只饮瘗谷净水。看守者须沉默，不得与祭物交谈，不得回应祭物任何问题。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福前一日</td>
+                <td>坛场布置</td>
+                <td>三村执事</td>
+                <td class="note-cell">绕坛麻绳围坛三匝，悬挂四枚铜铃于石柱。坛前石案预置卵石六枚。城墙基撒白灰封城线一周。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福当日</td>
+                <td>岁贡大典</td>
+                <td>林氏主祭</td>
+                <td class="note-cell">执事者登坛行祈。凿杀、血沁、封城。全程沉默不得言语。祭毕不得回顾坛场。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福后七日</td>
+                <td>封城值守</td>
+                <td>三村巡查队</td>
+                <td class="note-cell">轮班值守古城外围，记录异象（乌鸦盘旋、雾气弥漫、坛面发光、地下声响等）。任何人不得进入白灰封城线以内。</td>
+            </tr>
+            <tr>
+                <td class="time-slot">祈福后第八日</td>
+                <td>开城验证</td>
+                <td>林氏主祭</td>
+                <td class="note-cell">查验坛面血污是否尽去、祭物尸骨是否消失、凹槽是否新增裂痕。记录验证结果，判定瘗姥受祈与否。</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+                            

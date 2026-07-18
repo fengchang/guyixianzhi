@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索引擎 - Windows XP</title>
+    <style>
+        /* ==================== 全局重置 ==================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            font-family: "SimSun", "宋体", "Microsoft YaHei", "PingFang SC", sans-serif;
+            font-size: 12px; cursor: default; user-select: none;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+            background: #000;
+        }
+        #screen {
+            width: 1224px; height: 900px; margin: 0 auto; position: relative; overflow: hidden;
+            background: #004e8c;
+            box-shadow: 0 0 0 18px #1a1a1a, 0 0 0 22px #2a2a2a, 0 0 0 26px #111, 0 0 60px rgba(0,0,0,0.7);
+            border-radius: 4px;
+        }
+        #desktop {
+            width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+            background: linear-gradient(180deg,
+                #3a7ec8 0%, #5b9ed4 8%, #7eb8e0 18%, #9dc8e8 28%, #b8d4ec 38%, #c8ddf0 48%,
+                #d4e4f2 52%, #e8eef6 54%, #f0f2f4 56%,
+                #c8d4b8 58%, #b0c0a0 60%, #a8b898 62%,
+                #8ab848 64%, #7aac38 68%, #6ea030 74%, #5c9028 82%, #4a7c20 90%, #3c6818 100%);
+            z-index: 0;
+        }
+        #desktop::before {
+            content: ""; position: absolute; top: 10%; left: 12%;
+            width: 220px; height: 70px;
+            background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 30%, transparent 60%),
+                        radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 35%, transparent 65%),
+                        radial-gradient(ellipse at 65% 55%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 40%, transparent 70%),
+                        radial-gradient(ellipse at 40% 60%, rgba(255,255,255,0.8) 0%, transparent 50%);
+            filter: blur(6px); border-radius: 50%; z-index: 0; pointer-events: none; opacity: 0.9;
+        }
+        #desktop::after {
+            content: ""; position: absolute; top: 18%; right: 18%;
+            width: 280px; height: 60px;
+            background: radial-gradient(ellipse at 35% 45%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 28%, transparent 55%),
+                        radial-gradient(ellipse at 55% 50%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 32%, transparent 62%),
+                        radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.8) 0%, transparent 45%);
+            filter: blur(8px); border-radius: 50%; z-index: 0; pointer-events: none; opacity: 0.85;
+        }
+        .cloud-small {
+            position: absolute; border-radius: 50%; filter: blur(7px); pointer-events: none; z-index: 0;
+        }
+        .cloud-small.cloud1 { top: 22%; left: 45%; width: 140px; height: 40px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.75) 0%, transparent 55%); opacity: 0.7; }
+        .cloud-small.cloud2 { top: 8%; right: 30%; width: 100px; height: 30px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.6) 0%, transparent 50%); opacity: 0.5; }
+
+        #desktop-icons {
+            position: absolute; top: 20px; left: 24px; z-index: 1;
+            display: flex; flex-direction: column; gap: 18px;
+        }
+        .desktop-icon {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            cursor: pointer; width: 70px; text-align: center; transition: filter 0.1s;
+        }
+        .desktop-icon:hover { filter: brightness(1.2); }
+        .desktop-icon .icon-img {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.18); border-radius: 3px;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-shadow: 0 0 6px rgba(255,255,255,0.5); color: #fff;
+        }
+        .desktop-icon .icon-label {
+            font-size: 10px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px; line-height: 1.2; word-break: break-all;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+
+        #xp-window {
+            position: absolute; top: 50px; left: 50%; transform: translateX(-50%);
+            width: 900px; height: 600px; background: #ffffff;
+            border: 3px solid #0054e3; border-radius: 8px 8px 0 0;
+            box-shadow: 0 0 0 1px rgba(0,60,180,0.4), 0 6px 30px rgba(0,0,0,0.5),
+                        0 2px 8px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.1);
+            display: flex; flex-direction: column; z-index: 10; overflow: hidden;
+        }
+        #xp-titlebar {
+            background: linear-gradient(180deg, #0a6cd6 0%, #1a7ce0 3%, #2d8de8 8%, #3d9aee 20%,
+                #4aa4f2 35%, #3d98ec 50%, #2a84dc 65%, #1a6ec8 82%, #0d5cb4 95%, #0050a8 100%);
+            padding: 0 6px 0 10px; height: 30px; display: flex; align-items: center;
+            justify-content: space-between; flex-shrink: 0; border-radius: 6px 6px 0 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); cursor: default; user-select: none;
+        }
+        #xp-titlebar .title-left { display: flex; align-items: center; gap: 7px; height: 100%; }
+        #xp-titlebar .win-icon {
+            width: 20px; height: 20px; background: linear-gradient(180deg, #f0e8d0, #dcc898);
+            border-radius: 2px; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: #5a4020; flex-shrink: 0;
+            border: 1px solid #b89860; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); line-height: 1;
+        }
+        #xp-titlebar .title-text {
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 13px; font-weight: bold; color: #ffffff; letter-spacing: 1px;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.4); white-space: nowrap;
+        }
+        #xp-titlebar .window-buttons { display: flex; gap: 2px; align-items: center; height: 100%; }
+        #xp-titlebar .win-btn {
+            width: 26px; height: 22px; border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.35); cursor: pointer; font-size: 10px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; line-height: 1;
+            font-family: "Segoe UI", "SimSun", "Tahoma", sans-serif; transition: all 0.08s;
+            color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.3); user-select: none;
+        }
+        #xp-titlebar .win-btn.min-btn {
+            background: linear-gradient(180deg, #3da0f0 0%, #1a70c8 45%, #0d5aac 70%, #0048a0 100%);
+            font-size: 14px; line-height: 0.6; padding-bottom: 2px;
+        }
+        #xp-titlebar .win-btn.min-btn:hover {
+            background: linear-gradient(180deg, #5ab8f8 0%, #2888d8 45%, #1a68b8 70%, #0a50a0 100%);
+            border-color: rgba(255,255,255,0.6);
+        }
+        #xp-titlebar .win-btn.max-btn {
+            background: linear-gradient(180deg, #3da0f0 0%, #1a70c8 45%, #0d5aac 70%, #0048a0 100%);
+            font-size: 11px;
+        }
+        #xp-titlebar .win-btn.max-btn:hover {
+            background: linear-gradient(180deg, #5ab8f8 0%, #2888d8 45%, #1a68b8 70%, #0a50a0 100%);
+            border-color: rgba(255,255,255,0.6);
+        }
+        #xp-titlebar .win-btn.close-btn {
+            background: linear-gradient(180deg, #e88060 0%, #d04030 30%, #c0201a 55%, #a01010 85%, #8a0808 100%);
+            border-color: rgba(255,255,255,0.4); font-size: 13px; margin-left: 4px;
+        }
+        #xp-titlebar .win-btn.close-btn:hover {
+            background: linear-gradient(180deg, #f0a080 0%, #e05040 30%, #d02820 55%, #b01818 85%, #9a0a0a 100%);
+            border-color: rgba(255,255,255,0.7); box-shadow: 0 0 8px rgba(255,60,30,0.5);
+        }
+        #xp-titlebar .win-btn:active { background: #0a4a90; box-shadow: inset 0 2px 6px rgba(0,0,0,0.35); border-color: rgba(0,0,0,0.3); }
+        #xp-titlebar .win-btn.close-btn:active { background: #8a1010; }
+
+        #xp-menubar {
+            background: #f0f0ea; border-bottom: 1px solid #c8c8b8; padding: 3px 8px;
+            display: flex; gap: 14px; font-size: 12px; font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            color: #1a1a1a; flex-shrink: 0; user-select: none; letter-spacing: 0.5px;
+        }
+        #xp-menubar span { cursor: pointer; padding: 2px 4px; border-radius: 1px; }
+        #xp-menubar span:hover { background: #d8d8c8; text-decoration: underline; }
+
+        #xp-toolbar {
+            background: #f8f8f2; border-bottom: 1px solid #d0d0c0; padding: 3px 8px;
+            display: flex; gap: 4px; align-items: center; flex-shrink: 0; flex-wrap: wrap;
+        }
+        #xp-toolbar .tool-btn {
+            padding: 3px 10px; font-size: 11px; font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            background: #f0f0e8; border: 1px solid #b0b0a0; border-radius: 3px; cursor: pointer;
+            letter-spacing: 0.5px; color: #1a1a1a;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); transition: all 0.1s;
+        }
+        #xp-toolbar .tool-btn:hover { background: #e8e8d8; border-color: #808070; }
+        #xp-toolbar .tool-btn:active {
+            background: #d0d0c0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); border-style: inset;
+        }
+
+        #window-content {
+            flex: 1; min-height: 0; background: #ffffff; position: relative;
+            display: flex; flex-direction: column; overflow-y: auto;
+        }
+        #search-container {
+            padding: 20px 30px; display: flex; flex-direction: column; height: 100%;
+        }
+        .search-bar {
+            display: flex; align-items: center; gap: 6px; margin-bottom: 20px;
+        }
+        #search-input {
+            flex: 1; padding: 4px 8px; font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 13px; border: 1px solid #7e9db9; border-radius: 2px;
+            outline: none; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        #search-btn {
+            padding: 4px 14px; font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 12px; background: #f0f0e8; border: 1px solid #b0b0a0; border-radius: 3px;
+            cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+            letter-spacing: 0.5px; transition: all 0.1s;
+        }
+        #search-btn:hover { background: #e8e8d8; }
+        #search-btn:active { background: #d0d0c0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); }
+        #results-area {
+            flex: 1; overflow-y: auto; margin-top: 5px;
+        }
+        .result-item {
+            border-bottom: 1px solid #e0d8c8; padding: 10px 4px; cursor: default;
+            transition: background 0.1s;
+        }
+        .result-item:hover { background: #f8f8f0; }
+        .result-item.clickable { cursor: pointer; color: #1a0dab; }
+        .result-item.clickable:hover { background: #f0f0e0; text-decoration: underline; }
+        .result-title {
+            font-size: 13px; font-weight: bold; color: #1a0dab; margin-bottom: 4px;
+        }
+        .result-desc {
+            font-size: 11px; color: #4a3a28; line-height: 1.4;
+        }
+        .result-url {
+            font-size: 10px; color: #0e7740; margin-top: 2px;
+        }
+
+        #xp-statusbar {
+            background: #f0f0e8; border-top: 1px solid #c8c8b8; padding: 4px 10px;
+            font-size: 10px; color: #5a5040; letter-spacing: 0.3px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0; font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            border-radius: 0 0 5px 5px;
+        }
+
+        #xp-taskbar {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 36px;
+            background: linear-gradient(180deg, #5a7da8 0%, #4a6d98 2%, #3d5f88 10%,
+                #355680 25%, #2e4d72 50%, #274568 75%, #1f3c5c 95%, #183050 100%);
+            border-top: 1px solid #6a8db8; display: flex; align-items: center; padding: 0 4px;
+            z-index: 20; box-shadow: inset 0 1px 0 rgba(255,255,255,0.15); gap: 4px;
+        }
+        #start-btn {
+            height: 28px; padding: 0 14px;
+            background: linear-gradient(180deg, #5a9e3a 0%, #3d7a20 30%, #2d6018 60%, #1a4a0a 100%);
+            border-radius: 6px; border: 1px solid #1a3a08; cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            font-size: 11px; font-weight: bold; color: #fff;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3); letter-spacing: 1px;
+            flex-shrink: 0; transition: all 0.1s;
+        }
+        #start-btn:hover {
+            background: linear-gradient(180deg, #6aae4a 0%, #4d8a2a 30%, #3a7020 60%, #225a10 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 0 8px rgba(80,160,40,0.4);
+        }
+        #start-btn:active { background: #1a4a0a; box-shadow: inset 0 2px 6px rgba(0,0,0,0.4); }
+        #quick-launch {
+            display: flex; gap: 4px; align-items: center; padding: 0 4px; flex-shrink: 0;
+        }
+        .ql-icon {
+            width: 24px; height: 24px; background: rgba(255,255,255,0.15); border-radius: 2px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 12px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.1s;
+        }
+        .ql-icon:hover { background: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.3); }
+        #taskbar-programs {
+            flex: 1; display: flex; gap: 3px; align-items: center; overflow: hidden; padding: 0 4px;
+        }
+        .tb-program {
+            height: 26px; padding: 0 12px; background: rgba(255,255,255,0.12); border-radius: 3px;
+            cursor: pointer; font-size: 10px; color: #fff; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 5px; white-space: nowrap;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15);
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+        }
+        .tb-program.active {
+            background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.35);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .tb-program:hover { background: rgba(255,255,255,0.22); }
+        #system-tray {
+            display: flex; align-items: center; gap: 6px; padding: 0 6px; flex-shrink: 0;
+            color: #fff; font-size: 10px; letter-spacing: 0.5px;
+            font-family: "SimSun", "宋体", "PingFang SC", sans-serif;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+        }
+        .tray-icon { width: 18px; height: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; border-radius: 1px; }
+        .tray-icon:hover { background: rgba(255,255,255,0.2); }
+        .tray-clock { font-size: 10px; letter-spacing: 0.5px; padding: 2px 4px; border-radius: 2px; }
+        .tray-clock:hover { background: rgba(255,255,255,0.15); }
+
+        #scanlines-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 998;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: multiply; opacity: 0.5;
+        }
+        #grain-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997;
+            background-image: url('data:image/svg+xml,%3Csvg width="3" height="3" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23000" opacity="0.035"/%3E%3Crect x="1" y="1" width="1" height="1" fill="%23000" opacity="0.04"/%3E%3Crect x="2" y="2" width="1" height="1" fill="%23000" opacity="0.03"/%3E%3C/svg%3E');
+            background-repeat: repeat; background-size: 3px 3px; mix-blend-mode: multiply; opacity: 0.55;
+        }
+        #chroma-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 996;
+            background: radial-gradient(ellipse at 50% 45%, transparent 60%, rgba(20,30,50,0.06) 85%, rgba(10,15,25,0.1) 100%);
+        }
+        @media (max-width: 1060px) {
+            #screen { width: 100vw; height: auto; aspect-ratio: 1024/768; border-radius: 0; box-shadow: none; }
+            #xp-window { width: 90%; height: auto; min-height: 400px; top: 30px; }
+            #desktop-icons { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div id="screen">
+
+    <!-- 桌面背景 -->
+    <div id="desktop">
+        <span class="cloud-small cloud1"></span>
+        <span class="cloud-small cloud2"></span>
+    </div>
+
+    <!-- 桌面图标 -->
+    <div id="desktop-icons">
+        <div class="desktop-icon"><div class="icon-img">🖥️</div><span class="icon-label">我的电脑</span></div>
+        <div class="desktop-icon"><div class="icon-img">📁</div><span class="icon-label">我的文档</span></div>
+        <div class="desktop-icon"><div class="icon-img">🗑️</div><span class="icon-label">回收站</span></div>
+    </div>
+
+    <!-- XP 窗口 -->
+    <div id="xp-window">
+        <!-- 标题栏 -->
+        <div id="xp-titlebar">
+            <div class="title-left">
+                <div class="win-icon">🔍</div>
+                <span class="title-text">搜索引擎 - Windows XP</span>
+            </div>
+            <div class="window-buttons">
+                <button class="win-btn min-btn">_</button>
+                <button class="win-btn max-btn">□</button>
+                <button class="win-btn close-btn">✕</button>
+            </div>
+        </div>
+        <!-- 菜单栏 -->
+        <div id="xp-menubar">
+            <span>文件(F)</span><span>编辑(E)</span><span>查看(V)</span><span>收藏(A)</span><span>工具(T)</span><span>帮助(H)</span>
+        </div>
+        <!-- 工具栏 -->
+        <div id="xp-toolbar">
+            <button class="tool-btn">← 后退</button>
+            <button class="tool-btn">前进 →</button>
+            <button class="tool-btn">🏠 主页</button>
+            <button class="tool-btn">🔍 搜索</button>
+            <button class="tool-btn">📋 收藏</button>
+            <button class="tool-btn">🖨️ 打印</button>
+        </div>
+        <!-- 窗口内容：搜索引擎 -->
+        <div id="window-content">
+            <div id="search-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="请输入关键词搜索相关信息..." autofocus>
+                    <button id="search-btn">🔍 搜索</button>
+                </div>
+                <div id="results-area">
+                    <!-- 初始提示 -->
+                    <p style="color:#5a4a38; font-size:12px; text-align:center; margin-top:30px;">
+                        请输入 "古邑（yì）县" 或 "古邑县广播电视台" 进行搜索
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- 状态栏 -->
+        <div id="xp-statusbar">
+            <span>就绪</span>
+            <span>搜索引擎 · 安全连接</span>
+            <span>🕊️ 2026</span>
+        </div>
+    </div>
+
+    <!-- 任务栏 -->
+    <div id="xp-taskbar">
+        <button id="start-btn">开 始</button>
+        <div id="quick-launch">
+            <div class="ql-icon">📋</div>
+            <div class="ql-icon">🌐</div>
+            <div class="ql-icon">📂</div>
+        </div>
+        <div id="taskbar-programs">
+            <div class="tb-program active">🔍 古邑搜索引擎</div>
+        </div>
+        <div id="system-tray">
+            <span class="tray-icon">🔊</span>
+            <span class="tray-icon">🌐</span>
+            <span class="tray-icon">🛡️</span>
+            <span class="tray-clock" id="tray-clock">14:28</span>
+        </div>
+    </div>
+
+    <!-- 电影效果叠加层 -->
+    <div id="scanlines-overlay"></div>
+    <div id="grain-overlay"></div>
+    <div id="chroma-overlay"></div>
+</div>
+
+<script>
+    // ==================== 系统时钟 ====================
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('tray-clock').textContent = hours + ':' + minutes;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // ==================== 窗口按钮交互 ====================
+    const xpWindow = document.getElementById('xp-window');
+    const minBtn = document.querySelector('#xp-titlebar .win-btn.min-btn');
+    const maxBtn = document.querySelector('#xp-titlebar .win-btn.max-btn');
+    const closeBtn = document.querySelector('#xp-titlebar .win-btn.close-btn');
+    let isMaximized = false, origStyles = {};
+
+    minBtn.addEventListener('click', () => {
+        xpWindow.style.opacity = '0.5';
+        xpWindow.style.transform = 'translateX(-50%) scale(0.92)';
+        xpWindow.style.transition = 'all 0.25s ease';
+        setTimeout(() => {
+            xpWindow.style.opacity = '1';
+            xpWindow.style.transform = 'translateX(-50%) scale(1)';
+            xpWindow.style.transition = 'all 0.3s ease';
+        }, 500);
+    });
+    maxBtn.addEventListener('click', () => {
+        if (!isMaximized) {
+            origStyles = {
+                top: xpWindow.style.top, left: xpWindow.style.left,
+                width: xpWindow.style.width, height: xpWindow.style.height,
+                transform: xpWindow.style.transform, borderRadius: xpWindow.style.borderRadius,
+            };
+            xpWindow.style.top = '0'; xpWindow.style.left = '0';
+            xpWindow.style.width = '100%'; xpWindow.style.height = 'calc(100% - 36px)';
+            xpWindow.style.transform = 'none'; xpWindow.style.borderRadius = '0';
+            xpWindow.style.transition = 'all 0.3s ease';
+            isMaximized = true;
+        } else {
+            xpWindow.style.top = origStyles.top || '50px';
+            xpWindow.style.left = origStyles.left || '50%';
+            xpWindow.style.width = origStyles.width || '780px';
+            xpWindow.style.height = origStyles.height || '560px';
+            xpWindow.style.transform = origStyles.transform || 'translateX(-50%)';
+            xpWindow.style.borderRadius = origStyles.borderRadius || '8px 8px 0 0';
+            xpWindow.style.transition = 'all 0.3s ease';
+            isMaximized = false;
+        }
+    });
+    closeBtn.addEventListener('click', () => {
+        xpWindow.style.opacity = '0';
+        xpWindow.style.transform = 'translateX(-50%) scale(0.94)';
+        xpWindow.style.transition = 'all 0.45s ease';
+        setTimeout(() => {
+            xpWindow.style.opacity = '1';
+            xpWindow.style.transform = 'translateX(-50%) scale(1)';
+            xpWindow.style.transition = 'all 0.35s ease';
+        }, 700);
+    });
+
+    // ==================== 开始按钮 ====================
+    document.getElementById('start-btn').addEventListener('click', () => {
+        const btn = document.getElementById('start-btn');
+        btn.style.transform = 'scale(0.94)';
+        setTimeout(() => { btn.style.transform = 'scale(1)'; }, 150);
+        const icons = document.querySelectorAll('#desktop-icons .desktop-icon');
+        icons.forEach((icon, i) => {
+            setTimeout(() => {
+                icon.style.filter = 'brightness(1.6)';
+                setTimeout(() => { icon.style.filter = ''; }, 200);
+            }, i * 60);
+        });
+    });
+
+    // 禁止右键
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // ==================== 搜索引擎逻辑 ====================
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const resultsArea = document.getElementById('results-area');
+
+    // 模拟搜索结果数据库
+    const allResults = [
+        { title: '古邑县广播电视台', url: 'level1-1.html', desc: '古邑县广播电视台是本地权威媒体，提供新闻、专题、文艺节目。', target: true, showOn: ['古邑县','广播电视台'] },
+        { title: '古邑县政府门户网站', url: '', desc: '古邑县人民政府官方网站，政务公开、便民服务。', target: false, showOn: ['古邑县'] },
+        { title: '古邑县文化旅游局', url: '', desc: '介绍古邑县旅游景点、文化活动、非遗传承。', target: false, showOn: ['古邑县'] },
+        { title: '古邑县第一中学', url: '', desc: '省级重点中学，历史悠久，教育成果丰硕。', target: false, showOn: ['古邑县'] },
+        { title: '古邑县人民医院', url: '', desc: '二级甲等医院，提供医疗、预防、保健服务。', target: false, showOn: ['古邑县'] },
+        { title: '古邑县交通局', url: '', desc: '负责古邑县公路、运输、公共交通管理。', target: false, showOn: ['古邑县'] },
+        { title: '全国广播电视台名录', url: '', desc: '包含各省市县广播电视台联系方式。', target: false, showOn: ['广播电视台'] },
+        { title: '广播电视节目制作经营许可证查询', url: '', desc: '国家广播电视总局官方查询系统。', target: false, showOn: ['广播电视台'] },
+    ];
+
+    function search(keyword) {
+        const kw = keyword.trim().toLowerCase();
+        if (!kw) {
+            resultsArea.innerHTML = '<p style="color:#5a4a38; font-size:12px; text-align:center; margin-top:30px;">请输入关键词</p>';
+            return;
+        }
+
+        // 过滤显示结果：只要关键词出现在标题或描述中，或者匹配 showOn 字段
+        const matched = allResults.filter(item => {
+            if (item.showOn && item.showOn.some(w => kw.includes(w.toLowerCase()))) return true;
+            return item.title.toLowerCase().includes(kw) || item.desc.toLowerCase().includes(kw);
+        });
+
+        if (matched.length === 0) {
+            resultsArea.innerHTML = '<p style="color:#5a4a38; font-size:12px; text-align:center; margin-top:30px;">未找到相关结果，请尝试其他关键词。</p>';
+            return;
+        }
+
+        let html = '';
+        matched.forEach(item => {
+            const clickClass = item.target ? 'clickable' : '';
+            html += `
+                <div class="result-item ${clickClass}" data-url="${item.url || ''}">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-desc">${item.desc}</div>
+                    <div class="result-url">${item.url ? 'http://www.guyi.gov.cn/' + item.title.replace(/ /g,'') : ''}</div>
+                </div>
+            `;
+        });
+        resultsArea.innerHTML = html;
+
+        // 绑定点击事件
+        document.querySelectorAll('.result-item.clickable').forEach(el => {
+            el.addEventListener('click', function(e) {
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.location.href = url;
+                }
+            });
+        });
+    }
+
+    searchBtn.addEventListener('click', () => search(searchInput.value));
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') search(searchInput.value);
+    });
+
+    // 初始默认显示一些示例（可选）
+    // search('古邑县'); // 如果想打开就显示一些结果，取消注释这行
+</script>
+</body>
+</html>

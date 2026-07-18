@@ -1,0 +1,1174 @@
+<!-- Level1-1 废弃电视台官网主页（古邑县广播电视台） - 千禧年县城政务官网复古重制版 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古邑县广播电视台,新闻,节目表,政务,广电">
+    <meta name="description" content="古邑县广播电视台官方网站">
+    <title>古邑县广播电视台 - 首页</title>
+    <style>
+        /* ==================== 全局复古基调 ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #C5C0B5;
+            font-family: "SimSun", "宋体", "MS Sans Serif", "Arial", sans-serif;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #2A2A2A;
+            text-align: center;
+            cursor: default;
+            min-height: 100vh;
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="3" height="3" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23A8A39A" opacity="0.35"/%3E%3Crect x="2" y="1" width="1" height="1" fill="%2399948C" opacity="0.25"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-blend-mode: multiply;
+        }
+
+        #main-container {
+            width: 972px;
+            margin: 0 auto;
+            text-align: left;
+            background-color: #FFFEF7;
+            border: 2px solid #7A7E85;
+            border-style: outset;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        /* ==================== 最顶部红底白字走马灯公告栏 ==================== */
+        #alert-marquee-bar {
+            width: 100%;
+            background-color: #C82026;
+            background-image: linear-gradient(180deg, #D42028 0%, #B01A20 100%);
+            padding: 4px 8px;
+            text-align: center;
+            border-bottom: 2px solid #8B0000;
+        }
+
+        #alert-marquee-bar marquee {
+            color: #FFFFFF;
+            font-size: 12px;
+            font-family: "SimHei", "黑体", sans-serif;
+            letter-spacing: 1px;
+            font-weight: bold;
+            width: 100%;
+            height: 20px;
+        }
+
+        /* ==================== 顶部通栏 ==================== */
+        #top-banner {
+            width: 100%;
+            height: 92px;
+            background-color: #1A3555;
+            background-image: linear-gradient(180deg, #1F3D63 0%, #142C48 100%);
+            border-bottom: 3px solid #0A1525;
+            display: table;
+            table-layout: fixed;
+            position: relative;
+        }
+
+        #top-banner .banner-cell {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 6px 8px;
+        }
+
+        #logo-area {
+            width: 150px;
+            text-align: center;
+            position: relative;
+        }
+
+        #logo-area .logo-img-wrapper {
+            display: inline-block;
+            width: 115px;
+            height: 62px;
+            border: 2px solid #7A8A9A;
+            background-color: #F0EDE5;
+            overflow: visible;
+            position: relative;
+            box-shadow:
+                1px 0 0 rgba(255, 255, 255, 0.35),
+                -1px 0 0 rgba(255, 255, 255, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.25),
+                0 -1px 0 rgba(255, 255, 255, 0.2),
+                2px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        #logo-area .logo-img-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23888" opacity="0.18"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            z-index: 2;
+        }
+
+        #logo-area .logo-img-wrapper img {
+            width: 111px;
+            height: 58px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: contrast(0.88) brightness(1.06) saturate(0.7);
+        }
+
+        #logo-area .blink-star {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+            font-size: 18px;
+            color: #C82026;
+            z-index: 5;
+            animation: starBlink 1.2s ease-in-out infinite;
+            text-shadow: 0 0 3px rgba(200, 32, 38, 0.6);
+            pointer-events: none;
+        }
+
+        @keyframes starBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.8); }
+        }
+
+        #logo-area .logo-text {
+            font-size: 9px;
+            color: #C5CDD5;
+            margin-top: 2px;
+            letter-spacing: 2px;
+            font-family: "SimHei", "黑体", sans-serif;
+        }
+
+        #marquee-area {
+            text-align: center;
+            padding: 0 8px;
+        }
+
+        #marquee-area .marquee-label {
+            display: inline-block;
+            background-color: #C82026;
+            color: #FFF;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 7px;
+            margin-right: 5px;
+            letter-spacing: 1px;
+            font-family: "SimHei", "黑体", sans-serif;
+            vertical-align: middle;
+        }
+
+        #marquee-area marquee {
+            color: #E8D5A3;
+            font-size: 11px;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            width: 370px;
+            vertical-align: middle;
+        }
+
+        #date-area {
+            width: 170px;
+            text-align: center;
+        }
+
+        #date-area .date-box {
+            display: inline-block;
+            background-color: #3A3A35;
+            border: 3px inset #6A6A6A;
+            padding: 7px 10px;
+            font-family: "Courier New", "SimSun", "NSimSun", monospace;
+            font-size: 13px;
+            color: #33EE44;
+            letter-spacing: 2px;
+            text-align: center;
+            line-height: 1.5;
+            cursor: default;
+            min-width: 140px;
+            text-shadow: 0 0 4px rgba(50, 230, 60, 0.5);
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23555" opacity="0.3"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            position: relative;
+        }
+
+        #date-area .date-box .weekday {
+            font-size: 10px;
+            color: #77CC77;
+            display: block;
+        }
+        #date-area .date-box .date-str {
+            font-size: 15px;
+            font-weight: bold;
+            color: #44FF55;
+            display: block;
+        }
+        #date-area .date-box .clock-note {
+            font-size: 8px;
+            color: #99BB99;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+            text-shadow: none;
+        }
+
+        /* ==================== 导航栏（统一为浅蓝按钮，竖线分割） ==================== */
+        #nav-bar {
+            background-color: #E0E3EA;
+            border-bottom: 2px solid #999DA5;
+            padding: 6px 0;
+            text-align: center;
+        }
+
+        #nav-bar .nav-table {
+            margin: 0 auto;
+            border-spacing: 0;
+            display: inline-table;
+        }
+
+        #nav-bar .nav-table td {
+            padding: 0 2px;
+            vertical-align: middle;
+        }
+
+        #nav-bar .nav-table td.nav-separator {
+            color: #888;
+            font-size: 11px;
+            padding: 0 1px;
+            user-select: none;
+        }
+
+        /* 所有导航按钮统一为浅蓝细边框样式 */
+        #nav-bar .nav-btn {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 1px;
+            color: #1A3555;
+            background-color: #F5F5F8;
+            border: 1px solid #8899BB;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0;
+            text-align: center;
+            white-space: nowrap;
+            min-width: 56px;
+        }
+
+        #nav-bar .nav-btn:hover {
+            background-color: #FFFACD;
+            border-color: #AA8833;
+            color: #663300;
+        }
+
+        #nav-bar .nav-btn:active {
+            background-color: #FFE88C;
+            border-style: inset;
+        }
+
+        /* ==================== 新闻轮播（花边标题 + 双层边框 + 文字翻页） ==================== */
+        #news-slider {
+            width: 100%;
+            background-color: #F0F1F4;
+            border-bottom: 2px solid #B0B4BB;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        #news-slider .slider-title {
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 15px;
+            color: #0F2040;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            display: inline-block;
+            padding: 2px 18px;
+            background: #F0F1F4;
+            border-left: 3px double #888;
+            border-right: 3px double #888;
+        }
+
+        #news-slider .slider-images {
+            display: table;
+            margin: 10px auto;
+            border-spacing: 10px;
+        }
+
+        #news-slider .slider-images .slide-cell {
+            display: table-cell;
+            width: 420px;
+            height: 262px;
+            vertical-align: top;
+            text-align: center;
+            border: 3px double #8A8A8A;
+            outline: 2px solid #B8B8B8;
+            outline-offset: 1px;
+            background-color: #E8E5DD;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #news-slider .slider-images .slide-cell img {
+            width: 412px;
+            height: 254px;
+            display: block;
+            object-fit: cover;
+            filter: contrast(0.8) brightness(1.05) saturate(0.55) blur(0.6px);
+            image-rendering: auto;
+        }
+
+        #news-slider .slide-caption-row {
+            display: table;
+            margin: 4px auto 0;
+            border-spacing: 10px;
+        }
+
+        #news-slider .slide-caption-row .caption-cell {
+            display: table-cell;
+            width: 280px;
+            font-size: 10px;
+            color: #444;
+            text-align: center;
+            font-family: "SimSun", "宋体", serif;
+            padding: 3px 4px;
+            background-color: #F5F5F2;
+            border: 1px solid #C8CCD2;
+            font-weight: bold;
+        }
+
+        #news-slider .slider-nav-text {
+            margin-top: 8px;
+            font-size: 11px;
+            font-family: "SimSun", "宋体", serif;
+            color: #003399;
+            text-align: center;
+        }
+
+        #news-slider .slider-nav-text a {
+            color: #003399;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 0 3px;
+        }
+
+        #news-slider .slider-nav-text a:hover {
+            color: #CC0000;
+            text-decoration: underline;
+        }
+
+        #news-slider .slider-nav-text .page-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: #999;
+            color: #999;
+            font-size: 10px;
+            line-height: 12px;
+            text-align: center;
+            margin: 0 2px;
+            cursor: pointer;
+            vertical-align: middle;
+            font-family: "SimSun", serif;
+        }
+
+        #news-slider .slider-nav-text .page-dot.active-dot {
+            background-color: #1A3555;
+            color: #1A3555;
+        }
+
+        #news-slider .slider-links {
+            margin-top: 6px;
+            font-size: 11px;
+        }
+
+        #news-slider .slider-links a {
+            color: #003399;
+            text-decoration: underline;
+            margin: 0 6px;
+            cursor: pointer;
+        }
+
+        #news-slider .slider-links a:hover {
+            color: #CC0000;
+        }
+        #news-slider .slider-links a:visited {
+            color: #003399;
+        }
+
+        /* ==================== 搜索栏 ==================== */
+        #search-area-outer {
+            margin: 10px 20px;
+            padding: 2px;
+            background-color: #D8E0EC;
+            border: 2px solid #8899AA;
+        }
+
+        #search-area-inner {
+            padding: 8px 12px;
+            background-color: #EDEEF2;
+            text-align: center;
+        }
+
+        #search-area-inner .search-note {
+            font-size: 9px;
+            color: #777;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        #search-area-inner .search-label {
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 12px;
+            color: #1A3555;
+            margin-right: 5px;
+            letter-spacing: 1px;
+            vertical-align: middle;
+        }
+
+        #search-area-inner input[type="text"] {
+            width: 250px;
+            height: 24px;
+            font-size: 12px;
+            border: 2px inset #999;
+            padding: 2px 5px;
+            background-color: #E8E8E0;
+            font-family: "SimSun", "宋体", serif;
+            vertical-align: middle;
+            color: #333;
+        }
+
+        #search-area-inner button {
+            width: 60px;
+            height: 24px;
+            background-color: #D8D8D8;
+            border: 2px outset #CCC;
+            font-family: "SimSun", "宋体", serif;
+            font-size: 11px;
+            cursor: pointer;
+            vertical-align: middle;
+            margin-left: 5px;
+            letter-spacing: 1px;
+            color: #222;
+            border-radius: 0;
+        }
+
+        #search-area-inner button:active {
+            border-style: inset;
+            background-color: #C8C8C8;
+        }
+
+        /* ==================== 主体左右分栏表格 ==================== */
+        #content-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #9A9EA5;
+        }
+
+        #content-table td {
+            vertical-align: top;
+            padding: 0;
+            border: 1px solid #C0C4CB;
+        }
+
+        #left-sidebar {
+            width: 175px;
+            background-color: #1F3D5E;
+            background-image: linear-gradient(180deg, #234568 0%, #16304D 50%, #0F2440 100%);
+            border-right: 2px solid #0D1F33;
+            padding: 0;
+            color: #D0D8E0;
+        }
+
+        #left-sidebar .sidebar-header {
+            background-color: #0F2440;
+            color: #FFF;
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 13px;
+            text-align: center;
+            padding: 9px 4px;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #091828;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        #left-sidebar .nav-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #left-sidebar .nav-list li {
+            border-bottom: 1px solid #2A4A6A;
+        }
+
+        #left-sidebar .nav-list li a {
+            display: block;
+            padding: 8px 10px 8px 18px;
+            font-size: 11px;
+            color: #D0D8E0;
+            text-decoration: none;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 1px;
+            background-color: transparent;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+
+        #left-sidebar .nav-list li a:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-left: 2px solid #8899BB;
+            color: #FFF;
+        }
+
+        #left-sidebar .nav-list li a .nav-prefix {
+            color: #1A1A1A;
+            font-size: 9px;
+            margin-right: 4px;
+        }
+
+        #left-sidebar .sidebar-notice {
+            margin: 10px 6px;
+            padding: 8px 7px;
+            font-size: 10px;
+            color: #222;
+            background-color: #FFFACD;
+            border: 2px dashed #333;
+            line-height: 1.6;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        #left-sidebar .weather-box {
+            margin: 8px 6px;
+            padding: 6px 7px;
+            font-size: 10px;
+            color: #D0D8E0;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid #4A6A8A;
+            line-height: 1.5;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        #left-sidebar .weather-box .weather-title {
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 10px;
+            text-align: center;
+            letter-spacing: 1px;
+            border-bottom: 1px dotted #5A7A9A;
+            padding-bottom: 3px;
+            margin-bottom: 4px;
+            color: #BBD;
+        }
+
+        #left-sidebar .weather-box table {
+            width: 100%;
+            font-size: 9px;
+            color: #C8D4DE;
+            border-collapse: collapse;
+        }
+        #left-sidebar .weather-box table td {
+            padding: 2px 3px;
+            border-bottom: 1px dotted #3A5A7A;
+            text-align: center;
+        }
+
+        #left-sidebar .friend-links-box {
+            margin: 8px 6px;
+            padding: 6px 7px;
+            font-size: 10px;
+            color: #AAB8C4;
+            background-color: rgba(0, 0, 0, 0.25);
+            border: 1px solid #3A5A7A;
+            line-height: 1.6;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        #left-sidebar .friend-links-box .fl-title {
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 10px;
+            text-align: center;
+            letter-spacing: 1px;
+            border-bottom: 1px dotted #5A7A9A;
+            padding-bottom: 3px;
+            margin-bottom: 4px;
+            color: #BBD;
+        }
+
+        #left-sidebar .friend-links-box a {
+            color: #AABBDD;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 9px;
+        }
+        #left-sidebar .friend-links-box a:hover {
+            color: #FFF;
+        }
+
+        /* ==================== 右侧新闻列表 ==================== */
+        #right-content {
+            padding: 10px 14px;
+            background-color: #FFFEF7;
+        }
+
+        #right-content .content-section {
+            margin-bottom: 14px;
+            border: 2px ridge #B5B0A0;
+            background-color: #FDFCFA;
+            padding: 8px 12px;
+        }
+
+        #right-content .content-section .section-title {
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 13px;
+            color: #1A3555;
+            border-bottom: 2px solid #C5C0B5;
+            padding: 3px 6px;
+            margin: -8px -12px 8px -12px;
+            background-color: #F8F7F3;
+            letter-spacing: 2px;
+        }
+
+        #right-content .content-section .news-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #D0CEC5;
+            clear: both;
+        }
+
+        #right-content .content-section .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        #right-content .news-thumb {
+            float: left;
+            width: 158px;
+            height: 114px;
+            margin-right: 12px;
+            border: 2px solid #B8B5A0;
+            background-color: #E8E5DD;
+            overflow: hidden;
+        }
+
+        #right-content .news-thumb img {
+            width: 154px;
+            height: 110px;
+            display: block;
+            filter: contrast(0.75) brightness(1.1) saturate(0.5) blur(0.4px);
+            image-rendering: auto;
+        }
+
+        #right-content .news-text .news-date {
+            font-size: 9px;
+            color: #999;
+            margin-bottom: 1px;
+            letter-spacing: 0.5px;
+        }
+
+        #right-content .news-text .news-title {
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 2px;
+        }
+
+        #right-content .news-text .news-title a {
+            color: #003399;
+            text-decoration: underline;
+        }
+        #right-content .news-text .news-title a:hover {
+            color: #CC0000;
+        }
+        #right-content .news-text .news-title a:visited {
+            color: #003399;
+        }
+
+        #right-content .news-text .news-summary {
+            font-size: 11px;
+            color: #555;
+            line-height: 1.8;
+            margin-top: 2px;
+        }
+
+        /* ==================== 底部公告 ==================== */
+        #bottom-announcement {
+            background-color: #EDECE5;
+            border-top: 2px solid #A0A4AC;
+            padding: 10px 16px;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="3" height="3" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23C8C4B8" opacity="0.3"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+        }
+
+        #bottom-announcement .maintenance-btn {
+            display: inline-block;
+            padding: 7px 22px;
+            background-color: #D0CEC5;
+            color: #444;
+            border: 2px outset #B5B0A0;
+            font-size: 11px;
+            font-family: "SimSun", "宋体", serif;
+            cursor: pointer;
+            letter-spacing: 1px;
+            margin: 5px 0;
+            border-radius: 0;
+            pointer-events: auto;
+            text-decoration: none;
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23999080" opacity="0.25"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            box-shadow:
+                1px 1px 2px rgba(0, 0, 0, 0.2),
+                -1px -1px 1px rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        #bottom-announcement .maintenance-btn:active {
+            border-style: inset;
+            background-color: #C5C0B5;
+        }
+
+        /* ==================== 底部页脚 ==================== */
+        #footer-copyright {
+            background-color: #E0DED5;
+            border-top: 1px solid #B0B4BB;
+            padding: 10px 14px;
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            line-height: 1.9;
+            background-image:
+                url('data:image/svg+xml,%3Csvg width="3" height="3" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23C5C0B5" opacity="0.2"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+        }
+
+        #footer-copyright .copyright-line {
+            color: #AAA;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        #footer-copyright .dead-links {
+            margin-top: 5px;
+            font-size: 10px;
+        }
+
+        #footer-copyright .dead-links a {
+            color: #AAB;
+            text-decoration: none;
+            margin: 0 4px;
+            cursor: pointer;
+            font-size: 9px;
+        }
+
+        #footer-copyright .dead-links a:hover {
+            text-decoration: underline;
+            color: #888;
+        }
+
+        #footer-copyright .footer-misc {
+            margin-top: 6px;
+            font-size: 9px;
+            color: #BBB;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+
+        /* ==================== 自定义红色警示弹窗 ==================== */
+        #red-alert-overlay {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 18px 30px;
+            border: 2px solid #C82026;
+            z-index: 9999;
+            text-align: center;
+            color: #FF0000;
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        #red-alert-overlay .blink-text {
+            animation: blinkWho 0.8s ease-in-out infinite;
+        }
+
+        @keyframes blinkWho {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 辅助 */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 隐藏线索：站点编号#SITE-L1-1（古邑县广播电视台），频段47.3MHz，石坛村档案封存 -->
+    <div id="main-container">
+
+        <!-- 最顶部红底白字走马灯 -->
+        <div id="alert-marquee-bar">
+            <marquee behavior="scroll" direction="left" scrollamount="4" scrolldelay="30" loop="infinite" truespeed height="20">
+                【防汛提醒】山谷村落汛期谨防山洪&nbsp;&nbsp;｜&nbsp;&nbsp;石坛村史料已上传&nbsp;&nbsp;｜&nbsp;&nbsp;员工内网仅密钥登录&nbsp;&nbsp;｜&nbsp;&nbsp;古邑县广播电视台宣
+            </marquee>
+        </div>
+
+        <!-- 顶部通栏 -->
+        <div id="top-banner">
+            <div class="banner-cell" id="logo-area">
+                <span class="blink-star">★</span>
+                <div class="logo-img-wrapper">
+                    <img src="image/radiologo.jpg" width='111' height='58' viewBox='0 0 111 58'%3E%3Crect fill='%233A4A6A' width='111' height='58'/%3E%3Ctext x='55' y='39' font-family='SimHei' font-size='20' fill='%23E8D5A3' text-anchor='middle' font-weight='bold'%3E古邑台%3C/text%3E%3Ccircle cx='88' cy='16' r='9' fill='%23C82026'/%3E%3C/svg%3E"
+                    alt="古邑县广播电视台台标">
+                </div>
+                <div class="logo-text">古邑县广播电视台</div>
+            </div>
+            <div class="banner-cell" id="marquee-area">
+                <span class="marquee-label">公&nbsp;告</span>
+                <marquee behavior="scroll" direction="left" scrollamount="3" scrolldelay="35" loop="infinite" truespeed width="370" height="22" style="color:#E8D5A3; font-size:11px;">
+                    ★ 欢迎收看古邑县广播电视台晚间新闻栏目 ★ 本台自2010年6月起进行系统升级维护，部分页面暂时无法访问 ★
+                </marquee>
+            </div>
+            <div class="banner-cell" id="date-area">
+    <div class="date-box" onclick="window.open('level1-sz.html', '_blank')" title="点击进行时序校准" style="cursor:pointer;">
+        <span class="weekday">星期四</span>
+        <span class="date-str">2010-06-15</span>
+        <span class="date-str">23:59:59</span>
+        <span class="clock-note">点击校准时钟</span>
+    </div>
+</div>
+        </div>
+
+        <!-- 导航栏（统一风格，第一个和最后一个按钮已改为浅蓝边框） -->
+        <div id="nav-bar">
+            <table class="nav-table">
+                <tr>
+                    <td><a class="nav-btn" href="#" onclick="return show404Alert()">设为首页</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-dtjs.html">电台介绍</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-gcfg.html" >古城风光</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-qxdt.html" >区县地图</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-pplm.html" onclick="return show404Alert()">品牌栏目</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-ttqd.html" onclick="return show404Alert()">投稿渠道</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="level1-lxwm.html" onclick="return show404Alert()">联系我们</a></td>
+                    <td class="nav-separator">|</td>
+                    <td><a class="nav-btn" href="#" onclick="showRedAlert(); return false;">加入我们</a></td>
+                </tr>
+            </table>
+        </div>
+
+       <!-- 新闻轮播 -->
+<div id="news-slider">
+    <div class="slider-title">★———— 新闻聚焦 ————★</div>
+    <div class="slider-images">
+        <!-- 第一张：点击弹窗404 -->
+        <div class="slide-cell" id="slide1-cell" onclick="return show404Alert()" style="cursor:pointer;">
+            <img id="slide-img-1" src="image/rnews1.png" width='272' height='167' alt="轮播图1">
+        </div>
+        <!-- 第二张：点击跳转（请把 NEWS6.html 换成你要跳转的文件名） -->
+        <div class="slide-cell" id="slide2-cell" style="display:none; cursor:pointer;" onclick="window.location.href='NEWS-lhs.html'">
+            <img id="slide-img-2" src="image/rnews2.jpg" width='272' height='167' alt="轮播图2">
+        </div>
+        <!-- 第三张：点击弹窗404 -->
+        <div class="slide-cell" id="slide3-cell" style="display:none; cursor:pointer;" onclick="return show404Alert()">
+            <img id="slide-img-3" src="image/rnews3.png" width='272' height='167' alt="轮播图3">
+        </div>
+    </div>
+    <div class="slide-caption-row">
+        <div class="caption-cell" id="caption1">■ 全县防汛工作会议召开</div>
+        <div class="caption-cell" id="caption2" style="display:none;">■ 青年学子林淮生参与山洪抢险不幸遇难</div>
+        <div class="caption-cell" id="caption3" style="display:none;">■ 春节古邑街景实拍</div>
+    </div>
+    <div class="slider-nav-text">
+        <a href="#" id="prev-slide-text">&lt; 上一页</a>
+        <span style="margin:0 4px;color:#888;">|</span>
+        <span class="page-dot active-dot" id="pdot1">■</span>
+        <span class="page-dot" id="pdot2">■</span>
+        <span class="page-dot" id="pdot3">■</span>
+        <span style="margin:0 4px;color:#888;">|</span>
+        <a href="#" id="next-slide-text">下一页 &gt;</a>
+            </div>
+            <div class="slider-links">
+                <a href="#" onclick="return show404Alert()">[更多要闻]</a>
+                <a href="#" onclick="return show404Alert()">[专题报道]</a>
+                <a href="#" onclick="return show404Alert()">[乡镇动态]</a>
+            </div>
+        </div>
+
+        <!-- 搜索栏 -->
+<div id="search-area-outer">
+    <div id="search-area-inner">
+        <div class="search-note">站内档案检索，仅支持汉字、数字关键词，特殊符号无法识别(日期格式xxxx-xx-xx/xx-xx)</div>
+        <form id="search-form" action="search-result.html" method="GET" style="display:inline;" onsubmit="return checkSearchForm()">
+            <label class="search-label" for="search-input">新闻搜索：</label>
+            <input type="text" name="keyword" id="search-input" placeholder="请输入关键词..." maxlength="20">
+            <button type="submit" id="search-btn">搜索</button>
+        </form>
+    </div>
+</div>
+
+
+        <!-- 主体左右分栏 -->
+        <table id="content-table">
+            <tr>
+                <td id="left-sidebar">
+                    <div class="sidebar-header">栏目导航</div>
+                    <ul class="nav-list">
+                        <li><a href="#" onclick="return show404Alert()"><span class="nav-prefix">◆</span>新闻播报</a></li>
+                        <li><a href="level1-yght.html"><span class="nav-prefix">◆</span>员工后台</a></li>
+                        <li><a href="level1-lxcd.html"><span class="nav-prefix">◆</span>录像存档</a></li>
+                        <li><a href="level1-jmb.html"><span class="nav-prefix">◆</span>节目表</a></li>
+                        <li><a href="#" onclick="return show404Alert()"><span class="nav-prefix">◆</span>观众投稿</a></li>
+                        <li><a href="level1-2.html" onclick="return show404Alert()"><span class="nav-prefix">◆</span>内部查询</a></li>
+                    </ul>
+
+                    <div class="sidebar-notice">
+                        【提示】<br>本站自2010年6月起后台功能部分关停，录像存档、内部查询栏目仅限在岗员工凭专属密钥登录。
+                    </div>
+
+                    <div class="weather-box">
+                        <div class="weather-title">古邑县天气预报</div>
+                        <table>
+                            <tr><td>6月15日</td><td>多云</td><td>28°C</td></tr>
+                            <tr><td>6月16日</td><td>阵雨</td><td>25°C</td></tr>
+                            <tr><td>6月17日</td><td>阴</td><td>27°C</td></tr>
+                            <tr><td>6月18日</td><td>晴</td><td>30°C</td></tr>
+                        </table>
+                    </div>
+
+                    <!-- 下级乡镇广播站（精简为三个） -->
+                    <div class="friend-links-box">
+                        <div class="fl-title">下级乡镇广播站</div>
+                        <a href="#" onclick="return show404Alert()">古邑村广播站 </a><br>
+                        <a href="#" onclick="return show404Alert()">石坛村广播站</a><br>
+                        <a href="#" onclick="return show404Alert()">山河村广播站</a>
+                    </div>
+                </td>
+
+                <!-- 右侧新闻内容 -->
+                <td id="right-content" oncontextmenu="return restrictRightClick(event);">
+                    <div class="content-section">
+                        <div class="section-title">■ 本台要闻</div>
+
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                                <img src="image/news1.png" width="86" height="61">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2009-11-28</div>
+                                <div class="news-title"><a href="NEWS1.html">古邑村开展全民思想宣讲集会 凝心聚力共建平安村居</a></div>
+                                <div class="news-summary">村民大会堂召开全村群众集中宣讲学习会，全村在家村民、网格员、村民代表全员参加。会议传达了上级关于加强平安村居建设的重要指示精神，要求全体村民团结一心，共同维护村居和谐稳定大局。会后发放了宣传手册及联系卡，确保户户知晓、人人参与。</div>
+                            </div>
+                        </div>
+
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                                <img src="image/news2.png" width="86" height="61">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2009-10-15</div>
+                                <div class="news-title"><a href="NEWS2.html">石坛村正式并入古邑村行政村管理</a></div>
+                                <div class="news-summary">根据我县乡村行政区划调整工作安排，经上级主管部门批复同意，石坛村完成村级建制撤销程序，整体并入古邑村行政村统一管理。相关户籍档案、土地台账及集体经济账目已移交完毕，原石坛村村民各项权益保障不变，后续工作由古邑村村委会统筹负责。</div>
+                            </div>
+                        </div>
+
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                               <img src="image/news3.png" width="86" height="61">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2009-04-15</div>
+                                <div class="news-title"><a href="NEWS3.html">晨间新闻：昨日我山河村遭遇特大山洪灾害，十六名村民失联</a></div>
+                                <div class="news-summary">近日我县境内出现持续性强降雨天气，山林河谷地带雨量集中、短时雨势猛烈。4月14日晚间，山河村所在山谷突发特大山洪，冲毁部分民房及村道。截至发稿时，已确认十六名山河村村民失去联系。</div>
+                            </div>
+                        </div>
+
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                                <img src="image/news4.jpg" width="86" height="61">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2009-01-08</div>
+                                <div class="news-title"><a href="NEWS4.html">周末特别节目：纪录片《解读古邑县记》重播安排</a></div>
+                                <div class="news-summary">本台将于每周六下午14:30播出大型文献纪录片系列《解读古邑县记》。该片全景式展现古邑县自建制以来的历史沿革、风土人情及重大事件，由我台专题部历时两年精心摄制完成，敬请全县观众届时收看。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-title">■ 节目预告</div>
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                                <img src="image/news5.jpg" width='86' height='61' alt="配图">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2010-06-15</div>
+                                <div class="news-title"><a href="#" onclick="return show404Alert()">古邑新闻（2010年6月15日）</a></div>
+                                <div class="news-summary">今晚19:40播出《古邑新闻》，主要内容：春耕生产全面展开，县领导督导农田水利建设；全县防汛工作会议部署汛期重点工作；各乡镇扎实推进平安村居创建活动。</div>
+                            </div>
+                        </div>
+                        <div class="news-item clearfix">
+                            <div class="news-thumb">
+                                <img src="image/news6.jpg" width='86' height='61' alt="配图">
+                            </div>
+                            <div class="news-text">
+                                <div class="news-date">2010-06-14</div>
+                                <div class="news-title"><a href="#" onclick="return show404Alert()">周末影院：《英雄儿女》</a></div>
+                                <div class="news-summary">周五晚间19:00经典革命战争题材影片《英雄儿女》重映，该片曾获多项电影奖项，欢迎全县观众届时锁定古邑县广播电视台收看节目。</div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 底部公告 -->
+        <div id="bottom-announcement">
+            <div class="announcement-text">※ 网站系统维护中，部分功能暂不可用 ※ 最后更新日期：2010年6月15日 ※</div>
+            <button class="maintenance-btn" id="maint-btn">网站更新维护</button>
+            <div style="font-size:10px; color:#999; margin-top:4px;">客服热线：0750-235875643（已停用）</div>
+        </div>
+
+        <!-- 底部页脚 -->
+        <div id="footer-copyright">
+            <div class="copyright-line">Copyright &copy; 2003-2010 古邑县广播电视台 版权所有</div>
+            <div class="copyright-line">广播电视播出许可证编号：XXXXXXXXXX &nbsp;|&nbsp; ICP备XXXXXXXX号</div>
+            <div class="dead-links">
+                <a href="#" onclick="return show404Alert()">友情链接</a> |
+                <a href="#" onclick="return show404Alert()">下属乡镇广播站</a> |
+                <a href="#" onclick="return show404Alert()">广电总局</a> |
+                <a href="#" onclick="return show404Alert()">央视网</a> |
+                <a href="#" onclick="return show404Alert()">省级广电联盟</a> |
+                <a href="#" onclick="return show404Alert()">技术合作单位</a> |
+                <a href="#" onclick="return show404Alert()">广告服务</a> |
+                <a href="#" onclick="return show404Alert()">法律声明</a>
+            </div>
+            <div class="footer-misc">
+                地址：古邑县古邑镇广电路1号&nbsp;&nbsp;|&nbsp;&nbsp;邮编：86934095&nbsp;&nbsp;|&nbsp;&nbsp;行政值班电话：0750-235875644（已停用）<br>
+                建议使用Microsoft Internet Explorer 6.0以上版本浏览器&nbsp;&nbsp;|&nbsp;&nbsp;最佳显示分辨率1024×768<br>
+                本站所有内容未经授权禁止转载、摘编或建立镜像&nbsp;&nbsp;|&nbsp;&nbsp;技术支持：古邑县广播电视技术中心
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定义红色警示弹窗（加入我们专用） -->
+    <div id="red-alert-overlay">
+        <span>你不属于这里，<span class="blink-text">你是谁？</span></span>
+    </div>
+
+    <script>
+        // 404弹窗
+        function show404Alert() {
+            alert("您访问的页面不存在或已丢失。");
+            return false;
+        }
+
+        // 主线跳转
+        function gotoMainline(event) {
+            if (event) event.preventDefault();
+            window.location.href = "level1-2.html";
+            return false;
+        }
+
+        // 禁止右键
+        function restrictRightClick(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        // 自定义红色警示弹窗（加入我们）
+        function showRedAlert() {
+            const overlay = document.getElementById('red-alert-overlay');
+            overlay.style.display = 'block';
+            // 2秒后自动隐藏
+            setTimeout(function() {
+                overlay.style.display = 'none';
+            }, 2000);
+        }
+
+        // 轮播图控制
+        (function() {
+            const slides = [
+                { cell: document.getElementById('slide1-cell'), caption: document.getElementById('caption1'), dot: document.getElementById('pdot1') },
+                { cell: document.getElementById('slide2-cell'), caption: document.getElementById('caption2'), dot: document.getElementById('pdot2') },
+                { cell: document.getElementById('slide3-cell'), caption: document.getElementById('caption3'), dot: document.getElementById('pdot3') }
+            ];
+            let current = 0;
+            function showSlide(i) {
+                slides.forEach((s, idx) => {
+                    s.cell.style.display = idx === i ? 'table-cell' : 'none';
+                    s.caption.style.display = idx === i ? 'table-cell' : 'none';
+                    s.dot.classList.toggle('active-dot', idx === i);
+                });
+                current = i;
+            }
+            document.getElementById('prev-slide-text').addEventListener('click', function(e) {
+                e.preventDefault();
+                showSlide((current - 1 + 3) % 3);
+            });
+            document.getElementById('next-slide-text').addEventListener('click', function(e) {
+                e.preventDefault();
+                showSlide((current + 1) % 3);
+            });
+            slides.forEach((s, i) => {
+                s.dot.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showSlide(i);
+                });
+            });
+            showSlide(0);
+        })();
+
+        
+
+        // 维护按钮
+        document.getElementById('maint-btn').addEventListener('click', () => {
+            alert('系统维护中，请稍后再试。维护日志最后更新：2010年6月15日。');
+        });
+        function checkSearchForm() {
+    var input = document.getElementById('search-input');
+    if (!input.value.trim()) {
+        alert('请输入关键词检索');
+        return false;   // 阻止表单提交
+    }
+    return true;        // 允许提交
+}
+    </script>
+</body>
+</html>

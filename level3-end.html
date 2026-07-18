@@ -1,0 +1,551 @@
+<!-- level3-end.html - 古邑县 · 最终抉择（CRT牛皮纸恐怖质感） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古邑县,结局,ARG,终章">
+    <meta name="description" content="最终抉择 - 古邑县">
+    <title>最终抉择 - 古邑县</title>
+    <style>
+        :root {
+            --bg: #c8bfb0;
+            /* 泛黄灰旧纸张底色 */
+            --card-bg: #e8dcc8;
+            /* 牛皮纸主色调 */
+            --text: #1a1814;
+            /* 深褐色文字，极度清晰 */
+            --text-secondary: #4a4844;
+            --text-muted: #6a6864;
+            --border: #a09080;
+            --shadow: 0 2px 12px rgba(0,0,0,0.2);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.4), 0 0 15px rgba(120,40,40,0.15);
+            --green: #2a6a38;
+            /* 老旧终端绿色 */
+            --green-hover: #1d4a28;
+            --green-bg: #dfe8d8;
+            --red: #b04040;
+            --red-hover: #8a2020;
+            --red-bg: #e8d8d8;
+            --accent: #6a5020;
+            --accent-text: #8a4020;
+            --disabled: #b0a898;
+            --disabled-text: #8a8070;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            font-family: "PingFang SC","Microsoft YaHei","Hiragino Sans GB","SimSun","宋体",sans-serif;
+            font-size: 15px; line-height: 1.8; color: var(--text);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px; cursor: default;
+            position: relative;
+            overflow-x: hidden;
+            /* 全局细微色差故障效果 */
+            animation: bodyChromatic 0.4s steps(1) infinite;
+        }
+
+        /* 8%透明度血红手绘眼睛平铺暗纹 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Ccircle cx="80" cy="80" r="35" fill="none" stroke="%23601010" stroke-width="3" opacity="0.6"/%3E%3Ccircle cx="80" cy="80" r="18" fill="%23601010" opacity="0.5"/%3E%3Ccircle cx="80" cy="80" r="6" fill="%231a1814"/%3E%3Cpath d="M40 80 Q80 30 120 80" fill="none" stroke="%23601010" stroke-width="3" opacity="0.7"/%3E%3Cpath d="M40 80 Q80 130 120 80" fill="none" stroke="%23601010" stroke-width="3" opacity="0.7"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-size: 180px 180px;
+            opacity: 0.08;
+        }
+
+        /* 老式CRT横向扫描线 + 胶片颗粒噪点 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.06) 0px,
+                    rgba(0,0,0,0.06) 2px,
+                    transparent 2px,
+                    transparent 4px);
+            animation: scanlines 0.1s linear infinite;
+            mix-blend-mode: multiply;
+        }
+
+        /* 控制CRT扫描线极其微弱的移动 */
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 4px; }
+        }
+
+        /* 细微全局频闪色差故障 */
+        @keyframes bodyChromatic {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(0.5px, -0.5px); }
+            50% { transform: translate(-0.5px, 0.5px); }
+            75% { transform: translate(0.5px, 0.5px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* 主容器：泛黄磨损牛皮纸样式 + 边缘磨损毛边 */
+        #main-container {
+            width: 680px; max-width: 100%;
+            background: var(--card-bg);
+            padding: 40px 36px 32px;
+            position: relative;
+            border: 3px solid #8b7b6b;
+            box-shadow:
+                0 0 0 4px #6b5b4b,
+                0 0 0 8px #4b3b2b,
+                0 0 30px rgba(0,0,0,0.6),
+                inset 0 0 40px rgba(0,0,0,0.15);
+            /* 模拟磨损边缘 */
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+
+        /* 老式绿色通话指示灯 + 跳动通话计时 */
+        #main-container::before {
+            content: "● REC 00:05";
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-family: "SF Mono","Consolas","Courier New",monospace;
+            font-size: 14px;
+            color: #2a6a38;
+            text-shadow: 0 0 8px rgba(30,100,40,0.6);
+            animation: recPulse 1.5s ease-in-out infinite;
+            z-index: 10;
+            pointer-events: none;
+            letter-spacing: 1px;
+            background: rgba(232,220,200,0.6);
+            padding: 0 4px;
+        }
+
+        @keyframes recPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* 小号灰色IP追踪远程接入备注文字 */
+        #main-container::after {
+            content: "远程接入追踪已激活";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: "SF Mono","Consolas","Courier New",monospace;
+            font-size: 10px;
+            color: #6a6864;
+            z-index: 10;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+            background: rgba(232,220,200,0.6);
+            padding: 0 4px;
+        }
+
+        /* 来电通知遮罩 */
+        #incoming-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.78); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column; cursor: default;
+        }
+        #incoming-overlay .incoming-card {
+            background: #e8dcc8;
+            border: 4px solid #8b7b6b;
+            padding: 40px 36px;
+            text-align: center;
+            box-shadow:
+                0 0 0 6px #4b3b2b,
+                0 20px 60px rgba(0,0,0,0.6);
+            max-width: 380px; width: 90%;
+            position: relative;
+        }
+        #incoming-overlay .incoming-card::before {
+            content: "";
+            position: absolute;
+            top: -12px; left: 15px;
+            width: 16px; height: 16px;
+            background: #2a6a38;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(30,100,40,0.8);
+            animation: recPulse 1.2s infinite;
+        }
+        #incoming-overlay .incoming-avatar {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: #d0c8b8; margin: 0 auto 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px; color: var(--accent-text);
+            border: 2px solid #8b7b6b;
+        }
+        #incoming-overlay .incoming-name {
+            font-size: 22px; font-weight: 700; letter-spacing: 3px;
+            color: #1a1814; margin-bottom: 6px;
+        }
+        #incoming-overlay .incoming-label {
+            font-size: 13px; color: #6a6864; letter-spacing: 1px; margin-bottom: 24px;
+        }
+        #incoming-overlay .incoming-dot {
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green); margin-right: 6px;
+            animation: dotPulse 1.2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(42,106,56,0.6); }
+            50% { opacity: 0.4; box-shadow: 0 0 0 12px rgba(42,106,56,0); }
+        }
+        #answer-btn {
+            display: inline-block; padding: 14px 44px; font-size: 16px;
+            font-family: "PingFang SC","Microsoft YaHei","SimSun",sans-serif;
+            font-weight: 600; letter-spacing: 2px; cursor: pointer;
+            border: 2px outset #8b7b6b; outline: none;
+            background: #2a6a38; color: #e0e8d0;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        #answer-btn:hover {
+            background: #1d4a28;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            transform: translateY(-2px);
+        }
+        #answer-btn:active {
+            transform: translateY(0);
+            border-style: inset;
+        }
+
+        /* 来电标识 */
+        .call-header { text-align: center; margin-bottom: 24px; }
+        .call-dot {
+            display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+            background: var(--green); margin-right: 8px;
+            animation: callPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes callPulse {
+            0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(42,106,56,0.5); }
+            50% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(42,106,56,0); }
+        }
+        .call-label { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; }
+        .call-number {
+            font-family: "SF Mono","Consolas","Courier New",monospace;
+            font-size: 15px; color: var(--text-secondary); letter-spacing: 1px; margin-top: 4px;
+        }
+        .call-name {
+            font-size: 26px; font-weight: 700; color: var(--text);
+            letter-spacing: 4px; margin-top: 10px;
+        }
+
+        /* 通话内容：泛黄磨损对话卡片 */
+        .dialog-card {
+            background: #d8c8b0;
+            border: 2px solid #8b7b6b;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            padding: 20px 22px; margin: 20px 0 24px;
+            line-height: 1.9; color: #1a1814;
+            position: relative;
+        }
+        .dialog-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg width="4" height="4" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23ffffff" opacity="0.03"/%3E%3Crect x="2" y="2" width="1" height="1" fill="%23000000" opacity="0.04"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            mix-blend-mode: multiply;
+        }
+        .dialog-card .speaker {
+            color: var(--accent-text); font-weight: 700; letter-spacing: 1px;
+            margin-top: 10px; font-size: 14px; text-shadow: 0 0 6px rgba(200,160,40,0.4);
+        }
+        .dialog-card .speaker:first-child { margin-top: 0; }
+        .dialog-card p { margin-bottom: 6px; text-indent: 1em; }
+        .dialog-card .highlight { color: #8a4020; font-weight: 600; text-indent: 1em; text-shadow: 0 0 8px rgba(200,40,40,0.3); }
+
+        /* 选择按钮 */
+        #choice-area { display: flex; justify-content: center; gap: 24px; margin-top: 8px; }
+        .choice-btn {
+            flex: 1; max-width: 180px; padding: 14px 28px; font-size: 16px;
+            font-family: "PingFang SC","Microsoft YaHei","SimSun",sans-serif;
+            letter-spacing: 4px; cursor: pointer; border-radius: 0px;
+            text-align: center; font-weight: 600; transition: all 0.3s ease;
+            border: 2px outset #8b7b6b; outline: none; position: relative;
+        }
+        .btn-agree {
+            background: var(--green); color: #e0e8d0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            order: 1;
+        }
+        .btn-agree:hover { background: var(--green-hover); transform: translateY(-2px); }
+        .btn-agree:active { transform: translateY(0); border-style: inset; }
+        .btn-refuse {
+            background: var(--disabled); color: var(--disabled-text);
+            border: 2px solid var(--disabled); cursor: not-allowed;
+            order: 2; pointer-events: none; box-shadow: none;
+        }
+        .btn-refuse.active {
+            background: #e8d8d8; color: var(--red);
+            border: 2px solid var(--red); cursor: pointer;
+            pointer-events: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            animation: refuseGlow 0.6s ease-in-out 3;
+        }
+        @keyframes refuseGlow {
+            0%,100% { box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 0 20px rgba(176,64,64,0.6); }
+        }
+        .btn-refuse.active:hover {
+            background: #d0c0c0; border-color: var(--red-hover);
+            color: var(--red-hover); transform: translateY(-2px);
+        }
+        .btn-refuse.active:active { transform: translateY(0); border-style: inset; }
+
+        /* 拒绝倒计时提示 */
+        #refuse-hint {
+            text-align: center; font-size: 12px; color: var(--text-muted);
+            margin-top: 12px; letter-spacing: 1px;
+            animation: hintFade 0.8s ease-in-out infinite;
+        }
+        @keyframes hintFade { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+
+        /* 结局面板 */
+        #ending-panel {
+            display: none; flex-direction: column; align-items: center;
+            text-align: center; padding-top: 10px;
+        }
+        .ending-icon { font-size: 48px; margin-bottom: 10px; }
+        .ending-title { font-size: 26px; font-weight: 700; letter-spacing: 4px; margin-bottom: 16px; }
+        .ending-text { font-size: 14px; line-height: 2; letter-spacing: 0.5px; max-width: 520px; text-align: left; text-indent: 2em; color: #1a1814; margin-bottom: 20px; }
+        .ending-text p { margin-bottom: 8px; }
+        .ending-stamp { font-family: "SF Mono","Consolas","Courier New",monospace; font-size: 12px; letter-spacing: 2px; padding: 8px 18px; border: 1px solid #8b7b6b; display: inline-block; }
+        .ending-refuse .ending-icon { color: var(--green); }
+        .ending-refuse .ending-title { color: var(--green); }
+        .ending-refuse .ending-stamp { color: var(--green); background: var(--green-bg); border-color: #2a6a38; }
+        .ending-agree .ending-icon { color: var(--red); }
+        .ending-agree .ending-title { color: var(--red); animation: endingTitlePulse 1.5s ease-in-out infinite; }
+        @keyframes endingTitlePulse { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
+        .ending-agree .ending-stamp { color: var(--red); background: var(--red-bg); border-color: #b04040; animation: stampBlink 0.8s ease-in-out infinite; }
+        @keyframes stampBlink { 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+        .subtle-red-glow {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; pointer-events: none; z-index: -1;
+            background: radial-gradient(ellipse at 50% 80%,rgba(180,40,40,0.06) 0%,transparent 70%);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+        .footer-note { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 20px; letter-spacing: 1px; }
+
+        @media (max-width: 600px) {
+            #main-container { padding: 24px 18px; }
+            .call-name { font-size: 22px; }
+            #choice-area { flex-direction: column; align-items: center; gap: 12px; }
+            .choice-btn { max-width: 100%; width: 100%; }
+            .btn-agree { order: 1; }
+            .btn-refuse { order: 2; }
+        }
+        /* === 结束游玩按钮 — 复古牛皮纸风格 === */
+#end-game-btn {
+    display: inline-block;   /* 避免继承 flex 的拉伸 */
+    padding: 12px 32px;
+    font-family: "PingFang SC","Microsoft YaHei","SimSun",sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border: 2px outset #8b7b6b;          /* 立体边框与卡片一致 */
+    outline: none;
+    background: #b0a090;                 /* 纸板灰色，低调不抢眼 */
+    color: #1a1814;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.2s ease;
+    margin-top: 24px;                    /* 与上方时间戳拉开距离 */
+    border-radius: 0;                    /* 保持直角，无圆角 */
+}
+
+#end-game-btn:hover {
+    background: #9b8b7b;                 /* 深一阶的牛皮纸色 */
+    border-color: #6b5b4b;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    transform: translateY(-2px);
+}
+
+#end-game-btn:active {
+    border-style: inset;
+    background: #8a7a6a;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+
+    <!-- 来电通知遮罩 -->
+    <div id="incoming-overlay">
+        <div class="incoming-card">
+            <div class="incoming-avatar">📞</div>
+            <div class="incoming-name">林 长 清</div>
+            <div class="incoming-label">
+                <span class="incoming-dot"></span>来电通知
+            </div>
+            <button id="answer-btn" onclick="answerCall()">接 听</button>
+        </div>
+    </div>
+
+    <!-- 音频（初始不播放） -->
+    <audio id="phoneAudio" src="dianhua.mp3" preload="auto"></audio>
+
+    <div class="subtle-red-glow" id="red-glow"></div>
+
+    <div id="main-container">
+        <div id="call-panel">
+            <div class="call-header">
+                <span class="call-dot"></span>
+                <span class="call-label">通话中</span>
+            </div>
+            <div class="call-number">来电号码：████-████████</div>
+            <div class="call-name">林 长 清</div>
+
+            <div class="dialog-card">
+                <p class="speaker">【林长清】</p>
+                <p>我知道你找到了很多东西。你看了那些档案，看了那些记录。你很聪明，比我那个不争气的儿子聪明得多。</p>
+                <p>但是让我告诉你一个事实——你手里的东西，只是线索，并不足以支撑为证据。这些线索在外面的世界不值一提，我大可通过广播电视台讲这些称之为阴谋论。你没有官方记录支持，没有证人敢作证。你所看到的一切，都可以被解释为地方民俗、乡土传说。你拿什么来举报？</p>
+                <p class="highlight">与其跟我作对，不如跟我合作。</p>
+                <p>古邑需要一个新的面孔，一个能让外界信任的人。你可以成为那个人。我可以给你无法想象的财富，每年祈福的供奉足够让你这辈子衣食无忧。我可以给你三村土地的经营权。你可以站在权力的顶端，看着下面的人对你俯首帖耳。</p>
+                <p>我的儿子背叛了我，但我仍然需要继承人。你不是林家的人，但这恰恰是你的优势——你不受那些古老誓约的束缚。我们可以一起管理这片土地，平息瘗姥的怒气，让河谷永远安宁。</p>
+                <p class="highlight">但你若拒绝……我不能保证你的安全。这座山谷有太多意外，山洪、落石、失温……你已经在档案里读到过那些外来游客的下场了，不是吗？</p>
+                <p class="speaker">【林长清】</p>
+                <p>我给你三分钟考虑。同意，或者拒绝。决定权在你。</p>
+            </div>
+
+            <div id="choice-area">
+                <button class="choice-btn btn-agree" onclick="chooseEnding('agree')">同 意</button>
+                <button class="choice-btn btn-refuse" id="refuse-btn" onclick="chooseEnding('refuse')">拒 绝</button>
+            </div>
+            <div id="refuse-hint"></div>
+        </div>
+
+        <div id="ending-panel">
+            <div class="ending-icon" id="ending-icon"></div>
+            <div class="ending-title" id="ending-title"></div>
+            <div class="ending-text" id="ending-text"></div>
+            <div class="ending-stamp" id="ending-stamp"></div>
+            <!-- 结束游玩按钮 -->
+<button id="end-game-btn" onclick="endGame()" style="margin-top: 24px;">
+    结束游玩
+</button>
+        </div>
+
+        <div class="footer-note">古邑县 · 最终抉择 · 河谷在注视着你</div>
+    </div>
+
+    <script>
+        
+        
+        var phoneAudio = document.getElementById('phoneAudio');
+        var refuseBtn = document.getElementById('refuse-btn');
+        var refuseHint = document.getElementById('refuse-hint');
+        var refuseUnlockTimer = null;
+        var countdownTimer = null;
+
+        // ==================== 接听来电 ====================
+        function answerCall() {
+            // 隐藏来电遮罩
+            document.getElementById('incoming-overlay').style.display = 'none';
+            // 播放音频
+            phoneAudio.play().catch(function() {
+                document.addEventListener('click', function() {
+                    phoneAudio.play();
+                }, { once: true });
+            });
+            // 启动拒绝按钮解锁倒计时（5秒）
+            startRefuseUnlock(5);
+        }
+
+        // ==================== 拒绝按钮解锁倒计时 ====================
+        function startRefuseUnlock(seconds) {
+            var remaining = seconds;
+            refuseHint.textContent = '拒绝选项将在 ' + remaining + ' 秒后可用';
+
+            countdownTimer = setInterval(function() {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(countdownTimer);
+                    refuseHint.textContent = '';
+                    refuseBtn.classList.add('active');
+                    refuseBtn.style.cursor = 'pointer';
+                } else {
+                    refuseHint.textContent = '拒绝选项将在 ' + remaining + ' 秒后可用';
+                }
+            }, 1000);
+        }
+
+        // ==================== 选择结局 ====================
+        function chooseEnding(choice) {
+            // 停止倒计时
+            if (countdownTimer) clearInterval(countdownTimer);
+            if (refuseUnlockTimer) clearTimeout(refuseUnlockTimer);
+            refuseHint.textContent = '';
+
+            // 停止音频
+            phoneAudio.pause();
+            phoneAudio.currentTime = 0;
+
+            // 隐藏通话面板
+            document.getElementById('call-panel').style.display = 'none';
+
+            const endingPanel = document.getElementById('ending-panel');
+            const endingIcon = document.getElementById('ending-icon');
+            const endingTitle = document.getElementById('ending-title');
+            const endingText = document.getElementById('ending-text');
+            const endingStamp = document.getElementById('ending-stamp');
+
+            endingPanel.style.display = 'flex';
+
+            if (choice === 'refuse') {
+                endingPanel.className = 'ending-refuse';
+                endingIcon.textContent = '🌿';
+                endingTitle.textContent = '这场荒诞的统治结束了';
+                endingText.innerHTML = `
+                    <p>你没有犹豫，拒绝了林长清的所有提议。</p>
+                    <p>挂断电话的那一刻，你将所有收集到的证据打包上传至多个云端服务器，并匿名发送给了省级纪检部门、多家主流媒体以及民间调查组织。</p>
+                    <p>接下来的几个月里，调查组进驻古邑。林长清试图销毁证据、封锁消息，但你已经将备份散布得太广。林家千年来的谎言体系在铁证面前土崩瓦解。</p>
+                    <p>山河村十六人的真实死因得以昭雪，他们的名字被刻在村口的纪念碑上。林淮生的遗愿，终于在你手中得以实现。</p>
+                    <p>这场延续百年的荒诞统治，在你手中画上了句号。</p>
+                `;
+                endingStamp.textContent = '古邑县 · 河谷安宁 · 真相永存';
+            } else if (choice === 'agree') {
+                endingPanel.className = 'ending-agree';
+                endingIcon.textContent = '🕯️';
+                endingTitle.textContent = '你已成为下一年的祭品';
+                endingText.innerHTML = `
+                    <p>你选择了同意。</p>
+                    <p>电话那头，林长清的声音变得温和而亲切。他欢迎你成为古邑的"合伙人"，邀请你第二天到古城祭坛参加入伙仪式。那晚你睡得很安稳，以为自己做了一生中最正确的决定。</p>
+                    <p>第三天清晨，你如约来到古城。迎接你的不是林长清，而是四个沉默的执事者。他们用黑布蒙住你的脸，将你关进了祭坛旁的石室。</p>
+                    <p>从你选择同意的那一刻起，你的命运就已经被写在林家的祈福台账上了。你成为了明年4月14日的年度祈福祭品。</p>
+                    <p>在你生命的最后时刻，你会听到鹅卵石敲击的声音。那是瘗姥在呼唤你。</p>
+                `;
+                endingStamp.textContent = '古瘗县 · 河谷不息 · 瘗姥永在';
+                document.getElementById('red-glow').style.display = 'block';
+            }
+        }
+
+        // 禁止F12
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault(); return false;
+            }
+        });
+        // 页面加载后 5 秒自动停止 CRT 抖动
+window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        document.body.style.animation = 'none';
+    }, 10000); // 10000毫秒 = 10秒，改成你想要的秒数
+});
+function endGame() {
+    // 跳转到最终页面（请确认文件名为 level3-final.html）
+    window.location.href = 'level3-final.html';
+}
+    </script>
+</body>
+</html>

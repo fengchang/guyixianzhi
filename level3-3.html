@@ -1,0 +1,442 @@
+<!-- level3-ip.html - 古邑县域内部管控终端 · 登录历史编辑（退出登录区域不受乱码影响） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,登录历史,IP监控">
+    <meta name="description" content="古邑县域内部管控终端 - 登录历史编辑">
+    <title>登录历史 - 古邑县域管控系统</title>
+    <style>
+        :root {
+            --crt-bg: #0a0d10;
+            --crt-amber: #d4a030;
+            --crt-red: #b83030;
+            --crt-gold: #e0b040;
+            --crt-white: #c8c8c0;
+            --glow-red: 0 0 10px #d03030;
+            --glow-gold: 0 0 10px #d4a030;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: url('image/eye.jpg') repeat center center fixed;
+background-size: 150px 150px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            font-family: "Courier New","SimSun","NSimSun","宋体",monospace;
+            font-size: 13px; line-height: 1.7; color: var(--crt-white);
+            cursor: crosshair; overflow-x: hidden; position: relative;
+        }
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 2px, transparent 2px, transparent 4px);
+        }
+        .film-grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 998;
+            background-image: url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23ffffff" opacity="0.03"/%3E%3Crect x="1" y="1" width="1" height="1" fill="%23000000" opacity="0.04"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            animation: grainShift 0.1s steps(3) infinite;
+        }
+        @keyframes grainShift { 0%{transform:translate(0,0);}33%{transform:translate(-1px,1px);}66%{transform:translate(1px,-1px);}100%{transform:translate(0,0);} }
+        .crt-jitter {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 997;
+            animation: jitter 0.06s linear infinite;
+        }
+        @keyframes jitter { 0%{transform:translate(0,0);}25%{transform:translate(0.5px,-0.3px);}50%{transform:translate(-0.4px,0.2px);}75%{transform:translate(0.2px,0.4px);}100%{transform:translate(0,0);} }
+
+        #main-wrapper {
+            width: 820px; min-height: 88vh;
+            background: #0d1116; border: 3px ridge #3a3040;
+            box-shadow: 0 0 0 2px #1a1a20,0 0 0 6px #0c0c10,0 0 40px rgba(120,30,30,0.3),inset 0 0 60px rgba(0,0,0,0.6);
+            position: relative; z-index: 1; display: flex; flex-direction: column; padding: 0;
+        }
+        #top-bar {
+            width: 100%; height: 48px;
+            background: linear-gradient(180deg,#2a1520 0%,#1a0c14 50%,#120810 100%);
+            border-bottom: 2px solid #5a2040;
+            display: flex; align-items: center; padding: 0 20px; flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(80,10,30,0.5),inset 0 1px 0 rgba(120,40,60,0.3);
+        }
+        #top-bar .top-title {
+            font-family: "SimSun","NSimSun","宋体",serif;
+            font-size: 13px; color: #e0c0a0; letter-spacing: 3px;
+            text-shadow: 0 0 8px rgba(200,120,40,0.5),1px 1px 0 #1a0000;
+        }
+        #top-bar .top-status {
+            margin-left: auto; font-size: 9px; color: #8a6060; letter-spacing: 0.5px;
+            font-family: "Courier New","SimSun",monospace;
+        }
+
+        #content-area {
+            flex: 1; padding: 20px 24px; background: #0d1116; overflow-y: auto; position: relative;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+        .blood-seep {
+            position: absolute; pointer-events: none; z-index: 2; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 15% 80%,rgba(100,15,20,0.12) 0%,transparent 55%),
+                        radial-gradient(ellipse at 85% 70%,rgba(80,10,15,0.10) 0%,transparent 50%),
+                        radial-gradient(ellipse at 50% 90%,rgba(60,5,10,0.14) 0%,transparent 60%);
+            animation: bloodPulse 8s ease-in-out infinite;
+        }
+        @keyframes bloodPulse { 0%,100%{opacity:0.6;}40%{opacity:0.9;}70%{opacity:0.4;} }
+        .glyph-layer {
+            position: absolute; pointer-events: none; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.05;
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="30" cy="30" r="22" fill="none" stroke="%23806070" stroke-width="0.8" opacity="0.5"/%3E%3Ccircle cx="30" cy="30" r="16" fill="none" stroke="%23604050" stroke-width="0.5" opacity="0.4"/%3E%3Cpath d="M30 8 L36 22 L30 18 L24 22 Z" fill="%23604050" opacity="0.35"/%3E%3C/svg%3E');
+            background-repeat: repeat; background-position: 30px 20px;
+        }
+
+        .content-inner { position: relative; z-index: 3; }
+        .page-title {
+            font-family: "SimSun","NSimSun","宋体",serif; font-size: 14px; color: #e0b040;
+            letter-spacing: 3px; text-shadow: 0 0 10px rgba(200,160,40,0.5);
+            margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #5a2040; text-align: center;
+        }
+
+        /* 登录历史表格 */
+        .log-table {
+            width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px;
+            border: 1px solid #2a1a28;
+        }
+        .log-table th {
+            background: #1a1020; color: #c0a060; padding: 8px 6px;
+            border-bottom: 1px solid #3a2030; letter-spacing: 2px; font-weight: normal; text-align: center;
+        }
+        .log-table td {
+            padding: 7px 6px; border-bottom: 1px dotted #1a1018; text-align: center; color: #a09090;
+        }
+        .log-table tr:nth-child(even) td { background: rgba(0,0,0,0.2); }
+        .log-table .row-abnormal { background: rgba(180,30,30,0.1) !important; }
+        .log-table .row-abnormal td { color: #d08080; }
+        .tag-local { color: #5ab860; font-size: 10px; }
+        .tag-remote { color: #ff4040; font-size: 10px; text-shadow: 0 0 6px rgba(255,40,40,0.5); animation: ipBlink 1.2s ease-in-out infinite; }
+        @keyframes ipBlink { 0%,100%{opacity:1;}50%{opacity:0.35;} }
+
+        /* 删除按钮 */
+        .delete-btn {
+            display: inline-block; padding: 5px 12px; font-size: 10px;
+            font-family: "SimSun","NSimSun","宋体",serif; letter-spacing: 2px;
+            color: #d08080; background: #1a0c0c; border: 1px solid #6a3030;
+            cursor: pointer; transition: all 0.2s; text-shadow: 0 0 4px rgba(200,80,80,0.4);
+        }
+        .delete-btn:hover { background: #2a1010; border-color: #a04040; color: #ff8080; box-shadow: 0 0 14px rgba(200,30,30,0.5); }
+        .delete-btn:active { border-style: inset; background: #0a0404; }
+
+        /* 提示文字 */
+        .info-text { font-size: 10px; color: #6a5060; margin-top: 12px; letter-spacing: 0.5px; }
+
+        /* 退出登录按钮区域 */
+        .logout-area {
+            text-align: center; margin-top: 28px; padding-top: 16px;
+            border-top: 1px solid #2a1a28;
+        }
+        .logout-btn {
+            display: inline-block; padding: 8px 26px; font-size: 11px;
+            font-family: "SimSun","NSimSun","宋体",serif; letter-spacing: 3px;
+            color: #d08080; background: #1a0c0c; border: 2px solid #6a3030;
+            cursor: pointer; transition: all 0.2s; text-shadow: 0 0 6px rgba(200,80,80,0.5);
+            box-shadow: 0 0 10px rgba(180,30,30,0.3);
+        }
+        .logout-btn:hover { background: #2a1010; border-color: #a04040; color: #ff8080; box-shadow: 0 0 20px rgba(200,30,30,0.6); }
+        .logout-btn:active { border-style: inset; background: #0a0404; }
+
+        /* ==================== 弹窗层 ==================== */
+        #overlay-mask {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.82); z-index: 1000;
+        }
+        /* 血红色大字弹窗 */
+        #blood-popup {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            background: rgba(10,0,0,0.92); border: 3px solid #c02020; padding: 30px 50px;
+            z-index: 1001; text-align: center; font-family: "SimSun","NSimSun","宋体",serif;
+            font-size: 42px; font-weight: bold; color: #ff2020;
+            letter-spacing: 8px; text-shadow: 0 0 30px #ff0000,0 0 60px #aa0000,0 0 100px #660000;
+            box-shadow: 0 0 60px rgba(200,20,20,0.7); animation: bloodPulsePopup 0.6s ease-in-out infinite;
+        }
+        @keyframes bloodPulsePopup { 0%,100%{box-shadow:0 0 40px rgba(200,20,20,0.6);}50%{box-shadow:0 0 80px rgba(255,20,20,0.9);} }
+
+        /* 全屏乱码文字层——你是谁 */
+        #chaos-layer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1002; overflow: hidden;
+        }
+        #chaos-layer .chaos-word {
+            position: absolute; font-family: "SimSun","NSimSun","宋体",serif;
+            font-weight: bold; color: #ff2020; text-shadow: 0 0 20px rgba(255,0,0,0.8);
+            animation: chaosFloat 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes chaosFloat {
+            0% { transform: translate(0,0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translate(18px,-12px) rotate(6deg); opacity: 1; }
+        }
+
+        /* 全屏乱码层——我看到你了 */
+        #see-you-layer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1003; overflow: hidden;
+        }
+        #see-you-layer .see-you-word {
+            position: absolute; font-family: "SimSun","NSimSun","宋体",serif;
+            font-weight: bold; color: #ff1010; text-shadow: 0 0 25px rgba(255,0,0,0.9), 0 0 50px rgba(200,0,0,0.7);
+            animation: seeYouFloat 2s ease-in-out infinite alternate;
+        }
+        @keyframes seeYouFloat {
+            0% { transform: translate(0,0) rotate(-5deg); opacity: 0.6; }
+            100% { transform: translate(20px,-15px) rotate(8deg); opacity: 1; }
+        }
+
+        /* IP暴露提示——放大居中 */
+        #ip-exposed {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            background: rgba(0,0,0,0.9); border: 2px solid #c02020; padding: 20px 40px;
+            z-index: 1004; font-family: "SimSun","NSimSun","宋体",serif;
+            font-size: 32px; font-weight: bold; color: #ff4040; letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(255,40,40,0.8), 0 0 40px rgba(200,20,20,0.6);
+            text-align: center;
+            animation: ipExposedPulse 0.8s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(200,20,20,0.5);
+        }
+        @keyframes ipExposedPulse { 0%,100%{opacity:1;}50%{opacity:0.55;} }
+
+        #right-panel::-webkit-scrollbar { width: 5px; }
+        #right-panel::-webkit-scrollbar-track { background: #0a0a0e; }
+        #right-panel::-webkit-scrollbar-thumb { background: #3a2030; border-radius: 0; }
+        #right-panel::-webkit-scrollbar-thumb:hover { background: #5a3050; }
+    </style>
+</head>
+<body>
+
+    <div class="film-grain"></div>
+    <div class="crt-jitter"></div>
+    <div id="overlay-mask"></div>
+
+    <!-- 血红色大字弹窗 -->
+    <div id="blood-popup">你是谁？</div>
+
+    <!-- 全屏乱码层——你是谁 -->
+    <div id="chaos-layer"></div>
+
+    <!-- 全屏乱码层——我看到你了 -->
+    <div id="see-you-layer"></div>
+
+    <!-- IP暴露提示——放大居中 -->
+    <div id="ip-exposed">⚠ 您的IP地址已暴露</div>
+
+    <div id="main-wrapper">
+        <div id="top-bar">
+            <span class="top-title">古邑县域内部管控终端 · 登录历史编辑</span>
+            <span class="top-status">操作员: 林长清 | 会话ID: ████</span>
+        </div>
+        <div id="content-area">
+            <div class="blood-seep"></div>
+            <div class="glyph-layer"></div>
+            <div class="content-inner" id="content-inner">
+                <div class="page-title">登录历史记录 · 编辑与监控</div>
+                <p style="color:#8a7a80;font-size:10px;text-align:center;margin-bottom:8px;">以下为该终端近30天的登录记录。异常登录尝试以红色标注。</p>
+
+                <table class="log-table" id="log-table">
+                    <thead>
+                        <tr><th width="18%">登录时间</th><th width="14%">用户</th><th width="22%">IP地址</th><th width="18%">登录地点</th><th width="14%">状态</th><th width="14%">操作</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2010-06-15 08:12:34</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                        <tr>
+                            <td>2010-06-14 19:45:22</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                        <tr>
+                            <td>2010-06-14 14:30:08</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                        <tr>
+                            <td>2010-06-13 22:17:45</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                            <td>2010-09-13 12:34:26</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                            <td>2015-01-10 22:17:25</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                            <td>2019-09-18 22:17:55</td><td>林长清</td><td>192.168.1.100</td><td>古瘗村广电路1号</td><td><span class="tag-local">● 本地</span></td><td>--</td>
+                        </tr>
+                        <tr class="row-abnormal">
+                            <td>2026-07-17 03:41:19</td>
+                            <td>林长清</td>
+                            <td style="color:#ff4040;text-shadow:0 0 6px rgba(255,40,40,0.5);">58.214.xxx.xxx</td>
+                            <td style="color:#ff4040;">██省██市（异地）</td>
+                            <td><span class="tag-remote">⚠ 异地</span></td>
+                            <td><button class="delete-btn" id="delete-btn" onclick="triggerChaos()">删除此记录</button></td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+                <p class="info-text">[系统] 检测到1条异常登录记录。该记录显示来自非本地IP的登录尝试，时间点为凌晨时段，不符合操作员日常登录规律。建议立即核实并采取安全措施。</p>
+                <p class="info-text" style="color:#8a6060;">[警告] 删除异常记录不会清除服务器日志。该操作仅从当前终端视图中移除对应条目。</p>
+
+                <!-- 退出登录按钮 -->
+                <div class="logout-area" id="logout-area">
+                    <p style="color:#6a5060;font-size:10px;margin-bottom:10px;letter-spacing:1px;">如需安全退出，请点击下方按钮</p>
+                    <button class="logout-btn" id="logout-btn" onclick="triggerLogout()">退出登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 删除记录按钮事件 ====================
+        function triggerChaos() {
+            const deleteBtn = document.getElementById('delete-btn');
+            const bloodPopup = document.getElementById('blood-popup');
+            const overlayMask = document.getElementById('overlay-mask');
+            const chaosLayer = document.getElementById('chaos-layer');
+            const ipExposed = document.getElementById('ip-exposed');
+            const contentInner = document.getElementById('content-inner');
+
+            // 禁用按钮
+            deleteBtn.disabled = true;
+            deleteBtn.textContent = '处理中...';
+            deleteBtn.style.opacity = '0.5';
+            deleteBtn.style.cursor = 'default';
+
+            // 第一阶段：弹出"你是谁？"
+            setTimeout(function() {
+                bloodPopup.style.display = 'block';
+                overlayMask.style.display = 'block';
+            }, 300);
+
+            // 第二阶段：替换文字（但跳过退出登录区域） + 80个全屏血字
+            setTimeout(function() {
+                // 替换表格文字
+                const table = document.getElementById('log-table');
+                if (table) {
+                    const allTd = table.querySelectorAll('td, th');
+                    allTd.forEach(function(td) {
+                        td.textContent = '你是谁';
+                        td.style.color = '#ff2020';
+                        td.style.textShadow = '0 0 10px rgba(255,20,20,0.6)';
+                    });
+                }
+                // 替换提示文字（排除退出登录区域内的元素）
+                const infoTexts = contentInner.querySelectorAll('.info-text');
+                infoTexts.forEach(function(p) {
+                    p.textContent = '你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁你是谁';
+                    p.style.color = '#ff2020';
+                    p.style.textShadow = '0 0 6px rgba(255,20,20,0.5)';
+                });
+                // 替换标题
+                const title = contentInner.querySelector('.page-title');
+                if (title) {
+                    title.textContent = '你是谁你是谁你是谁';
+                    title.style.color = '#ff2020';
+                    title.style.textShadow = '0 0 20px rgba(255,20,20,0.7)';
+                }
+                // 退出登录区域保持不变，不再替换
+
+                // 生成80个随机血红色大字
+                const chaosWords = [];
+                for (var w = 0; w < 80; w++) {
+                    chaosWords.push('你是谁？');
+                }
+                chaosLayer.innerHTML = '';
+                for (var i = 0; i < chaosWords.length; i++) {
+                    var span = document.createElement('span');
+                    span.className = 'chaos-word';
+                    span.textContent = chaosWords[i];
+                    span.style.left = (Math.random() * 92) + '%';
+                    span.style.top = (Math.random() * 92) + '%';
+                    span.style.fontSize = (14 + Math.random() * 44) + 'px';
+                    span.style.animationDelay = (Math.random() * 1.2) + 's';
+                    span.style.animationDuration = (0.8 + Math.random() * 2.5) + 's';
+                    var rotateVal = (Math.random() * 50 - 25);
+                    span.style.transform = 'rotate(' + rotateVal + 'deg)';
+                    chaosLayer.appendChild(span);
+                }
+                chaosLayer.style.display = 'block';
+            }, 1500);
+
+            // 第三阶段：显示IP暴露 + 关闭弹窗
+            setTimeout(function() {
+                bloodPopup.style.display = 'none';
+                chaosLayer.style.display = 'none';
+                ipExposed.style.display = 'block';
+            }, 3500);
+
+            // 第四阶段：关闭遮罩
+            setTimeout(function() {
+                overlayMask.style.display = 'none';
+            }, 6000);
+
+            // 第五阶段：IP暴露提示淡出
+            setTimeout(function() {
+                ipExposed.style.display = 'none';
+                deleteBtn.textContent = '已删除';
+                deleteBtn.style.color = '#6a5060';
+                deleteBtn.style.borderColor = '#3a2030';
+            }, 10000);
+        }
+
+        // ==================== 退出登录按钮事件 ====================
+        function triggerLogout() {
+            const logoutBtn = document.getElementById('logout-btn');
+            const overlayMask = document.getElementById('overlay-mask');
+            const seeYouLayer = document.getElementById('see-you-layer');
+
+            // 禁用按钮
+            logoutBtn.disabled = true;
+            logoutBtn.textContent = '退出中...';
+            logoutBtn.style.opacity = '0.5';
+            logoutBtn.style.cursor = 'default';
+
+            // 立即显示遮罩
+            overlayMask.style.display = 'block';
+
+            // 生成100条"我看到你了！"
+            const seeYouWords = [];
+            for (var w = 0; w < 100; w++) {
+                seeYouWords.push('我看到你了！');
+            }
+            seeYouLayer.innerHTML = '';
+            for (var i = 0; i < seeYouWords.length; i++) {
+                var span = document.createElement('span');
+                span.className = 'see-you-word';
+                span.textContent = seeYouWords[i];
+                span.style.left = (Math.random() * 90) + '%';
+                span.style.top = (Math.random() * 90) + '%';
+                span.style.fontSize = (16 + Math.random() * 50) + 'px';
+                span.style.animationDelay = (Math.random() * 1.5) + 's';
+                span.style.animationDuration = (1.2 + Math.random() * 3) + 's';
+                var rotateVal = (Math.random() * 60 - 30);
+                span.style.transform = 'rotate(' + rotateVal + 'deg)';
+                seeYouLayer.appendChild(span);
+            }
+            seeYouLayer.style.display = 'block';
+
+            // 2.5秒后跳转
+            setTimeout(function() {
+                window.location.href = 'level3-end.html';
+            }, 2500);
+        }
+
+        // ==================== 快捷键 ====================
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault(); return false;
+            }
+            if (e.key === 'Escape') {
+                document.getElementById('blood-popup').style.display = 'none';
+                document.getElementById('chaos-layer').style.display = 'none';
+                document.getElementById('see-you-layer').style.display = 'none';
+                document.getElementById('overlay-mask').style.display = 'none';
+            }
+        });
+
+        console.log('%c古邑县域内部管控终端 · 登录历史编辑',
+            'color:#e0b040;font-size:14px;font-family:monospace;');
+        console.log('%c警告：检测到异常登录记录。',
+            'color:#ff4040;font-size:10px;font-family:monospace;');
+    </script>
+    
+</body>
+</html>

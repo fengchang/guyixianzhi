@@ -1,0 +1,900 @@
+<!-- level2-grrz-zhenxiang.html - 古瘗县域内部管控系统 · 个人日志（真相版） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="古瘗县,内部管控,个人日志,林淮生,真相">
+    <meta name="description" content="古瘗县域内部行政管理系统 - 个人日志 · 真相档案">
+    <title>个人日志（真相） - 古瘗县域内部管控系统</title>
+    <style>
+        :root {
+            --crt-bg: #0a1218;
+            --crt-text: #3af24a;
+            --crt-text-dim: #1a8a2a;
+            --crt-glow: #2aff3a;
+            --crt-amber: #c8a040;
+            --crt-red: #8a3030;
+            --crt-blue: #2a5088;
+            --scanline-opacity: 0.07;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #020508;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: "Courier New", "SimSun", "NSimSun", "宋体", monospace;
+            cursor: crosshair;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            position: relative;
+        }
+
+        .monitor-housing {
+            position: relative;
+            width: 1050px;
+            height: 750px;
+            background: linear-gradient(180deg, #1c1c1e 0%, #0f0f11 40%, #141418 60%, #1c1c1e 100%);
+            border-radius: 24px 24px 18px 18px;
+            padding: 22px;
+            box-shadow:
+                0 0 0 3px #2c2c30, 0 0 0 8px #1c1c1e, 0 0 0 12px #0c0c0e,
+                0 0 40px rgba(0, 20, 10, 0.5), 0 0 80px rgba(0, 40, 20, 0.25), 0 0 120px rgba(60, 10, 10, 0.18),
+                inset 0 30px 60px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .monitor-brand {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "SimSun", "宋体", serif;
+            font-size: 10px;
+            color: #3a3a38;
+            letter-spacing: 3px;
+            z-index: 2;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+        }
+
+        .power-led {
+            position: absolute;
+            bottom: 26px;
+            right: 50px;
+            width: 6px;
+            height: 6px;
+            background: #2aff3a;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 8px #2aff3a, 0 0 18px #1a8a2a;
+            animation: ledPulse 3s ease-in-out infinite;
+        }
+        @keyframes ledPulse {
+            0%,
+            100% {
+                opacity: 0.9;
+                box-shadow: 0 0 6px #2aff3a, 0 0 14px #1a8a2a;
+            }
+            50% {
+                opacity: 0.4;
+                box-shadow: 0 0 3px #2aff3a, 0 0 8px #1a8a2a;
+            }
+        }
+
+        .crt-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--crt-bg);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                inset 0 0 120px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 30, 15, 0.4);
+            background-image:
+                radial-gradient(ellipse at 50% 50%, rgba(20, 50, 40, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.55) 82%, rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        .scanlines-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.07) 0px, rgba(0, 0, 0, 0.07) 2px, transparent 2px, transparent 4px);
+            animation: scanlineDrift 0.12s linear infinite;
+        }
+        @keyframes scanlineDrift {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 3px;
+            }
+        }
+
+        .scanline-bar {
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            pointer-events: none;
+            z-index: 11;
+            background: linear-gradient(180deg,
+                    transparent 0%, rgba(0, 0, 0, 0.3) 40%, rgba(60, 10, 10, 0.2) 50%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+            animation: scanBarMove 5.5s linear infinite;
+        }
+        @keyframes scanBarMove {
+            0% {
+                top: -10%;
+            }
+            100% {
+                top: 105%;
+            }
+        }
+
+        .film-grain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 8;
+            background-image: url('data:image/svg+xml,%3Csvg width="2" height="2" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="1" height="1" fill="%23ffffff" opacity="0.04"/%3E%3Crect x="1" y="1" width="1" height="1" fill="%23000000" opacity="0.05"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            animation: grainShift 0.1s steps(3) infinite;
+        }
+        @keyframes grainShift {
+            0% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(-1px, 1px);
+            }
+            66% {
+                transform: translate(1px, -1px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .crt-jitter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9;
+            animation: jitter 0.06s linear infinite;
+        }
+        @keyframes jitter {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(0.6px, -0.4px);
+            }
+            50% {
+                transform: translate(-0.5px, 0.3px);
+            }
+            75% {
+                transform: translate(0.3px, 0.5px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .chromatic-edge {
+            position: absolute;
+            pointer-events: none;
+            z-index: 4;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            box-shadow:
+                inset 3px 0 0 rgba(255, 40, 40, 0.05), inset -3px 0 0 rgba(40, 40, 255, 0.04), inset 0 2px 0 rgba(40, 255, 40, 0.05);
+            border-radius: 8px;
+        }
+
+        .blood-seep {
+            position: absolute;
+            pointer-events: none;
+            z-index: 4;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 15% 80%, rgba(120, 15, 15, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 70%, rgba(100, 10, 10, 0.1) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 90%, rgba(80, 5, 5, 0.16) 0%, transparent 55%);
+            animation: bloodPulse 8s ease-in-out infinite;
+            border-radius: 8px;
+        }
+        @keyframes bloodPulse {
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+            40% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.45;
+            }
+        }
+
+        .couplet-left,
+        .couplet-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: "SimSun", "NSimSun", "宋体", "楷体", serif;
+            font-size: 28px;
+            letter-spacing: 14px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            z-index: 6;
+            pointer-events: none;
+            text-shadow:
+                0 0 14px rgba(200, 160, 60, 0.45), 0 0 28px rgba(180, 130, 30, 0.25), 0 0 50px rgba(160, 100, 20, 0.18), 0 0
+                80px rgba(120, 40, 40, 0.12);
+            animation: coupletGlow 5s ease-in-out infinite, coupletBlood 9s ease-in-out infinite;
+        }
+        .couplet-left {
+            left: 18px;
+            color: rgba(190, 145, 50, 0.6);
+            animation-delay: 0s, 0s;
+        }
+        .couplet-right {
+            right: 18px;
+            color: rgba(190, 145, 50, 0.6);
+            animation-delay: 2.5s, 4.5s;
+        }
+        @keyframes coupletGlow {
+            0%,
+            100% {
+                text-shadow: 0 0 10px rgba(200, 160, 60, 0.35), 0 0 20px rgba(160, 100, 20, 0.18);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(220, 180, 70, 0.6), 0 0 40px rgba(180, 120, 30, 0.35), 0 0 70px rgba(200, 50, 30,
+                        0.2);
+            }
+        }
+        @keyframes coupletBlood {
+            0%,
+            94%,
+            100% {
+                color: rgba(190, 145, 50, 0.6);
+            }
+            95% {
+                color: rgba(210, 60, 40, 0.8);
+                text-shadow: 0 0 30px rgba(220, 30, 30, 0.7), 0 0 60px rgba(180, 10, 10, 0.5);
+            }
+            97% {
+                color: rgba(190, 145, 50, 0.55);
+            }
+        }
+
+        .yilao-apparition {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 440px;
+            height: 540px;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.12;
+            background:
+                radial-gradient(ellipse at 50% 28%, rgba(90, 130, 100, 0.7) 0%, transparent 32%),
+                radial-gradient(ellipse at 48% 22%, rgba(30, 50, 35, 0.8) 0%, transparent 18%),
+                radial-gradient(ellipse at 52% 22%, rgba(30, 50, 35, 0.8) 0%, transparent 18%),
+                radial-gradient(ellipse at 50% 55%, rgba(70, 110, 85, 0.5) 0%, transparent 48%),
+                radial-gradient(ellipse at 28% 24%, rgba(45, 95, 60, 0.55) 0%, transparent 38%),
+                radial-gradient(ellipse at 72% 24%, rgba(45, 95, 60, 0.55) 0%, transparent 38%),
+                linear-gradient(180deg, transparent 0%, rgba(35, 75, 50, 0.35) 32%, rgba(25, 55, 40, 0.5) 55%, rgba(12, 35, 20, 0.6) 78%,
+                    transparent 100%);
+            filter: blur(7px);
+            animation: apparitionBreathe 10s ease-in-out infinite, apparitionStare 14s ease-in-out infinite;
+        }
+        @keyframes apparitionBreathe {
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: translateX(-50%) translateY(0);
+            }
+            30% {
+                opacity: 0.15;
+                transform: translateX(-50%) translateY(-5px);
+            }
+            60% {
+                opacity: 0.08;
+                transform: translateX(-50%) translateY(3px);
+            }
+            85% {
+                opacity: 0.13;
+                transform: translateX(-50%) translateY(-3px);
+            }
+        }
+        @keyframes apparitionStare {
+            0%,
+            96%,
+            100% {
+                filter: blur(7px);
+            }
+            97% {
+                filter: blur(3px);
+            }
+            98% {
+                filter: blur(5px);
+            }
+            99% {
+                filter: blur(8px);
+            }
+        }
+
+        .yilao-apparition-2 {
+            position: absolute;
+            bottom: -60px;
+            left: 44%;
+            width: 380px;
+            height: 480px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.07;
+            background:
+                radial-gradient(ellipse at 48% 26%, rgba(70, 110, 85, 0.55) 0%, transparent 35%),
+                radial-gradient(ellipse at 52% 56%, rgba(50, 90, 65, 0.4) 0%, transparent 42%),
+                linear-gradient(180deg, transparent 0%, rgba(25, 55, 38, 0.38) 38%, rgba(10, 30, 18, 0.5) 72%, transparent 100%);
+            filter: blur(12px);
+            animation: apparitionBreathe2 13s ease-in-out infinite;
+        }
+        @keyframes apparitionBreathe2 {
+            0%,
+            100% {
+                opacity: 0.05;
+                transform: translateX(0) translateY(0);
+            }
+            40% {
+                opacity: 0.1;
+                transform: translateX(10px) translateY(-8px);
+            }
+            70% {
+                opacity: 0.04;
+                transform: translateX(-6px) translateY(4px);
+            }
+        }
+
+        .water-vortex {
+            position: absolute;
+            pointer-events: none;
+            z-index: 3;
+            border-radius: 50%;
+            border: 1px solid rgba(40, 100, 70, 0.1);
+            animation: vortexSpin 20s linear infinite;
+        }
+        .water-vortex.v1 {
+            bottom: -90px;
+            left: -70px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(20, 60, 40, 0.08) 0%, transparent 68%);
+            animation-duration: 22s;
+        }
+        .water-vortex.v2 {
+            bottom: -50px;
+            right: -60px;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(15, 50, 35, 0.07) 0%, transparent 62%);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+        .water-vortex.v3 {
+            top: -70px;
+            left: 38%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(25, 55, 40, 0.06) 0%, transparent 58%);
+            animation-duration: 26s;
+        }
+        @keyframes vortexSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .yilao-glyphs {
+            position: absolute;
+            pointer-events: none;
+            z-index: 3;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="30" cy="30" r="22" fill="none" stroke="%2380a090" stroke-width="0.8" opacity="0.5"/%3E%3Ccircle cx="30" cy="30" r="16" fill="none" stroke="%23608070" stroke-width="0.5" opacity="0.4"/%3E%3Cpath d="M30 8 L36 22 L30 18 L24 22 Z" fill="%23608070" opacity="0.35"/%3E%3Cpath d="M30 52 L36 38 L30 42 L24 38 Z" fill="%23608070" opacity="0.35"/%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-position: 40px 30px;
+        }
+
+        .mist-overlay {
+            position: absolute;
+            pointer-events: none;
+            z-index: 6;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 90%, rgba(45, 85, 55, 0.15) 0%, transparent 48%),
+                radial-gradient(ellipse at 80% 85%, rgba(35, 65, 45, 0.12) 0%, transparent 42%),
+                radial-gradient(ellipse at 50% 95%, rgba(25, 55, 38, 0.18) 0%, transparent 52%);
+            animation: mistDrift 12s ease-in-out infinite;
+            border-radius: 8px;
+        }
+        @keyframes mistDrift {
+            0%,
+            100% {
+                opacity: 0.65;
+            }
+            33% {
+                opacity: 1;
+            }
+            66% {
+                opacity: 0.45;
+            }
+        }
+
+        /* 顶部导航栏 */
+        .nav-bar {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            display: flex;
+            gap: 0;
+            pointer-events: auto;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 6px 16px;
+            font-family: "Courier New", "SimSun", monospace;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8ab89a;
+            background: rgba(10, 20, 15, 0.75);
+            border: 1px solid rgba(40, 160, 60, 0.35);
+            text-decoration: none;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            text-shadow: 0 0 6px rgba(40, 200, 60, 0.4);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5), inset 0 0 6px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
+            min-width: 60px;
+        }
+        .nav-btn::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 1px;
+            background: rgba(40, 200, 60, 0.5);
+            box-shadow: 0 0 4px rgba(40, 200, 60, 0.6);
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            color: #c8ffc8;
+            background: rgba(15, 40, 25, 0.9);
+            border-color: rgba(60, 220, 80, 0.7);
+            box-shadow: 0 0 16px rgba(40, 200, 60, 0.5), 0 0 30px rgba(20, 120, 30, 0.3);
+            text-shadow: 0 0 12px rgba(60, 255, 80, 0.7);
+            transform: translateY(-1px);
+        }
+        .nav-btn:hover::after {
+            width: 60%;
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(60, 255, 80, 0.8);
+        }
+        .nav-btn.btn-special {
+            border-color: rgba(200, 100, 40, 0.5);
+            color: #c8a070;
+            animation: specialBtnFlicker 7s ease-in-out infinite;
+        }
+        @keyframes specialBtnFlicker {
+            0%,
+            92%,
+            100% {
+                border-color: rgba(200, 100, 40, 0.5);
+                color: #c8a070;
+            }
+            93% {
+                border-color: rgba(240, 40, 40, 0.8);
+                color: #ff6060;
+                box-shadow: 0 0 20px rgba(200, 20, 20, 0.6);
+            }
+            95% {
+                border-color: rgba(200, 100, 40, 0.45);
+                color: #c8a070;
+            }
+        }
+
+        /* 终端主内容区 */
+        .terminal-content {
+            position: relative;
+            z-index: 7;
+            padding: 55px 55px 25px;
+            font-family: "Courier New", "SimSun", "NSimSun", "宋体", monospace;
+            font-size: 12px;
+            line-height: 1.75;
+            color: var(--crt-text);
+            text-shadow: 0 0 5px var(--crt-glow), 0 0 2px rgba(40, 255, 60, 0.5);
+            letter-spacing: 0.4px;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            pointer-events: auto;
+        }
+
+        .terminal-content .prompt {
+            color: var(--crt-glow);
+            font-weight: bold;
+        }
+        .terminal-content .header-line {
+            color: var(--crt-amber);
+            text-shadow: 0 0 8px rgba(200, 160, 60, 0.5), 0 0 18px rgba(160, 100, 30, 0.25);
+            font-size: 15px;
+            letter-spacing: 3px;
+            text-align: center;
+            margin: 6px 0;
+        }
+
+        /* 日志条目卡片——终端风格 */
+        .log-entry {
+            margin: 12px 0;
+            padding: 10px 14px;
+            border-left: 2px solid rgba(40, 200, 60, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 11px;
+            line-height: 1.8;
+            color: #8ab89a;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 3px rgba(40, 180, 60, 0.4);
+        }
+        .log-entry .log-meta {
+            color: var(--crt-amber);
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            text-shadow: 0 0 4px rgba(200, 160, 40, 0.4);
+        }
+        .log-entry .log-meta .tag-uploaded {
+            color: #4aff5a;
+        }
+        .log-entry .log-meta .tag-local {
+            color: #d4b040;
+        }
+        .log-entry .log-text {
+            color: #a0c8a0;
+            line-height: 1.8;
+            text-indent: 1em;
+        }
+        .log-entry .log-text .highlight {
+            color: #c89880;
+            font-weight: bold;
+            text-shadow: 0 0 4px rgba(200, 140, 100, 0.4);
+        }
+        .log-entry .log-text .creepy {
+            color: #b85050;
+            text-shadow: 0 0 5px rgba(180, 50, 50, 0.5);
+        }
+
+        /* 诡异闪现文字 */
+        .creepy-flash {
+            position: absolute;
+            pointer-events: none;
+            z-index: 12;
+            font-family: "SimSun", "NSimSun", "宋体", serif;
+            font-size: 18px;
+            color: rgba(200, 40, 40, 0);
+            text-shadow: none;
+            animation: creepyFlash 11s ease-in-out infinite;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 6px;
+            white-space: nowrap;
+        }
+        @keyframes creepyFlash {
+            0%,
+            94%,
+            100% {
+                color: rgba(200, 40, 40, 0);
+                text-shadow: none;
+            }
+            95% {
+                color: rgba(220, 30, 30, 0.75);
+                text-shadow: 0 0 30px rgba(200, 10, 10, 0.8), 0 0 60px rgba(150, 5, 5, 0.5);
+            }
+            96% {
+                color: rgba(180, 35, 35, 0.4);
+                text-shadow: 0 0 15px rgba(180, 15, 15, 0.4);
+            }
+            97% {
+                color: rgba(200, 40, 40, 0);
+                text-shadow: none;
+            }
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: var(--crt-glow);
+            vertical-align: middle;
+            margin-left: 2px;
+            animation: cursorBlink 0.9s step-end infinite;
+            box-shadow: 0 0 6px var(--crt-glow);
+        }
+        @keyframes cursorBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .terminal-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .terminal-content::-webkit-scrollbar-thumb {
+            background: rgba(40, 200, 60, 0.3);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 1100px) {
+            .monitor-housing {
+                width: 96vw;
+                height: 70vw;
+                padding: 14px;
+                border-radius: 16px;
+            }
+            .couplet-left,
+            .couplet-right {
+                font-size: 16px;
+                letter-spacing: 6px;
+            }
+            .couplet-left {
+                left: 4px;
+            }
+            .couplet-right {
+                right: 4px;
+            }
+            .terminal-content {
+                padding: 50px 30px 18px;
+                font-size: 10px;
+            }
+            .nav-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                min-width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="monitor-housing">
+        <div class="monitor-brand">GUYI BROADCAST · CTV-901</div>
+        <div class="power-led"></div>
+
+        <div class="crt-screen" id="crtScreen">
+            <div class="scanlines-overlay"></div>
+            <div class="scanline-bar"></div>
+            <div class="film-grain"></div>
+            <div class="crt-jitter"></div>
+            <div class="chromatic-edge"></div>
+            <div class="blood-seep"></div>
+
+       
+
+            <div class="yilao-apparition"></div>
+            <div class="yilao-apparition-2"></div>
+
+            <div class="water-vortex v1"></div>
+            <div class="water-vortex v2"></div>
+            <div class="water-vortex v3"></div>
+
+            <div class="yilao-glyphs"></div>
+            <div class="mist-overlay"></div>
+
+            <div class="creepy-flash">你是谁？？？</div>
+
+            <div class="nav-bar">
+           
+                <a href="level3-1.html" class="nav-btn btn-special">返回界面</a>
+            </div>
+
+            <div class="terminal-content" id="terminalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const terminalContent = document.getElementById('terminalContent');
+
+        const terminalHTML = `
+            <div style="text-align:center;margin-bottom:4px;">
+                <span style="color:#4a8a5a;letter-spacing:2px;">══════════════════════════════════════</span>
+            </div>
+            <div class="header-line">古 瘗 县 广 播 电 视 台</div>
+            <div class="header-line" style="font-size:12px;color:#8ab89a;">内 网 终 端 · 员 工 日 志 存 档</div>
+            <div style="text-align:center;color:var(--crt-text-dim);letter-spacing:2px;font-size:10px;">
+                VER 3.19 · 员工编号: 943851198907209213 · 林淮生
+            </div>
+            <div style="text-align:center;margin-top:3px;">
+                <span style="color:#5a8a60;">──────────────────────────────</span>
+            </div>
+
+            <p style="margin-top:6px;">
+                <span class="prompt">GUYI-T03:~$</span> <span style="color:#8ab89a;">access --journal --user=LHX --clearance=INTERNAL</span>
+            </p>
+            <p style="color:var(--crt-text-dim);font-size:10px;">
+                [系统] 正在读取员工林淮生(943851198907209213)个人日志存档…
+            </p>
+            <p style="color:var(--crt-red);font-size:10px;text-shadow:0 0 4px rgba(200,40,40,0.5);">
+                [警告] 检测到7/9条目已于2009-05-03被终端账户执行本地删除。当前显示为系统残迹恢复内容。
+            </p>
+            <p style="color:var(--crt-text-dim);font-size:10px;">
+                [提示] 请确保这是您要查阅的内容。
+            </p>
+
+            <div style="text-align:center;margin-top:4px;">
+                <span style="color:#5a8a60;">──────────────────────────────</span>
+            </div>
+
+            <!-- 日记条目1 -->
+            <div class="log-entry">
+                <div class="log-meta">[2001-06-19 22:14] <span class="tag-uploaded">● 已上传</span></div>
+                <div class="log-text">
+                    临近盛夏，河谷的河水渐渐涨起来。放学后我跟着父亲去往河滩散步。晚风裹挟着河水湿润的气息，十分舒服。父亲同我说起古邑代代相传的瘗姥传说。他叮嘱我，不要独自靠近深水河段，恪守乡里流传的规矩。我认真记在心里。他偶尔会带我去到广播电视台，允许我在演播室四处闲逛。机房的设备、循环播放的乡土节目，一切于我而言都新奇有趣。我羡慕父亲，他既是古邑村的村长，又是全县电视台的领导，受全乡的乡民敬重。我总觉得父亲见识广博，熟知古邑所有过往。心里暗自期待，将来有一天，我能够接手他肩上的事情。夕阳慢慢沉入群山之间，我们并肩走在回家的土路上，一路闲谈说笑。
+                </div>
+            </div>
+
+            <!-- 日记条目2 -->
+            <div class="log-entry">
+                <div class="log-meta">[2003-01-19 19:30] <span class="tag-local">○ 已私密（操作来自本端）</span></div>
+                <div class="log-text">
+                    年初闲暇，父亲有空便带我到电视台熟悉日常工作。他耐心教我简单的后台操作、音频剪辑与文件归档，细致又温和。而我负责每天校准时钟，时钟每天都会产生俩分钟的误差，每周周日的下午五点，父亲都让我把时钟校准到五点零二分，确保系统时间与外部世界同步。我一直很敬佩父亲，熟悉台里所有工作，打理着古邑的宣传事务。一想到我以后要接替父亲的工作，我就总是害怕自己不能像父亲一样做的好。临近傍晚下班，机房的父亲让我站在门外走廊等候，再三叮嘱我千万不要推门进来。他告诉我，里面是他的专属私密工作系统，我听话站在走廊，静静的等候。可心底的好奇实在按捺不住，我隔着门缝悄悄往里张望。我一眼就发现了不对劲，台里所有工作人员的登录账户，都是统一的工号或身份证编号，规整规范，但父亲输入的账号，是一长串弯折扭曲、古怪生僻的字符，像一串古老的秘语咒语。我仔细辨认了许久，通篇字形怪异晦涩，没有一个字是我认识的。登录跳转之后，父亲的页面布满五彩缤纷的错落区块、隐秘弹窗与专属标识。色彩繁杂堆叠，和我见过的所有系统都完全不一样。我看不懂页面上的内容，只觉得眼花缭乱。片刻之后，父亲快速退出所有窗口，出声叫我进门。我压下满心的疑惑，没有开口询问。我暗自猜想，或许是父亲职位更高，拥有专属的加密权限系统，我想到以后这个艳丽的账号会为我所用，我就激动的睡不着觉。
+                </div>
+            </div>
+
+            <!-- 日记条目3 -->
+            <div class="log-entry">
+                <div class="log-meta">[2004-02-06 23:55] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    这个月天气湿冷，河谷的雾气终日不散。午后家里无人，我在父亲书房最深处的书柜夹层里，意外翻出了一卷泛黄的纸本。纸页发脆、边角霉烂，封面上字迹模糊，是从未对外示人、真正的《古邑旧志》残卷。我一瞬间怔住了。从小到大，无论是长辈口中、电视台播报的乡土史料，还是父亲口中的规矩，所有人都口径一致：早年原版古邑旧志早已佚散损毁，完整残卷不复存在，仅留存经过归档的电子版本，只在广电内部管控系统内有权限查阅。可此刻真正的古志原卷，就安静躺在我眼前。压着心底的震惊，我逐页细细翻阅。纸页陈旧，笔墨古朴，是经年累月沉淀下来的真实记载。越往下看，心底的疑惑就越重，直至心底发凉。这卷私藏的实体残卷，和电视台内网公开的管控档案，处处相悖，出入极大。内网系统记载瘗姥性烈嗜煞，易怒覆水，乡民需岁岁献祭、虔诚供奉，稍有忤逆便会招致河灾祸乱；旧时四村迁徙，是因冒犯神谕、惨遭惩戒而流离溃散。但这本原始残卷里的记录全然不同。文字平和客观，只记载瘗姥为河泽守灵之神，静居水底，护佑河谷水土安稳，从不主动降灾于人。所谓噬人、索祭、天罚，原卷里一字未提。早年村落迁徙，仅仅是河道偏移、土地贫瘠，乡民为谋生远走他乡，与神怒毫无干系。我盯着两种完全相悖的史料，久久失语。<span class="highlight">我隐隐察觉到了这个县城的秘密……</span>
+                </div>
+            </div>
+
+            <!-- 日记条目4 -->
+            <div class="log-entry">
+                <div class="log-meta">[2004-02-13 17:40] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    趁父亲外出巡逻，我再次潜入他上锁的书房。藏在书柜夹层的原版《古瘗旧志》残卷，被我完整翻阅一遍。此前乡里代代流传的说法，正在一点点崩塌。所有人都恐惧瘗姥，传言她潜藏河底，发怒便会掀起洪水、吞噬行人，需要不断献上祭品换取安宁。可古志白纸黑字写得清晰。瘗姥本是驻守河谷的河泽守护神，性情沉静温和。她只管看护水域，收纳不慎落水亡故之人的残魂，从不会主动加害乡民。远古记载之中，没有惩戒、没有索求、不存在活人献祭的规矩。所谓触怒神明便招致灾祸，全部是后人编造的说辞。早年四座古村迁徙，仅仅是河道改道、水土贫瘠，村民远走他乡谋生。不知何时开始，先辈篡改史料，将正常迁徙扭曲为违逆神谕遭到覆灭。温和的水神，硬生生被塑造成贪婪、凶残、喜好索取供奉的恐怖存在。读到此处，一股寒意顺着脊背向上蔓延。我终于彻彻底底想通其中根源。我的父辈，乃至往上数几代先人，刻意编织出这场横跨百年的弥天大谎。他们刻意放大恐惧，设立祭祀规矩，借用虚无的神之名收拢人心，牢牢握住整片古邑的话语权与权力。我想起电视台常年循环播放的乡土新闻、每年古城盛大祭祀。想起机房那串无法辨识的咒语账号，色彩诡异的隐秘后台。所有仪式、恐惧、禁忌，从头到尾都是一场精心策划的骗局。<span class="creepy">真正吞噬古邑无数生灵的，从来不是传说里的水神，而是妄图依靠谎言永久把持河谷秩序的我们林家。</span>父亲清清楚楚掌握原始县志记载的全部真相，却依旧选择维护这套虚假传说。一代代传承谎言，一代代借着祀典巩固权柄。我不知道这场延续百年的戏，还要牺牲多少无辜之人，才能够落幕。
+                </div>
+            </div>
+
+            <!-- 日记条目5 -->
+            <div class="log-entry">
+                <div class="log-meta">[2004-02-14 06:10] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    我拿着原版《古瘗旧志》残卷，径直找到了父亲。我将所有真相摊开质问他，质问代代相传的瘗姥传说、古城祭祀，从头到尾皆是一场谎言。我期待他会愧疚、会辩解，或是寻找到一丝不得已的苦衷。可父亲神情异常平静，脸上没有半分慌乱，只剩下沉沉的严肃。他告诉我，这些秘密，我本来早晚都要知晓。我们林家世代守着这套说辞，借神明之名统御古邑，才能长久握住这片河谷的秩序与权力。等到我成年，这份担子便会交到我的手上，由我继续维持所有的仪式、恐惧与规矩。听完这番话，一股寒意牢牢攥住我的胸腔。于他而言，百年骗局只是家族代代承袭的责任；那些被献祭、被恐惧裹挟的乡民，仅仅是稳固权力的筹码。从前温和亲近的父亲，此刻陌生得让我不敢相认。我无法接受，一辈子活在编织谎言、操纵众人的牢笼之中，更不愿意继承这份沾满虚妄的权柄。那晚我彻夜未眠。天亮之后，我简单收拾几件衣物，没有留下只言片语，动身前往山河村投奔远房亲戚。从今往后，我唯一的出路只有读书。我要拼命备考，参加高考，远远逃离古邑这片被谎言吞噬的土地。河谷的河水依旧不停流淌，河滩的祭台静静等候下一个祀期。但我不想再成为骗局里的一环。至少眼下，我只想逃得越远越好。
+                </div>
+            </div>
+
+            <!-- 日记条目6 -->
+            <div class="log-entry">
+                <div class="log-meta">[2009-04-07 02:30] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    我终究还是回到了这个地方，夏日的河谷依旧潮湿沉闷，河滩风的味道和五年前一模一样。走进电视台门口，我的工位一直被保留，我坐下回想与父亲一起工作的日子，一切似乎恍如隔世。电视台的老楼依旧立在镇口，陈旧、肃穆，像牢牢钉死在这里的桎梏。我回到家里，时隔五年，再次与父亲面对面坐下。我压下所有年少的冲动与怨怼，耐心、认真地和他谈心。我告诉他，百年骗局困住的不只是乡民，也困住了我们林家每一代人。我劝他放下所谓的权柄，停止虚无的祭祀，拆掉代代相传的谎言，让古邑的人真正活在安稳与坦荡里。我以为年岁增长，亲情尚在。我以为他只是承袭祖训，身不由己，尚有回头的余地。可父亲的态度，比五年前更加冰冷、笃定。他看着我，神情沉稳至极，没有丝毫动摇。他告诉我，这套秩序维系古邑百年安稳，林家的掌控、民众的敬畏、岁岁不断的祀礼，从不是无端的权谋，是家族代代相传的使命。他说，我骨子里流着林家的血，迟早要彻底明白、彻底接纳。逃避一时，逃不过一世。那一刻我彻底明白，父亲和我的父辈从来不是被迫承袭，而是自愿沉溺在这场权力骗局里甘之如饴。我曾经满怀期许归来，想要救赎故土、救赎父亲、救赎被困在宿命里的自己。最终只换来彻骨的失望。彻底对古邑、对父亲失望后，我不再执着劝说。我折返山河村，找到了收留我多年的村长。我把从小到大所见的一切，古邑的谎言、刻意捏造的神怒、年年枉然的祭祀、林家借神驭权的真相，一字不落地坦白说出。村长静静听完全部，久久沉默，面色沉得像压着暴雨的河谷。
+                </div>
+            </div>
+
+            <!-- 日记条目7 -->
+            <div class="log-entry">
+                <div class="log-meta">[2009-04-12 21:00] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    争吵声还在我脑子里反复回响，屋子里沉闷得喘不过气。我实在无法理解他。我们血脉相连，可他的心好像早就和这片河谷冰冷的泥土融在了一起。所谓瘗姥的神谕、古邑千年的规矩，剥开层层说辞，到头来不过是牢牢攥在林家手里、操控乡民的权力。为了这份虚无缥缈的权柄，他怎么能做到如此癫狂，心安理得地草菅人命。一条条活生生的性命，在他眼中仅仅是维持秩序、安抚"瘗姥"的祭品。外人、有异议的村民，只要阻碍了这套延续百年的体系，就会被送上祭坛。我质问他，为什么要用尽各种办法来控制村民们来满足自己无穷无尽的私欲。他只是冷冷看着我。我看着眼前的父亲，陌生得可怕。他不再是小时候会带我在河滩散步的人，他是古邑的主祭，是这套血腥规则最坚定的守护者。<span class="creepy">我和他之间横亘的早已不是观念分歧，而是无数祭坛下沉在河底的亡魂。</span>
+                </div>
+            </div>
+
+            <!-- 日记条目8 -->
+            <div class="log-entry">
+                <div class="log-meta">[2009-04-14 20:15] <span class="tag-local">○ 未上传</span></div>
+                <div class="log-text">
+                    <span class="creepy">十六条活生生的人命……</span>仅仅为了守住他缥缈、腐朽、代代相传的虚假权力，为了在百年大祭这天立威震慑全境，为了让所有古邑人永远活在恐惧与顺从里——他毫不犹豫，草菅同族性命。我站在村口，看着安保封死所有通路，看着曾经熟悉的乡邻被拘禁待祭，浑身冰冷、震彻骨髓。我无法理解。我彻底无法理解我的父亲。明明一切都是骗局。明明没有河神，没有天罚，没有瘗姥降怒。明明所有人的苦难，都只是林家的权欲作祟。而他是最知道这一点的人……可他宁愿血洗村落、屠戮乡邻、用同族血肉染红百年祭坛，也要维系这一场荒唐千年的谎言统治。<span class="creepy">我不敢相信我的父辈们手上沾了多少鲜血，每次一想到这里，就止不住地干呕。</span>
+                </div>
+            </div>
+
+            <!-- 日记条目9 -->
+            <div class="log-entry">
+                <div class="log-meta">[2009-04-18 23:12] <span class="tag-local">○ 未上传 · 最后一条记录</span></div>
+                <div class="log-text">
+                    山间的风是冷的。从电视台下班回家，入夜后父亲寻我，语气平淡得没有一丝波澜，只嘱我明日破晓随他一同巡山勘界，巡查祭坛周边与山河村沿线防务，算是百年大祭后的一次全域巡检。我沉默应允。这是我留给父亲最后的余地，也是我给自己最后一丝念想。我清清楚楚知晓全部真相。瘗姥无神，天罚无据，洪水是天时常态，石碑是人工伪造，山河村十六位乡邻的罪名全是凭空罗织。他们唯一的罪责，就是不甘愚昧、不愿盲从、敢于拆穿这套维系林家权欲的千年骗局。明日巡山之行，我不再争执、不再嘶吼、不再徒劳控诉。我会平心静气，做最后一次规劝。我会最后一次告诉他：不必为了虚无的权柄屠戮乡邻，不必用山河村十六条人命，去维系一场自欺欺人的闹剧。百年祀典早已是沾满鲜血的枷锁，该断了，也该醒了。这是我的底线，也是给他最后的救赎机会。<span class="creepy">倘若明日巡山对峙，他依旧冥顽不灵、一意孤行，继续用恐惧裹挟整座古邑县——那我会将林家千年的骗局、每一次祭祀的血债、电视台的舆论操控、伪造神谕天灾的全部真相，尽数公之于众。</span>我要让外界所有人知道，古邑从无神明降怒，唯有人心贪权作恶。
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:10px;">
+                <span style="color:#4a8a5a;">──────────────────────────────</span>
+            </div>
+            <p style="text-align:center;font-size:10px;color:var(--crt-red);letter-spacing:1px;text-shadow:0 0 6px rgba(200,40,40,0.5);">
+                ⚠ 以上条目已于2009-05-03被终端账户执行不可逆本地删除。当前内容为系统残迹恢复。
+            </p>
+            <p style="text-align:center;font-size:10px;color:var(--crt-text-dim);">
+                林淮生(943851198907209213) · 最后登录: 2009-04-18 23:12:08 · 状态: <span style="color:#8a3030;">已故</span>
+            </p>
+            <p style="text-align:center;font-size:10px;color:var(--crt-text-dim);letter-spacing:2px;">
+                古瘗县广播电视台 · 内网终端 · GUYI-TV-03
+            </p>
+            <p>
+                <span class="prompt">GUYI-T03:~$</span> <span class="cursor-blink"></span>
+            </p>
+        `;
+
+        terminalContent.innerHTML = terminalHTML;
+
+        console.log('%c古瘗县广播电视台 · 内网终端 Ver.3.19 | 日志存档: LHX-200904',
+            'color:#3af24a;font-size:14px;font-family:monospace;');
+        console.log('%c员工编号: 943851198907209213 | 状态: 已故 | 条目封锁: 7/9',
+            'color:#8a3030;font-size:10px;font-family:monospace;');
+        console.log('%c瘗姥知晓一切。未经授权的访问将被追踪。',
+            'color:#5a3030;font-size:9px;font-family:monospace;');
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) || e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>
